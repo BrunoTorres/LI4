@@ -8,7 +8,6 @@ especificação do use case realizar exercício
 A fazer:
 Fórmula dificuldade;
 Anexos (definir);
-Especificação do use case resolver teste;
 Especificação de uma ou duas consultas;
 Ver se queremos por mais algum diagrama de sequência e diagrama de atividade;
 Completar diagrama de classes;
