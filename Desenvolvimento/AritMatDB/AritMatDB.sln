@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "AritMatDB", "AritMatDB\AritMatDB.sqlproj", "{F8D85069-02FC-4EF9-BE30-13487C52714A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8D85069-02FC-4EF9-BE30-13487C52714A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8D85069-02FC-4EF9-BE30-13487C52714A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8D85069-02FC-4EF9-BE30-13487C52714A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{F8D85069-02FC-4EF9-BE30-13487C52714A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8D85069-02FC-4EF9-BE30-13487C52714A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8D85069-02FC-4EF9-BE30-13487C52714A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
