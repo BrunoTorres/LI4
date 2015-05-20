@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[Aprendizagem]
+﻿USE AritMatDB;
+CREATE TABLE [dbo].[Aprendizagem]
 (
 	[IdAprendizagem] INT NOT NULL PRIMARY KEY IDENTITY, 
     [Aluno] INT NOT NULL, 
