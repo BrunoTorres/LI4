@@ -14,7 +14,7 @@ namespace AritMat.DAL
     public class GeralDAO
     {
 
-        private static string Path = @"C:\Users\John\Documents\Repos\LI4\Desenvolvimento\FINAL\AritMat\AritMat\App_Data";;
+        private static string Path = @"C:\Users\John\Documents\Repos\LI4\Desenvolvimento\FINAL\AritMat\AritMat\App_Data";
         private static string Db;
         private static SqlCeConnection Conn;
 
@@ -38,6 +38,7 @@ namespace AritMat.DAL
                 GeralDAO.Conn = new SqlCeConnection("Data Source=" + s + "'; LCID=1033; Case Sensitive = TRUE");
                 GeralDAO.Db = "AritMat";
             }
+            catch { }
 
         }
 

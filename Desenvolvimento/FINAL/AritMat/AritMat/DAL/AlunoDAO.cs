@@ -28,7 +28,7 @@ namespace AritMat.DAL
             {
                 if (dt.Rows.Count > 0)
                 {
-                    aluno = new Aluno(int.Parse(dt.Rows[0][0].ToString()), dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString(), dt.Rows[0][3].ToString(), DateTime.Parse(dt.Rows[0][4].ToString()), byte.Parse(dt.Rows[0][5].ToString()), int.Parse(dt.Rows[0][6].ToString()), byte.Parse(dt.Rows[0][7].ToString()), int.Parse(dt.Rows[0][7].ToString());
+                    aluno = new Aluno(int.Parse(dt.Rows[0][0].ToString()), dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString(), dt.Rows[0][3].ToString(), DateTime.Parse(dt.Rows[0][4].ToString()), byte.Parse(dt.Rows[0][5].ToString()), int.Parse(dt.Rows[0][6].ToString()), byte.Parse(dt.Rows[0][7].ToString()), int.Parse(dt.Rows[0][7].ToString()));
                 }
             }
 
@@ -47,7 +47,7 @@ namespace AritMat.DAL
             {
                 if (dt.Rows.Count > 0)
                 {
-                    aluno = new Aluno(int.Parse(dt.Rows[0][0].ToString()), dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString(), dt.Rows[0][3].ToString(), DateTime.Parse(dt.Rows[0][4].ToString()), byte.Parse(dt.Rows[0][5].ToString()), int.Parse(dt.Rows[0][6].ToString()), byte.Parse(dt.Rows[0][7].ToString()), int.Parse(dt.Rows[0][7].ToString());
+                    aluno = new Aluno(int.Parse(dt.Rows[0][0].ToString()), dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString(), dt.Rows[0][3].ToString(), DateTime.Parse(dt.Rows[0][4].ToString()), byte.Parse(dt.Rows[0][5].ToString()), int.Parse(dt.Rows[0][6].ToString()), byte.Parse(dt.Rows[0][7].ToString()), int.Parse(dt.Rows[0][7].ToString()));
                 }
             }
 
