@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[Tipo]
+﻿USE AritMatDB;
+CREATE TABLE [dbo].[Tipo]
 (
 	[IdTipo] INT NOT NULL PRIMARY KEY IDENTITY, 
     [Area] VARCHAR(150) NOT NULL

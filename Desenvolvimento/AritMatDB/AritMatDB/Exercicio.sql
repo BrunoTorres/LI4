@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[Exercicio]
+﻿USE AritMatDB;
+CREATE TABLE [dbo].[Exercicio]
 (
 	[IdExercicio] INT NOT NULL PRIMARY KEY IDENTITY, 
     [Tipo] INT NOT NULL, 

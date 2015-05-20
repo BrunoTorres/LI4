@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[Administrador]
+﻿USE AritMatDB;
+CREATE TABLE [dbo].[Administrador]
 (
 	[IdAdministrador] INT NOT NULL PRIMARY KEY IDENTITY, 
     [DataNasc] DATE NULL, 

@@ -1,4 +1,4 @@
-﻿USE AritMat;
+﻿USE AritMatDB;
 
 CREATE TABLE [dbo].[Aluno]
 (
