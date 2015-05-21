@@ -7,52 +7,127 @@ namespace AritMat.BOL
 {
     public class Aluno
     {
+        private readonly int idAluno;
+        private string nome;
+        private string username;
+        private string password;
+        private DateTime dataNasc;
+        private byte dica;
+        private int tema;
+        private byte explicacao;
+        private int pontuacao;
+        private Dictionary<int, Conhecimento> aprendizagem;
+        private Dictionary<ChaveLicao, Licao> licoes;
+        private Dictionary<int, Teste> testes; //ver 
 
-        private readonly int IdAluno;
-        private string Nome;
-        private string Username;
-        private string Password;
-        private DateTime DataNasc;
-        private byte Dica;
-        private int Tema;
-        private byte Explicacao;
-        private int Pontuacao;
-        private Dictionary<int, Conhecimento> Aprendizagem;
-        private Dictionary<ChaveLicao, Licao> Licoes;
-        private Dictionary<int, Teste> Testes;  //ver 
-
-        public Aluno(int id, string nome, string username, string password, DateTime data, byte dica, int tema,
-            byte explicacao, int pontuacao)
+        public Aluno(int id, string n, string uname, string pass, DateTime data, byte d, int t,
+            byte exp, int pont)
         {
-            IdAluno = id;
-            Nome = nome;
-            Username = username;
-            Password = password;
-            DataNasc = data;
-            Dica = dica;
-            Tema = tema;
-            Explicacao = explicacao;
-            Pontuacao = pontuacao;
+            idAluno = id;
+            nome = n;
+            username = uname;
+            password = pass;
+            dataNasc = data;
+            dica = d;
+            tema = t;
+            explicacao = exp;
+            pontuacao = pont;
         }
 
-        public int GetId() { return IdAluno; }
-        public string GetNome() { return Nome; }
-        public string GetUsername() { return Username; }
-        public string GetPassword() { return Password; }
-        public DateTime GetDataNascimento() { return DataNasc; }
-        public byte GetDica() { return Dica; }
-        public int GetTema(){ return Tema; }
-        public byte GetExplicacao(){ return Explicacao; }
-        public int GetPontuacao() { return Pontuacao; }
+        public int GetId()
+        {
+            return idAluno;
+        }
 
-        //public int GetId() { return IdAluno; }
-        public void SetNome(string nome) { Nome = nome; }
-        public void SetUsername(string username) { Username = username; }
-        public void SetPassword(string pass) { Password = pass; }
-        public void SetDataNascimento(DateTime data) { DataNasc = data; }
-        public void SetDica(byte dica) { Dica = dica; }
-        public void SetTema(int tema) { Tema = tema; }
-        public void SetExplicacao(byte explicacao) { Explicacao = explicacao; }
-        public void SetPontuacao(int pontuacao) { Pontuacao = pontuacao; }
+        public string GetNome()
+        {
+            return nome;
+        }
+
+        public string GetUsername()
+        {
+            return username;
+        }
+
+        public string GetPassword()
+        {
+            return password;
+        }
+
+        public DateTime GetDataNascimento()
+        {
+            return dataNasc;
+        }
+
+        public byte GetDica()
+        {
+            return dica;
+        }
+
+        public int GetTema()
+        {
+            return tema;
+        }
+
+        public byte GetExplicacao()
+        {
+            return explicacao;
+        }
+
+        public int GetPontuacao()
+        {
+            return pontuacao;
+        }
+
+        public Dictionary<int, Conhecimento> GetAprendizagem()
+        {
+            return aprendizagem;
+        }
+
+        //public int SetId() { return IdAluno; }
+        public void SetNome(string n)
+        {
+            nome = n;
+        }
+
+        public void SetUsername(string uname)
+        {
+            username = uname;
+        }
+
+        public void SetPassword(string pass)
+        {
+            password = pass;
+        }
+
+        public void SetDataNascimento(DateTime data)
+        {
+            dataNasc = data;
+        }
+
+        public void SetDica(byte d)
+        {
+            dica = d;
+        }
+
+        public void SetTema(int t)
+        {
+            tema = t;
+        }
+
+        public void SetExplicacao(byte exp)
+        {
+            explicacao = exp;
+        }
+
+        public void SetPontuacao(int pont)
+        {
+            pontuacao = pont;
+        }
+
+        public void SetAprendizagem(Dictionary<int, Conhecimento> aprend)
+        {
+            aprendizagem = aprend;
+        }
     }
 }

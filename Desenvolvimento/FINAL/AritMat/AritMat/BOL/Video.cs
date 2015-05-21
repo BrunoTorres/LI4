@@ -5,8 +5,8 @@ using System.Web;
 
 namespace AritMat.BOL
 {
-    public class Video
+    public class Video : ElementoEstudo
     {
-        private string Video;
+        private string video;
     }
 }

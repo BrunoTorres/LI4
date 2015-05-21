@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
-
 using System.Data.SqlClient;
 using System.Data.SqlServerCe;
+using System.Drawing;
 using System.IO;
 using System.Reflection.Emit;
+using AritMat.BOL;
 
 namespace AritMat.DAL
 {
     public class GeralDAO
     {
-
         private static string Path = @"C:\Users\John\Documents\Repos\LI4\Desenvolvimento\FINAL\AritMat\AritMat\App_Data";
         private static string Db;
         private static SqlCeConnection Conn;
@@ -27,10 +27,10 @@ namespace AritMat.DAL
 
         private static void OpenDB()
         {
-           GeralDAO.Conn = null;
+            GeralDAO.Conn = null;
             var s = GeralDAO.Path + "\\AritMat.sdf";
 
-            if(!File.Exists(s))
+            if (!File.Exists(s))
                 return;
 
             try
@@ -38,16 +38,19 @@ namespace AritMat.DAL
                 GeralDAO.Conn = new SqlCeConnection("Data Source=" + s + "'; LCID=1033; Case Sensitive = TRUE");
                 GeralDAO.Db = "AritMat";
             }
-            catch { }
-
+            catch
+            {
+            }
         }
 
-        public static SqlCeConnection GetConnection()
+        public SqlCeConnection GetConnection()
         {
-            if (GeralDAO.Conn == null)
-                GeralDAO.OpenDB();
+            var s = GeralDAO.Path + "\\AritMat.sdf";
 
-            return GeralDAO.Conn;
+            if (!File.Exists(s))
+                return null;
+
+            return new SqlCeConnection("Data Source=" + s + "'; LCID=1033; Case Sensitive = TRUE");
         }
 
         /*public static void CloseConn(Sql)
@@ -67,35 +70,45 @@ namespace AritMat.DAL
             GeralDAO.Db = "none";
         }*/
 
-        public static void Execute(string command, SqlCeConnection conn)
+        public static int Execute(string command, SqlCeConnection conn)
         {
-            if (GeralDAO.Db == "none") return;
-            if (conn != null)
-                try
+            if (conn == null)
+            {
+                GeralDAO g = new GeralDAO();
+                conn = g.GetConnection();
+            }
+            try
+            {
+                if (conn.State != ConnectionState.Open) conn.Open();
+                if (conn.State == ConnectionState.Open)
                 {
-                    if (conn.State != ConnectionState.Open) conn.Open();
-                    if (conn.State == ConnectionState.Open)
-                    {
-                        var cmd = new SqlCeCommand(command, conn);
-                        cmd.ExecuteNonQuery();
-                    }
+                    var cmd = new SqlCeCommand(command, conn);
+                    return cmd.ExecuteNonQuery();
                 }
-                catch { }
+
+            }
+            catch(SqlCeException ex)
+            {
+            }
+
+            return 0;
         }
 
         public static DataTable Query(string qry, SqlCeConnection conn)
         {
             DataTable dt = null;
 
-            if (Db == "none") return null;
             if (conn == null)
-                conn = GeralDAO.GetConnection();
-            
+            {
+                GeralDAO g = new GeralDAO();
+                conn = g.GetConnection();
+            }
+
             SqlCeCommand command = new SqlCeCommand(qry, conn);
             try
             {
                 DataTable s = null;
-            
+
                 if (conn.State != ConnectionState.Open) conn.Open();
                 if (conn.State == ConnectionState.Open)
                 {
@@ -118,11 +131,27 @@ namespace AritMat.DAL
                     reader.Close();
                 }
             }
-            catch { }
+            catch(SqlCeException ex)
+            {
+
+            }
 
             return dt;
         }
 
+        public static ElementoEstudo GetElementoEstudo(DataRow row)
+        {
+            if (row[2] != null && row[3] == null)
+            {
+                return new Texto(row[2].ToString());
+            }
 
+            if (row.ItemArray[3] != null && row.ItemArray[2] == null)
+            {
+                return new Imagem(Image.FromStream(new MemoryStream((byte[]) row[3])));
+            }
+
+            return null;
+        }
     }
 }

@@ -6,8 +6,13 @@ using System.Web;
 
 namespace AritMat.BOL
 {
-    public class Imagem
+    public class Imagem : ElementoEstudo
     {
-        private Image Imagem;
+        private Image imagem;
+
+        public Imagem(Image img)
+        {
+            imagem = img;
+        }
     }
 }

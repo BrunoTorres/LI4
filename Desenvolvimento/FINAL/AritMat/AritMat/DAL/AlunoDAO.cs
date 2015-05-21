@@ -12,9 +12,25 @@ namespace AritMat.DAL
     public class AlunoDAO
     {
 
-        public AlunoDAO() {}
+        private readonly ConhecimentoDAO conhecimentoDAO;
 
-        private static readonly string SELECT_ALUNO_ID = "SELECT * FROM Aluno WHERE IdAluno = @id";
+        public AlunoDAO()
+        {
+            conhecimentoDAO = new ConhecimentoDAO();
+        }
+
+        public Aluno AlunoLogin(SqlCeConnection conn, string user, string pw)
+        {
+            Aluno a = null;
+            DataTable dt = GeralDAO.Query("SELECT * FROM Aluno WHERE Username = '" + user + "' AND Password = '" + pw + "'" , conn);
+
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                a = new Aluno(int.Parse(dt.Rows[0][0].ToString()), dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString(), dt.Rows[0][3].ToString(), DateTime.Parse(dt.Rows[0][4].ToString()), byte.Parse(dt.Rows[0][5].ToString()), int.Parse(dt.Rows[0][6].ToString()), byte.Parse(dt.Rows[0][7].ToString()), int.Parse(dt.Rows[0][7].ToString()));
+            }
+
+            return a;
+        }
 
         public Aluno GetById(SqlCeConnection conn, int id)
         {
@@ -63,6 +79,11 @@ namespace AritMat.DAL
                        ")";
 
             GeralDAO.Execute(q, conn);
+        }
+
+        public Dictionary<int, Conhecimento> GetAprendizagemByAlunoId(int id, SqlCeConnection conn)
+        {
+            return conhecimentoDAO.GetAprendizagemByAlunoId(id, conn);
         }
 
     }

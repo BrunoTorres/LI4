@@ -17,7 +17,7 @@ namespace AritMat.BOL
 
         private string Nome;
 
-         public Administrador(int id, string nome, string username, string password, DateTime data)
+         public Administrador(int id, DateTime data, string nome, string username, string password)
         {
             IdAdmin = id;
             Nome = nome;

@@ -5,9 +5,15 @@ using System.Web;
 
 namespace AritMat.BOL
 {
-    public class Texto
+    public class Texto : ElementoEstudo
     {
-        private string Texto;
+        private string texto;
+
+        public Texto(string text)
+        {
+            texto = text;
+        }
+
       
     }
 }

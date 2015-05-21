@@ -7,33 +7,51 @@ namespace AritMat.BOL
 {
     public class Licao
     {
-        private ChaveLicao Id;
-        private int Tipo;
-        private int Administrador;
-        private ElementoEstudo ElemEstudo;
-        private DateTime TempoLicao;
-        private string Area;
-        private Dictionary<int,Exercicio> Exers;
+        private ChaveLicao id;
+        private int tipo;
+        private int administrador;
+        private ElementoEstudo elemEstudo;
+        private DateTime tempoLicao;
+        private string area;
+        private Dictionary<int, Exercicio> exercicios;
 
         //Falta
 
         //Verificar construtor
-        public Licao(ChaveLicao id, int tipo, int admin, DateTime tempo, string area)
+        public Licao(ChaveLicao idL, int t, int admin, DateTime tempo, string a)
         {
-            Id=id;
-            Tipo=tipo;
-            Administrador=admin;
-            TempoLicao=tempo;
-            Area = area;
+            id = idL;
+            tipo = t;
+            administrador = admin;
+            tempoLicao = tempo;
+            area = a;
         }
 
         //FALTAM GETS E SETS
 
-        public int GetTipo(){return Tipo;}
-        public int GetAdministrador(){return Administrador;}
-        public DateTime GetTempoLicao(){return TempoLicao;}
+        public int GetTipo()
+        {
+            return tipo;
+        }
 
-        public void SetTipo(int t){Tipo=t;}
-        public void SetAdmin(int ad){Administrador=ad;}
+        public int GetAdministrador()
+        {
+            return administrador;
+        }
+
+        public DateTime GetTempoLicao()
+        {
+            return tempoLicao;
+        }
+
+        public void SetTipo(int t)
+        {
+            tipo = t;
+        }
+
+        public void SetAdmin(int ad)
+        {
+            administrador = ad;
+        }
     }
 }

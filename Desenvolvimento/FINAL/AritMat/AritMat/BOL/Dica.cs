@@ -7,13 +7,40 @@ namespace AritMat.BOL
 {
     public class Dica
     {
-        private readonly int IdDica;
-        private int Exercicio;          
-        private ElementoEstudo ElemEstudo;
+        private readonly int idDica;
+        private int exercicio;
+        private ElementoEstudo elemEstudo;
 
-        public Dica(int id)
+        public Dica(int id, int exer, ElementoEstudo elem)
         {
-            IdDica=id;
+            idDica = id;
+            exercicio = exer;
+            elemEstudo = elem;
+        }
+
+        public int GetId()
+        {
+            return idDica;
+        }
+
+        public int GetExercicio()
+        {
+            return exercicio;;
+        }
+
+        public ElementoEstudo GetElementoEstudo()
+        {
+            return elemEstudo;
+        }
+
+        public void SetExercicio(int ex)
+        {
+            exercicio = ex;
+        }
+
+        public void SetElementoEstudo(ElementoEstudo elem)
+        {
+            elemEstudo = elem;
         }
     }
 }
