@@ -10,12 +10,14 @@ namespace AritMat.BOL
         private readonly int IdExer;
         private int Tipo;
         private int Administrador;
+        private ElementoEstudo ElmEstudo;
         private int Dificuldade;
         private DateTime TempoEx;
         private Dictionary<int,Resposta> Respostas;
-        private Dica Dica;
-        private ElementoEstudo ElmEstudo;
+        private Dictionary<int,Dica> Dicas;
 
+
+        //Falta
         //Verificar construtor
         public Exercicio(int id, int tipo, int adm, int dif, DateTime tmp, Dictionary<int,Resposta> r, Dica d, ElementoEstudo ee)
         {
@@ -31,15 +33,15 @@ namespace AritMat.BOL
 
         //FALTAM GETS E SETS
 
-        public int getId(){return IdExer;}
-        public int getTipo(){return Tipo;}
-        public int getAdmin(){return Administrador;}
-        public int getDif(){return Dificuldade;}
-        public DateTime getTempo(){return TempoEx;}
+        public int GetId(){return IdExer;}
+        public int GetTipo(){return Tipo;}
+        public int GetAdmin(){return Administrador;}
+        public int GetDif(){return Dificuldade;}
+        public DateTime GetTempo(){return TempoEx;}
 
-        public void setTipo(int t){Tipo=t;}
-        public void setAdmin(int a){Administrador=a;}
-        public void setDif(int dif){Dificuldade=dif;}
-        public void setTempo(DateTime t){TempoEx=t;}
+        public void SetTipo(int t){Tipo=t;}
+        public void SetAdmin(int a){Administrador=a;}
+        public void SetDif(int dif){Dificuldade=dif;}
+        public void SetTempo(DateTime t){TempoEx=t;}
     }
 }

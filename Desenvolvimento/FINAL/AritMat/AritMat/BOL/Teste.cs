@@ -9,8 +9,8 @@ namespace AritMat.BOL
     {
 
         private readonly int IdTeste;
-
         private float DificuldadeTeste;
+        private Dictionary<int, Exercicio> Exercicios;
 
         public Teste(int id, float dif)
         {
@@ -18,19 +18,26 @@ namespace AritMat.BOL
             DificuldadeTeste = dif;
         }
 
-        public int GetId()
+        public Teste(int id, float dif, Dictionary<int,Exercicio> exs)
         {
-            return IdTeste;
+            IdTeste = id;
+            DificuldadeTeste = dif;
+            Exercicios = exs;
         }
 
-        public float getDif()
-        {
-            return DificuldadeTeste;
-        }
+        public int GetId() { return IdTeste; }
+
+        public float GetDif() { return DificuldadeTeste; }
+
+        public Dictionary<int, Exercicio> GetExs() { return Exercicios; }
 
         public void SetDif(float dif)
         {
             DificuldadeTeste = dif;
+        }
+        public void AddExercicio(Exercicio e)
+        {
+            Exercicios.Add(e.GetId(), e);
         }
 
     }

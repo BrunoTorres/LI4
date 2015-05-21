@@ -17,7 +17,7 @@ namespace AritMat.BOL
 
         }
 
-        public int getIdLicao() { return IdLicao; }
-        public int getIdExpl() { return IdExpl; }
+        public int GetIdLicao() { return IdLicao; }
+        public int GetIdExpl() { return IdExpl; }
     }
 }

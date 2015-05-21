@@ -22,16 +22,16 @@ namespace AritMat.BOL
             Estado = estado;
         }
 
-        public int getId() { return IdConhecimento; }
-        public int getAluno() { return Aluno; }
-        public DateTime getData() { return Data; }
-        public int getTipo() { return Tipo; }
-        public float getEstado() { return Estado; }
+        public int GetId() { return IdConhecimento; }
+        public int GetAluno() { return Aluno; }
+        public DateTime GetData() { return Data; }
+        public int GetTipo() { return Tipo; }
+        public float GetEstado() { return Estado; }
 
-        public void setAluno(int aluno) { Aluno = aluno; }
-        public void setData(DateTime d) { Data = d; }
-        public void setTipo(int t) { Tipo = t; }
-        public void setEstado(float est) { Estado = est; }
+        public void SetAluno(int aluno) { Aluno = aluno; }
+        public void SetData(DateTime d) { Data = d; }
+        public void SetTipo(int t) { Tipo = t; }
+        public void SetEstado(float est) { Estado = est; }
 
 
     }

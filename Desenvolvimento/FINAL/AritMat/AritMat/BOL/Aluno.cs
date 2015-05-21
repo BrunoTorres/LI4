@@ -7,6 +7,20 @@ namespace AritMat.BOL
 {
     public class Aluno
     {
+
+        private readonly int IdAluno;
+        private string Nome;
+        private string Username;
+        private string Password;
+        private DateTime DataNasc;
+        private byte Dica;
+        private int Tema;
+        private byte Explicacao;
+        private int Pontuacao;
+        private Dictionary<int, Conhecimento> Aprendizagem;
+        private Dictionary<ChaveLicao, Licao> Licoes;
+        private Dictionary<int, Teste> Testes;  //ver 
+
         public Aluno(int id, string nome, string username, string password, DateTime data, byte dica, int tema,
             byte explicacao, int pontuacao)
         {
@@ -20,32 +34,6 @@ namespace AritMat.BOL
             Explicacao = explicacao;
             Pontuacao = pontuacao;
         }
-
-        private readonly int IdAluno;
-
-        private string Nome;
-
-        private string Username;
-
-        private string Password;
-
-        private DateTime DataNasc;
-
-        private byte Dica;
-
-        private int Tema;
-
-        private byte Explicacao;
-
-        private int Pontuacao;
-
-        /*public virtual ICollection<AlunoExercicioLicao> AlunoExercicioLicao { get; set; }
-
-        public virtual ICollection<AlunoLicao> AlunoLicao { get; set; }
-
-        public virtual ICollection<AlunoTesteExercicio> AlunoTesteExercicio { get; set; }
-
-        public virtual ICollection<Aprendizagem> Aprendizagem { get; set; }*/
 
         public int GetId() { return IdAluno; }
         public string GetNome() { return Nome; }

@@ -7,7 +7,7 @@ namespace AritMat.BOL
 {
     public class ElementoEstudo
     {
-
-        //cLASSE ABSTRATA FALTA IMPLEMENTAR
+        
+        
     }
 }
