@@ -39,10 +39,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server Compact Edition\v4.0\Private\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -111,36 +123,133 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BOL\Administrador.cs" />
     <Compile Include="BOL\Aluno.cs" />
+    <Compile Include="BOL\AritMat.cs" />
+    <Compile Include="BOL\ChaveLicao.cs" />
+    <Compile Include="BOL\Conhecimento.cs" />
+    <Compile Include="BOL\Dica.cs" />
+    <Compile Include="BOL\ElementoEstudo.cs" />
+    <Compile Include="BOL\Exercicio.cs" />
+    <Compile Include="BOL\Imagem.cs" />
+    <Compile Include="BOL\Licao.cs" />
+    <Compile Include="BOL\Resposta.cs" />
+    <Compile Include="BOL\Teste.cs" />
+    <Compile Include="BOL\Texto.cs" />
+    <Compile Include="BOL\Video.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DAL\AdministradorDAO.cs" />
     <Compile Include="DAL\AlunoDAO.cs" />
+    <Compile Include="DAL\ConhecimentoDAO.cs" />
+    <Compile Include="DAL\DicaDAO.cs" />
+    <Compile Include="DAL\ExercicioDAO.cs" />
     <Compile Include="DAL\GeralDAO.cs" />
+    <Compile Include="DAL\LicaoDAO.cs" />
+    <Compile Include="DAL\RespostaDAO.cs" />
+    <Compile Include="DAL\TesteDAO.cs" />
+    <Compile Include="DAL\TipoDAO.cs" />
+    <Compile Include="Exceptions\LastExplicacaoException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\AritMatDB.sdf" />
+    <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\camera.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\isotope.css" />
+    <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\1.jpg" />
+    <Content Include="Images\1.png" />
+    <Content Include="Images\2.png" />
+    <Content Include="Images\3.png" />
+    <Content Include="Images\4.png" />
+    <Content Include="Images\about.jpg" />
+    <Content Include="Images\arrow.png" />
+    <Content Include="Images\arrows.png" />
+    <Content Include="Images\bg.png" />
+    <Content Include="Images\bg_header.jpg" />
+    <Content Include="Images\blank.gif" />
+    <Content Include="Images\camera-loader.gif" />
+    <Content Include="Images\camera_skins.png" />
+    <Content Include="Images\coisa.jpg" />
+    <Content Include="Images\favicon.png" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\mqdefault.jpg" />
+    <Content Include="Images\news2.jpg" />
+    <Content Include="Images\news3.jpg" />
+    <Content Include="Images\news4.jpg" />
+    <Content Include="Images\photo-1.jpg" />
+    <Content Include="Images\photo-2.jpg" />
+    <Content Include="Images\photo-3.jpg" />
+    <Content Include="Images\photo-4.jpg" />
+    <Content Include="Images\playbutton.png" />
+    <Content Include="Images\portfolio\img1.jpg" />
+    <Content Include="Images\portfolio\img2.jpg" />
+    <Content Include="Images\portfolio\img3.jpg" />
+    <Content Include="Images\portfolio\img4.jpg" />
+    <Content Include="Images\portfolio\img5.jpg" />
+    <Content Include="Images\portfolio\img6.jpg" />
+    <Content Include="Images\portfolio\img7.jpg" />
+    <Content Include="Images\portfolio\img8.jpg" />
+    <Content Include="Images\portfolio\img9.jpg" />
+    <Content Include="Images\post_01.jpg" />
+    <Content Include="Images\slides\img1.jpg" />
+    <Content Include="Images\slides\img2.jpg" />
+    <Content Include="Images\slides\img3.jpg" />
+    <Content Include="Images\slides\thumbs\big_bunny_fake.jpg" />
+    <Content Include="Images\slides\thumbs\bridge.jpg" />
+    <Content Include="Images\slides\thumbs\header_bg.png" />
+    <Content Include="Images\slides\thumbs\leaf.jpg" />
+    <Content Include="Images\slides\thumbs\road.jpg" />
+    <Content Include="Images\slides\thumbs\sea.jpg" />
+    <Content Include="Images\slides\thumbs\shelter.jpg" />
+    <Content Include="Images\slides\thumbs\tree.jpg" />
+    <Content Include="Images\slides\thumbs\_notes\dwsync.xml" />
+    <Content Include="Images\slides\_notes\dwsync.xml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\fancybox\Descr.WD3" />
+    <Content Include="Views\Home\CheckLogin.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\camera.min.js" />
+    <Content Include="Scripts\custom.js" />
+    <Content Include="Scripts\fancybox\blank.gif" />
+    <Content Include="Scripts\fancybox\fancybox_loading.gif" />
+    <Content Include="Scripts\fancybox\fancybox_loading_402x.gif" />
+    <Content Include="Scripts\fancybox\fancybox_overlay.png" />
+    <Content Include="Scripts\fancybox\fancybox_sprite.png" />
+    <Content Include="Scripts\fancybox\fancybox_sprite_402x.png" />
+    <Content Include="Scripts\fancybox\jquery.fancybox.css" />
+    <Content Include="Scripts\fancybox\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\google-map.js" />
+    <Content Include="Scripts\html5shiv.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.cslider.js" />
+    <Content Include="Scripts\jquery.easing.1.3.js" />
+    <Content Include="Scripts\jquery.isotope.min.js" />
+    <Content Include="Scripts\jquery.min.js" />
+    <Content Include="Scripts\jquery.mobile.customized.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\modernizr-latest.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -154,11 +263,11 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Home\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="AuxPages\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

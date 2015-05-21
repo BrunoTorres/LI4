@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "Entrar";
     Layout = null;
+    
+    
 }
 <!DOCTYPE html>
 <html>
@@ -40,7 +42,7 @@
             jQuery('#login1').on('submit', function(ev) {
                 ev.preventDefault();
                 ev.stopPropagation();
-                wrapAjax('../../AuxPages/CheckLogin.cshtml',
+                wrapAjax('./CheckLogin.cshtml',
                     { 'username': jQuery('#loginUser').val(), 'password': jQuery('#loginPw').val() },
                     function (retData, retStatus, xhr) {
                         alert("FUNCTION!!!");
