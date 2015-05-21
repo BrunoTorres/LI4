@@ -1,0 +1,31 @@
+﻿@using System.Web.WebPages.Html
+@using AritMat.BOL
+@{
+    Layout = null;
+}
+<script>
+    alert("CHECK LOGIN");
+</script>
+@{
+    
+    AritMat ari = new AritMat();
+    HttpContext ctext = System.Web.HttpContext.Current;
+
+    string user = ctext.Request["username"];
+    string pw = ctext.Request["password"];
+
+    Aluno a = ari.UserLogin(user, pw);
+
+    if (a != null)
+    {
+        Session["ativo"] = true;
+        Session["id"] = a.GetId();
+        Session["user"] = a.GetUsername();
+
+        Response.Write("ok");
+    }
+    else
+    {
+        Response.Write("error");
+    }
+}
