@@ -11,7 +11,6 @@ namespace AritMat.DAL
 {
     public class AlunoDAO
     {
-
         private readonly ConhecimentoDAO conhecimentoDAO;
 
         public AlunoDAO()
@@ -22,11 +21,15 @@ namespace AritMat.DAL
         public Aluno AlunoLogin(SqlCeConnection conn, string user, string pw)
         {
             Aluno a = null;
-            DataTable dt = GeralDAO.Query("SELECT * FROM Aluno WHERE Username = '" + user + "' AND Password = '" + pw + "'" , conn);
+            DataTable dt =
+                GeralDAO.Query("SELECT * FROM Aluno WHERE Username = '" + user + "' AND Password = '" + pw + "'", conn);
 
             if (dt != null && dt.Rows.Count > 0)
             {
-                a = new Aluno(int.Parse(dt.Rows[0][0].ToString()), dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString(), dt.Rows[0][3].ToString(), DateTime.Parse(dt.Rows[0][4].ToString()), byte.Parse(dt.Rows[0][5].ToString()), int.Parse(dt.Rows[0][6].ToString()), byte.Parse(dt.Rows[0][7].ToString()), int.Parse(dt.Rows[0][7].ToString()));
+                a = new Aluno(int.Parse(dt.Rows[0][0].ToString()), dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString(),
+                    dt.Rows[0][3].ToString(), DateTime.Parse(dt.Rows[0][4].ToString()),
+                    byte.Parse(dt.Rows[0][5].ToString()), int.Parse(dt.Rows[0][6].ToString()),
+                    byte.Parse(dt.Rows[0][7].ToString()), int.Parse(dt.Rows[0][7].ToString()));
             }
 
             return a;
@@ -39,12 +42,15 @@ namespace AritMat.DAL
             DataTable dt = null;
 
             dt = GeralDAO.Query("SELECT * FROM Aluno WHERE IdAluno = " + id, conn);
-            
+
             if (dt != null)
             {
                 if (dt.Rows.Count > 0)
                 {
-                    aluno = new Aluno(int.Parse(dt.Rows[0][0].ToString()), dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString(), dt.Rows[0][3].ToString(), DateTime.Parse(dt.Rows[0][4].ToString()), byte.Parse(dt.Rows[0][5].ToString()), int.Parse(dt.Rows[0][6].ToString()), byte.Parse(dt.Rows[0][7].ToString()), int.Parse(dt.Rows[0][7].ToString()));
+                    aluno = new Aluno(int.Parse(dt.Rows[0][0].ToString()), dt.Rows[0][1].ToString(),
+                        dt.Rows[0][2].ToString(), dt.Rows[0][3].ToString(), DateTime.Parse(dt.Rows[0][4].ToString()),
+                        byte.Parse(dt.Rows[0][5].ToString()), int.Parse(dt.Rows[0][6].ToString()),
+                        byte.Parse(dt.Rows[0][7].ToString()), int.Parse(dt.Rows[0][7].ToString()));
                 }
             }
 
@@ -58,33 +64,41 @@ namespace AritMat.DAL
             DataTable dt = null;
 
             dt = GeralDAO.Query("SELECT * FROM Aluno WHERE Username = " + user, conn);
-            
+
             if (dt != null)
             {
                 if (dt.Rows.Count > 0)
                 {
-                    aluno = new Aluno(int.Parse(dt.Rows[0][0].ToString()), dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString(), dt.Rows[0][3].ToString(), DateTime.Parse(dt.Rows[0][4].ToString()), byte.Parse(dt.Rows[0][5].ToString()), int.Parse(dt.Rows[0][6].ToString()), byte.Parse(dt.Rows[0][7].ToString()), int.Parse(dt.Rows[0][7].ToString()));
+                    aluno = new Aluno(int.Parse(dt.Rows[0][0].ToString()), dt.Rows[0][1].ToString(),
+                        dt.Rows[0][2].ToString(), dt.Rows[0][3].ToString(), DateTime.Parse(dt.Rows[0][4].ToString()),
+                        byte.Parse(dt.Rows[0][5].ToString()), int.Parse(dt.Rows[0][6].ToString()),
+                        byte.Parse(dt.Rows[0][7].ToString()), int.Parse(dt.Rows[0][7].ToString()));
                 }
             }
 
             return aluno;
         }
 
-        public void AddAluno(SqlCeConnection conn, Aluno a)
+        public int AddAluno(SqlCeConnection conn, Aluno a)
         {
-            string q = "INSERT INTO Aluno " +
-                       "VALUES (" +
-                       a.GetNome() + "," + a.GetUsername() + "," + a.GetPassword() + "," + a.GetDataNascimento() + "," +
+            string data = null;
+
+            if (a.GetDataNascimento() != null)
+                data = a.GetDataNascimento().Value.Date.ToString();
+
+            string q = "INSERT INTO [Aluno]  ([Nome], [Username] ,[Password],[DataNasc],[Dica] ,[Tema] " +
+                       ",[Explicacao],[Pontuacao]) " +
+                       "VALUES ('" +
+                       a.GetNome() + "','" + a.GetUsername() + "','" + a.GetPassword() + "','" + data + "'," +
                        a.GetDica() + "," + a.GetTema() + "," + a.GetExplicacao() + "," + a.GetPontuacao() +
                        ")";
 
-            GeralDAO.Execute(q, conn);
+            return GeralDAO.Execute(q, conn);
         }
 
         public Dictionary<int, Conhecimento> GetAprendizagemByAlunoId(int id, SqlCeConnection conn)
         {
             return conhecimentoDAO.GetAprendizagemByAlunoId(id, conn);
         }
-
     }
 }
