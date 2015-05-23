@@ -26,7 +26,6 @@
     <script>
         jQuery(document).ready(function f() {
             function wrapAjax(xurl, xdata, cbkfun) { //Wrapper para simplificação das transações AJAX
-                alert("WRAP AJAX");
                 jQuery.ajax({
                     'async': false,
                     'cache': false,
@@ -42,13 +41,13 @@
             jQuery('#login1').on('submit', function(ev) {
                 ev.preventDefault();
                 ev.stopPropagation();
-                wrapAjax('./CheckLogin.cshtml',
+                wrapAjax('@Url.Action("CheckLogin", "Home")',
                     { 'username': jQuery('#loginUser').val(), 'password': jQuery('#loginPw').val() },
                     function (retData, retStatus, xhr) {
-                        alert("FUNCTION!!!");
                         var recebido = retData.trim();
                         if (recebido === "ok") {
-                            window.location.replace('Index');
+                            alert("LOGIN CERTO!!!");
+                            window.location.replace('@Url.Action("Index", "Home")');
                         } else {
                             alert("LOGIN ERRADO!");
                         }
@@ -124,7 +123,7 @@
                 <small>
                     Ainda não estás registado? <a data-toggle="tab">
                         <strong>
-                            <a href="~/Home/Register"></a>
+                            <a href="@Url.Action("Register")">Regista-te agora!</a>
                         </strong>
                     </a>
                 </small>

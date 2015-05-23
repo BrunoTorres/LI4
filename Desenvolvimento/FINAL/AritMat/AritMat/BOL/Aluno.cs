@@ -11,7 +11,7 @@ namespace AritMat.BOL
         private string nome;
         private string username;
         private string password;
-        private DateTime dataNasc;
+        private DateTime? dataNasc;
         private byte dica;
         private int tema;
         private byte explicacao;
@@ -19,6 +19,15 @@ namespace AritMat.BOL
         private Dictionary<int, Conhecimento> aprendizagem;
         private Dictionary<ChaveLicao, Licao> licoes;
         private Dictionary<int, Teste> testes; //ver 
+
+        public Aluno()
+        {
+            dataNasc = null;
+            dica = 1;
+            tema = 1;
+            explicacao = 1;
+            pontuacao = 0;
+        }
 
         public Aluno(int id, string n, string uname, string pass, DateTime data, byte d, int t,
             byte exp, int pont)
@@ -54,7 +63,7 @@ namespace AritMat.BOL
             return password;
         }
 
-        public DateTime GetDataNascimento()
+        public DateTime? GetDataNascimento()
         {
             return dataNasc;
         }

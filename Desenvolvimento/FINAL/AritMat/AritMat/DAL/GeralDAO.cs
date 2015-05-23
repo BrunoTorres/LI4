@@ -28,14 +28,14 @@ namespace AritMat.DAL
         private static void OpenDB()
         {
             GeralDAO.Conn = null;
-            var s = GeralDAO.Path + "\\AritMat.sdf";
+            var s = GeralDAO.Path + "\\AritMatDB.sdf";
 
             if (!File.Exists(s))
                 return;
 
             try
             {
-                GeralDAO.Conn = new SqlCeConnection("Data Source=" + s + "'; LCID=1033; Case Sensitive = TRUE");
+                GeralDAO.Conn = new SqlCeConnection("Data Source=" + s + "; LCID=1033; Case Sensitive = TRUE");
                 GeralDAO.Db = "AritMat";
             }
             catch
@@ -45,12 +45,12 @@ namespace AritMat.DAL
 
         public SqlCeConnection GetConnection()
         {
-            var s = GeralDAO.Path + "\\AritMat.sdf";
+            var s = GeralDAO.Path + "\\AritMatDB.sdf";
 
             if (!File.Exists(s))
                 return null;
 
-            return new SqlCeConnection("Data Source=" + s + "'; LCID=1033; Case Sensitive = TRUE");
+            return new SqlCeConnection("Data Source=" + s + "; LCID=1033; Case Sensitive = TRUE");
         }
 
         /*public static void CloseConn(Sql)
@@ -102,6 +102,7 @@ namespace AritMat.DAL
             {
                 GeralDAO g = new GeralDAO();
                 conn = g.GetConnection();
+                conn.Open();
             }
 
             SqlCeCommand command = new SqlCeCommand(qry, conn);
@@ -133,7 +134,7 @@ namespace AritMat.DAL
             }
             catch(SqlCeException ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
 
             return dt;

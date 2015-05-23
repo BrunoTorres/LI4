@@ -21,11 +21,23 @@ namespace AritMat.BOL
         public Aluno UserLogin(string user, string pw)
         {
             SqlCeConnection conn = geralDAO.GetConnection();
+            conn.Open();
             Aluno a = alunoDAO.AlunoLogin(conn, user, pw);
 
             conn.Close();
 
             return a;
+        }
+
+        public bool Registar(Aluno a)
+        {
+            SqlCeConnection conn = geralDAO.GetConnection();
+            conn.Open();
+            int r = alunoDAO.AddAluno(conn, a);
+
+            conn.Close();
+
+            return r > 0;
         }
     }
 }
