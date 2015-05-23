@@ -1,0 +1,66 @@
+﻿@model AritMat.MVC.Models.Licao
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Licao</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Texto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Texto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Video)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Video)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Imagem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Imagem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TempoLicao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TempoLicao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Administrador1.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Administrador1.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo1.Area)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipo1.Area)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
