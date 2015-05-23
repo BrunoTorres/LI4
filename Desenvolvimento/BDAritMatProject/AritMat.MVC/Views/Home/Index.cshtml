@@ -49,12 +49,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav pull-right mainNav">
-                    <li class="c1 active">
-                        <a href="Index">Início</a>
-                    </li>
-                    <li class="c2">
-                        <a href="About.cshtml">Sobre</a>
-                    </li>
+                    <li class="c1 active">@Html.ActionLink("Início", "Index", "Home")</li>
+                    <li class="c2">@Html.ActionLink("Sobre", "About", "Home") </li>
                     <li class="c3">@Html.ActionLink("Entrar", "Login", "Home") </li>
 
                 </ul>

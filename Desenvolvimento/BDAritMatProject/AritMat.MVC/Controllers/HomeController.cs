@@ -55,7 +55,7 @@ namespace AritMat.MVC.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Title = "Sobre";
 
             return View();
         }

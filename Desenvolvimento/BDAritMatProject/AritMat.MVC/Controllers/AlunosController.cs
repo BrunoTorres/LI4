@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AritMat.MVC.Models;
+using AritMat.MVC.Models.ViewModels;
 
 namespace AritMat.MVC.Controllers
 {
@@ -71,7 +72,8 @@ namespace AritMat.MVC.Controllers
             {
                 return HttpNotFound();
             }
-            return View(aluno);
+            AlunoEditModel aem = new AlunoEditModel(aluno);
+            return View(aem);
         }
 
         // POST: Alunos/Edit/5

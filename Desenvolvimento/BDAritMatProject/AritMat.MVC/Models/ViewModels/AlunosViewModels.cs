@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace AritMat.MVC.Models.ViewModels
 {
@@ -43,11 +40,57 @@ namespace AritMat.MVC.Models.ViewModels
         [Required]
         [Display(Name = "Data de Nascimento")]
         [DataType(DataType.Date, ErrorMessage = "Insere data no formato AAAA-MM-DD")]
-        public Nullable<System.DateTime> DataNasc { get; set; }
+        public DateTime? DataNasc { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Confirmar password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class AlunoEditModel
+    {
+        [Required]
+        public int IdAluno { get; set; }
+
+        [StringLength(150)]
+        [Required]
+        public string Nome { get; set; }
+
+        [StringLength(75)]
+        [Required]
+        public string Password { get; set; }
+
+        
+        [Display(Name = "Data de Nascimento")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date, ErrorMessage = "Insere data no formato AAAA-MM-DD")]
+        public DateTime? DataNasc { get; set; }
+
+        [Range(0, 1)]
+        [Required]
+        [Display(Name = "Apresentar dica?")]
+        public Boolean Dica { get; set; }
+
+        [Range(1, 3)]
+        [Required]
+        [Display(Name = "Tema escolhido")]
+        public int Tema { get; set; }
+
+        [Range(0, 1)]
+        [Required]
+        [Display(Name = "Recomendar explicações?")]
+        public byte Explicacao { get; set; }
+
+        public AlunoEditModel(Aluno a)
+        {
+            IdAluno = a.IdAluno;
+            Nome = a.Nome;
+            Password = a.Password;
+            DataNasc = a.DataNasc;
+            Dica = a.Dica == 1;
+            Tema = a.Tema;
+            Explicacao = a.Explicacao;
+        }
     }
 }
