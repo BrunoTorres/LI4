@@ -1,0 +1,136 @@
+﻿<!--
+Author: WebThemez
+Author URL: http://webthemez.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="free-educational-responsive-web-template-webEdu">
+    <meta name="author" content="webThemez.com">
+    <title>Arit-Mat</title>
+    <link rel="favicon" href="~/Images/favicon.png">
+    <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com?family=Open+Sans:300,400,700">
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/bootstrap-theme.css" media="screen">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <link rel="stylesheet" id="camera-css" href="~/Content/camera.css" type="text" media="all">
+
+
+    <script src="~/Scripts/custom.js"></script>
+
+    
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="~/content/html5shiv.js"></script>
+        <script src="~/content/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- Button for smallest screens -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <img src="~/Images/logo.png" alt="Techro HTML5 template">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav pull-right mainNav">
+                    <li class="c1 active">
+                        <a href="Index">Início</a>
+                    </li>
+                    <li class="c2">
+                        <a href="About.cshtml">Sobre</a>
+                    </li>
+                    <li class="c3">@Html.ActionLink("Entrar", "Login", "Home") </li>
+
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+    <!-- /.navbar -->
+    <!-- Header -->
+    <header id="head">
+        <div class="container">
+            <div class="heading-text">
+                <h1 class="animated flipInY delay1">Arit-Mat</h1> <br />
+                <p>Aprender connosco é divertido!!!</p>
+            </div>
+
+            <div class="fluid_container">
+                <figure>
+                    <img src="~/Images/slides/img3.jpg" height="600" />
+                </figure>
+            </div><!-- .fluid_container -->
+        </div>
+    </header>
+    <!-- /Header -->
+
+    <footer id="footer">
+
+        <div class="container">
+            <div class="row">
+                <div class="footerbottom">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="footerwidget">
+                            <h4>
+                                Categorias Disponíveis
+                            </h4>
+                            <div class="menu-course">
+                                <ul class="menu">
+                                    <li>
+                                        Adições
+
+                                    </li>
+                                    <li>
+                                        Subtrações
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="footerwidget">
+                            <h4>Contactos</h4>
+                            <p>Coisas</p>
+                            <div class="contact-info">
+                                <i class="fa fa-map-marker"></i> Universidade do Minho<br>
+                            </div>
+                        </div><!-- end widget -->
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <!--CLEAR FLOATS-->
+        </div>
+    </footer>
+
+    <!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+    <script src="~/Scripts/modernizr-latest.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/fancybox/jquery.fancybox.pack.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/jquery.mobile.customized.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="~/Scripts/camera.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/custom.js"></script>
+
+
+</body>
+</html>

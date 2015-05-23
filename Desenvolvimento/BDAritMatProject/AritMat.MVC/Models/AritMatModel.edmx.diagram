@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e29d6e7c570549829816c59e4ce40198" Name="Diagram1">
+        <EntityTypeShape EntityType="BDAritMatProjectModel.Administrador" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAritMatProjectModel.Aluno" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAritMatProjectModel.AlunoExercicioLicao" Width="1.5" PointX="8.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAritMatProjectModel.AlunoLicao" Width="1.5" PointX="11.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAritMatProjectModel.AlunoTesteExercicio" Width="1.5" PointX="5.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAritMatProjectModel.Aprendizagem" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAritMatProjectModel.Dica" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAritMatProjectModel.Exercicio" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAritMatProjectModel.Licao" Width="1.5" PointX="6" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAritMatProjectModel.Resposta" Width="1.5" PointX="5.25" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAritMatProjectModel.Teste" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDAritMatProjectModel.Tipo" Width="1.5" PointX="0.75" PointY="12.25" IsExpanded="true" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_Exercicio_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_Licao_ToTable2" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_AlunoExercicioLicao_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_AlunoLicao_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_AlunoTesteExercicio_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_Aprendizagem_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_AlunoExercicioLicao_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_AlunoExercicioLicao_ToTable_3" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_AlunoLicao_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_AlunoTesteExercicio_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_AlunoTesteExercicio_ToTable_2" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_Dica_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_Exercicio_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_Resposta_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.FK_Licao_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.LicaoExercicio" ManuallyRouted="false" />
+        <AssociationConnector Association="BDAritMatProjectModel.TesteExercicio" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

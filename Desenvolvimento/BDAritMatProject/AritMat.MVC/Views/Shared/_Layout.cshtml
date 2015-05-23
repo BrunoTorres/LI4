@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="free-educational-responsive-web-template-webEdu">
+    <meta name="author" content="webThemez.com">
+    <title>Arit-Mat - @ViewBag.Title</title>
+    <link rel="favicon" href="~/Images/favicon.png">
+    <link rel="stylesheet" media="screen" href="http://fonts.googleapis.com?family=Open+Sans:300,400,700">
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/bootstrap-theme.css" media="screen">
+    <link rel="stylesheet" href="~/Content/style.css">
+    <link rel="stylesheet" id="camera-css" href="~/Content/camera.css" type="text" media="all">
+
+    <script type='text/javascript' src='~/Scripts/jquery.min.js'></script>
+    <script src="~/Scripts/custom.js"></script>
+
+<body>
+    <div class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- Button for smallest screens -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <img src="~/Images/logo.png" alt="Techro HTML5 template">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav pull-right mainNav">
+                    <li class="c1 active">
+                        <a href="Index">Início</a>
+                    </li>
+                    <li class="c2">
+                        <a href="About.cshtml">Sobre</a>
+                    </li>
+                    <li class="c3">@Html.ActionLink("Entrar", "Login", "Home") </li>
+
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+    <!-- /.navbar -->
+</body>
+    @RenderBody()
+    @RenderSection("scripts", required: false)
+
+
+</html>
