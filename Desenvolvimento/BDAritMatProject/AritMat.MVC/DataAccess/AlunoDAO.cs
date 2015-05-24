@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using AritMat.MVC.Models;
 using AritMat.MVC.Models.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace AritMat.MVC.DataAccess
 {
@@ -35,6 +37,7 @@ namespace AritMat.MVC.DataAccess
 
         public Boolean AddAluno(AlunoRegisterModel m)
         {
+
             using (var context = new BDAritMatProjectEntities())
             {
                 Aluno al = new Aluno();
@@ -58,7 +61,50 @@ namespace AritMat.MVC.DataAccess
                 }
             }
         }
-    
+      
 
-}
+        public bool ChangeAluno(Aluno aluno)
+        {
+            using (var context = new BDAritMatProjectEntities())
+            {
+                Aluno al = new Aluno
+                {
+                    Username = aluno.Username,
+                    Nome = aluno.Nome,
+                    DataNasc = aluno.DataNasc,
+                    Password = aluno.Password,
+                    Pontuacao = aluno.Pontuacao,
+                    Explicacao = aluno.Explicacao,
+                    Dica = aluno.Dica,
+                    Tema = aluno.Tema
+                };
+                try
+                {
+                    context.Entry(aluno).State = EntityState.Modified;
+                    context.SaveChanges();
+                    return true;
+                }
+                catch (DbUpdateException)
+                {
+                    return false;
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    List<string> error = new List<string>();
+                    foreach (DbEntityValidationResult db in ex.EntityValidationErrors)
+                    {
+                        String entityname = db.Entry.Entity.GetType().Name;
+                        foreach (DbValidationError dbe in db.ValidationErrors)
+                        {
+                            //error.Add(entityname + "." + dbe.PropertyName + ": " + dbe.ErrorMessage);
+                            System.Diagnostics.Debug.WriteLine(entityname + "." + dbe.PropertyName + ": " + dbe.ErrorMessage);
+                        }
+                    }
+                    
+                     return false;
+                }
+            }
+
+        }
+    }
 }

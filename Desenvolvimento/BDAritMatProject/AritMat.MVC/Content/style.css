@@ -53,6 +53,13 @@ label {
 	color: #29AAE2;
 	font-size: 15px; 
 }
+
+.centered-checkbox {
+    margin-top: 30px;
+
+}
+
+/* ReSharper disable once Html.CssClassElementsNotFound */
 .form-control {
 	display: block;
 	width: 100%;
@@ -171,9 +178,11 @@ display: inline-block;
 	line-height: 1.15em;
 }
 #head .tagline {
-	color: rgba(255,255,255,0.75);
+    color: #ffffff;
+    color: rgba(255,255,255,0.75);
 	margin-bottom: 25px;
 }
+
 #head .tagline a {
 	color: #fff;
 }

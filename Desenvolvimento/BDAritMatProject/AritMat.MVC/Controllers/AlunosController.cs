@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
+using AritMat.MVC.DataAccess;
 using AritMat.MVC.Models;
 using AritMat.MVC.Models.ViewModels;
 
@@ -21,44 +23,6 @@ namespace AritMat.MVC.Controllers
             return View(db.Alunos.ToList());
         }
 
-        // GET: Alunos/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Aluno aluno = db.Alunos.Find(id);
-            if (aluno == null)
-            {
-                return HttpNotFound();
-            }
-            return View(aluno);
-        }
-
-
-        // GET: Alunos/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Alunos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdAluno,Nome,Username,Password,DataNasc,Dica,Tema,Explicacao,Pontuacao")] Aluno aluno)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Alunos.Add(aluno);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(aluno);
-        }
 
         // GET: Alunos/Edit/5
         public ActionResult Edit(int? id)
@@ -83,17 +47,19 @@ namespace AritMat.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IdAluno,Nome,Username,Password,DataNasc,Dica,Tema,Explicacao,Pontuacao")] Aluno aluno)
         {
-            if (ModelState.IsValid)
+            var result = new AlunoDAO().ChangeAluno(aluno);
+
+            if (result)
             {
-                db.Entry(aluno).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Alunos", new{id = aluno.IdAluno});
             }
-            return View(aluno);
+            ModelState.AddModelError("Edit", "Erro, não conseguiu adicionar os novos detalhes");
+            AlunoEditModel aem = new AlunoEditModel(aluno);
+            return View(aem);
+
         }
 
-        // GET: Alunos/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -104,19 +70,12 @@ namespace AritMat.MVC.Controllers
             {
                 return HttpNotFound();
             }
-            return View(aluno);
+            AlunoDetailsModel adm = new AlunoDetailsModel(aluno);
+            return View(adm);
         }
 
-        // POST: Alunos/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Aluno aluno = db.Alunos.Find(id);
-            db.Alunos.Remove(aluno);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+
+
 
         protected override void Dispose(bool disposing)
         {

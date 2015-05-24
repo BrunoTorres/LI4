@@ -11,7 +11,7 @@ namespace AritMat.MVC.Models.ViewModels
         public string Username { get; set; }
 
         [Required]
-        [StringLength(75, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
+        [StringLength(75, MinimumLength = 3, ErrorMessage = "The {0} must be at least {2} characters long.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -27,7 +27,7 @@ namespace AritMat.MVC.Models.ViewModels
         public string Username { get; set; }
 
         [Required]
-        [StringLength(75, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
+        [StringLength(75, MinimumLength = 10, ErrorMessage = "The {0} must be at least {2} characters long.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -53,9 +53,64 @@ namespace AritMat.MVC.Models.ViewModels
         [Required]
         public int IdAluno { get; set; }
 
+        [Required]
+        public string Username { get; set; }
+
         [StringLength(150)]
         [Required]
         public string Nome { get; set; }
+
+        [StringLength(75,MinimumLength = 3)]
+        [Required]
+        public string Password { get; set; }
+
+
+        [Display(Name = "Data de Nascimento")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date, ErrorMessage = "Insere data no formato AAAA-MM-DD")]
+        public DateTime? DataNasc { get; set; }
+
+        [Range(0, 1)]
+        [Required]
+        [Display(Name = "Apresentar dica?")]
+        public Boolean Dica { get; set; }
+
+        [Range(1, 3)]
+        [Required]
+        [Display(Name = "Tema escolhido")]
+        public int Tema { get; set; }
+
+        [Range(0, 1)]
+        [Required]
+        [Display(Name = "Recomendar explicações?")]
+        public Boolean Explicacao { get; set; }
+
+        public AlunoEditModel(Aluno a)
+        {
+            IdAluno = a.IdAluno;
+            Username = a.Username;
+            Nome = a.Nome;
+            Password = a.Password;
+            DataNasc = a.DataNasc;
+            Dica = a.Dica == 1;
+            Tema = a.Tema;
+            Explicacao = a.Explicacao == 1;
+        }
+    }
+
+    public class AlunoDetailsModel
+    {
+        [Required]
+        public int IdAluno { get; set; }
+
+        [StringLength(150)]
+        [Required]
+        public string Nome { get; set; }
+
+
+        [StringLength(75)]
+        [Required]
+        public string Username { get; set; }
 
         [StringLength(75)]
         [Required]
@@ -80,17 +135,19 @@ namespace AritMat.MVC.Models.ViewModels
         [Range(0, 1)]
         [Required]
         [Display(Name = "Recomendar explicações?")]
-        public byte Explicacao { get; set; }
+        public Boolean Explicacao { get; set; }
 
-        public AlunoEditModel(Aluno a)
+        public AlunoDetailsModel(Aluno a)
         {
             IdAluno = a.IdAluno;
+            Username = a.Username;
             Nome = a.Nome;
             Password = a.Password;
             DataNasc = a.DataNasc;
             Dica = a.Dica == 1;
             Tema = a.Tema;
-            Explicacao = a.Explicacao;
+            Explicacao = a.Explicacao == 1;
         }
+
     }
 }
