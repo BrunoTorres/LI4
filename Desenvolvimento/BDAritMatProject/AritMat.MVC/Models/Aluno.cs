@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.ComponentModel.DataAnnotations;
-
 namespace AritMat.MVC.Models
 {
     using System;
@@ -39,6 +37,4 @@ namespace AritMat.MVC.Models
         public virtual ICollection<AlunoTesteExercicio> AlunoTesteExercicios { get; set; }
         public virtual ICollection<Aprendizagem> Aprendizagens { get; set; }
     }
-
-    
 }
