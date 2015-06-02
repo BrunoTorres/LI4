@@ -16,12 +16,40 @@ namespace AritMat.MVC.Controllers
     public class AlunosController : Controller
     {
         private BDAritMatProjectEntities db = new BDAritMatProjectEntities();
+        private LicaoDAO licaoDAO;
+
+        public AlunosController()
+        {
+        }
+
 
         // GET: Alunos
-        public ActionResult Index()
+        public ActionResult Index(AlunoViewModel model)
         {
-            return View(db.Alunos.ToList());
+            //ViewBag.LicoesAdd = licaoDAO.GetLicoesAdd();
+
+            ViewBag.LicoesAdd = db.Licoes.ToList();
+            ViewBag.LicoesSub = db.Licoes.ToList();
+            //ViewBag.LicoesSub = licaoDAO.GetLicoesSub();
+
+            var avm = Session["User"] as AlunoViewModel;
+
+            if (avm != null)
+            {
+                ViewBag.NextLicao = new LicaoDAO().GetNextLicaoAluno(avm.IdAluno);
+
+
+                return View(avm);
+            }
+
+            return View(model);
         }
+
+        // GET: Alunos
+        /*public ActionResult Index()
+        {
+            return RedirectToAction("Login", "Home");
+        }*/
 
 
         // GET: Alunos/Edit/5

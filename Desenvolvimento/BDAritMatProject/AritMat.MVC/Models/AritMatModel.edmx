@@ -40,7 +40,7 @@
           <Property Name="Licao" Type="int" Nullable="false" />
           <Property Name="Explicacao" Type="int" Nullable="false" />
           <Property Name="Exercicio" Type="int" Nullable="false" />
-          <Property Name="Data" Type="date" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
           <Property Name="Resposta" Type="float" />
         </EntityType>
         <EntityType Name="AlunoLicao">
@@ -52,7 +52,7 @@
           <Property Name="Aluno" Type="int" Nullable="false" />
           <Property Name="Licao" Type="int" Nullable="false" />
           <Property Name="Explicacao" Type="int" Nullable="false" />
-          <Property Name="Data" Type="date" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
           <Property Name="RespErradas" Type="int" />
         </EntityType>
         <EntityType Name="AlunoTesteExercicio">
@@ -96,7 +96,7 @@
           <Property Name="Texto" Type="text" />
           <Property Name="Dificuldade" Type="int" Nullable="false" />
           <Property Name="Imagem" Type="varbinary(max)" />
-          <Property Name="TempoEx" Type="time" Precision="7" Nullable="false" />
+          <Property Name="TempoEx" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Licao">
           <Key>
@@ -106,7 +106,7 @@
           <Property Name="idLicao" Type="int" Nullable="false" />
           <Property Name="NumExpl" Type="int" Nullable="false" />
           <Property Name="Tipo" Type="int" Nullable="false" />
-          <Property Name="Administrador" Type="int" Nullable="false" />
+          <Property Name="Administrador" Type="int" />
           <Property Name="Texto" Type="text" />
           <Property Name="Video" Type="varchar" MaxLength="500" />
           <Property Name="Imagem" Type="varbinary(max)" />
@@ -314,7 +314,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Licao_ToTable2">
-          <End Role="Administrador" Type="Self.Administrador" Multiplicity="1" />
+          <End Role="Administrador" Type="Self.Administrador" Multiplicity="0..1" />
           <End Role="Licao" Type="Self.Licao" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Administrador">
@@ -524,7 +524,7 @@
           <Property Name="Licao" Type="Int32" Nullable="false" />
           <Property Name="Explicacao" Type="Int32" Nullable="false" />
           <Property Name="Exercicio" Type="Int32" Nullable="false" />
-          <Property Name="Data" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Resposta" Type="Double" />
           <NavigationProperty Name="Aluno1" Relationship="Self.FK_AlunoExercicioLicao_ToTable" FromRole="AlunoExercicioLicao" ToRole="Aluno" />
           <NavigationProperty Name="Licao1" Relationship="Self.FK_AlunoExercicioLicao_ToTable_1" FromRole="AlunoExercicioLicao" ToRole="Licao" />
@@ -539,7 +539,7 @@
           <Property Name="Aluno" Type="Int32" Nullable="false" />
           <Property Name="Licao" Type="Int32" Nullable="false" />
           <Property Name="Explicacao" Type="Int32" Nullable="false" />
-          <Property Name="Data" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RespErradas" Type="Int32" />
           <NavigationProperty Name="Aluno1" Relationship="Self.FK_AlunoLicao_ToTable" FromRole="AlunoLicao" ToRole="Aluno" />
           <NavigationProperty Name="Licao1" Relationship="Self.FK_AlunoLicao_ToTable_1" FromRole="AlunoLicao" ToRole="Licao" />
@@ -590,7 +590,7 @@
           <Property Name="Texto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Dificuldade" Type="Int32" Nullable="false" />
           <Property Name="Imagem" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="TempoEx" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="TempoEx" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Administrador1" Relationship="Self.FK_Exercicio_ToTable_1" FromRole="Exercicio" ToRole="Administrador" />
           <NavigationProperty Name="AlunoExercicioLicoes" Relationship="Self.FK_AlunoExercicioLicao_ToTable_3" FromRole="Exercicio" ToRole="AlunoExercicioLicao" />
           <NavigationProperty Name="AlunoTesteExercicios" Relationship="Self.FK_AlunoTesteExercicio_ToTable_2" FromRole="Exercicio" ToRole="AlunoTesteExercicio" />
@@ -608,11 +608,11 @@
           <Property Name="idLicao" Type="Int32" Nullable="false" />
           <Property Name="NumExpl" Type="Int32" Nullable="false" />
           <Property Name="Tipo" Type="Int32" Nullable="false" />
-          <Property Name="Administrador" Type="Int32" Nullable="false" />
+          <Property Name="Administrador" Type="Int32" Nullable="true" />
           <Property Name="Texto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Video" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Imagem" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="TempoLicao" Type="Int32" />
+          <Property Name="TempoLicao" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Administrador1" Relationship="Self.FK_Licao_ToTable2" FromRole="Licao" ToRole="Administrador" />
           <NavigationProperty Name="AlunoExercicioLicoes" Relationship="Self.FK_AlunoExercicioLicao_ToTable_1" FromRole="Licao" ToRole="AlunoExercicioLicao" />
           <NavigationProperty Name="AlunoLicoes" Relationship="Self.FK_AlunoLicao_ToTable_1" FromRole="Licao" ToRole="AlunoLicao" />
@@ -660,7 +660,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Licao_ToTable2">
-          <End Role="Administrador" Type="Self.Administrador" Multiplicity="1" />
+          <End Role="Administrador" Type="Self.Administrador" Multiplicity="0..1" />
           <End Role="Licao" Type="Self.Licao" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Administrador">

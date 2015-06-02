@@ -30,7 +30,7 @@ namespace AritMat.MVC.Models
         public string Texto { get; set; }
         public int Dificuldade { get; set; }
         public byte[] Imagem { get; set; }
-        public System.TimeSpan TempoEx { get; set; }
+        public int TempoEx { get; set; }
     
         public virtual Administrador Administrador1 { get; set; }
         public virtual ICollection<AlunoExercicioLicao> AlunoExercicioLicoes { get; set; }

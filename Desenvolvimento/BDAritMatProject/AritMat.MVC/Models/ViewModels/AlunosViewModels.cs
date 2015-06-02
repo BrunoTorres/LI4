@@ -1,8 +1,49 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AritMat.MVC.Models.ViewModels
 {
+
+    public class AlunoViewModel
+    {
+        public AlunoViewModel()
+        {
+            AlunoExercicioLicoes = new HashSet<AlunoExercicioLicao>();
+            AlunoLicoes = new HashSet<AlunoLicao>();
+            AlunoTesteExercicios = new HashSet<AlunoTesteExercicio>();
+            Aprendizagens = new HashSet<Aprendizagem>();
+        }
+
+        public AlunoViewModel(Aluno a)
+        {
+            IdAluno = a.IdAluno;
+            Username = a.Username;
+            Nome = a.Nome;
+            DataNasc = a.DataNasc;
+            Dica = a.Dica;
+            Tema = a.Tema;
+            Explicacao = a.Explicacao;
+        }
+    
+        public int IdAluno { get; set; }
+        public string Nome { get; set; }
+        public string Username { get; set; }
+        public DateTime? DataNasc { get; set; }
+        public byte Dica { get; set; }
+        public int Tema { get; set; }
+        public byte Explicacao { get; set; }
+        public int Pontuacao { get; set; }
+
+        public int CurrentLicao { get; set; }
+        public int NumExpl { get; set; }
+
+        public virtual ICollection<AlunoExercicioLicao> AlunoExercicioLicoes { get; set; }
+        public virtual ICollection<AlunoLicao> AlunoLicoes { get; set; }
+        public virtual ICollection<AlunoTesteExercicio> AlunoTesteExercicios { get; set; }
+        public virtual ICollection<Aprendizagem> Aprendizagens { get; set; }
+    }
+
     public class AlunoLoginModel
     {
         [StringLength(75)]

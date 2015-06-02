@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AritMat.MVC.DataAccess;
 using AritMat.MVC.Models;
+using AritMat.MVC.Models.ViewModels;
 
 namespace AritMat.MVC.Controllers
 {
@@ -131,6 +133,33 @@ namespace AritMat.MVC.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult VerLicao(int id)
+        {
+            AlunoViewModel avm = Session["User"] as AlunoViewModel;
+            ViewBag.LicoesAdd =
+                db.Licoes.SqlQuery(
+                    "SELECT * FROM Licao AS LI INNER JOIN Tipo AS TI ON LI.Tipo = TI.IdTipo WHERE TI.Area = 'Adição'")
+                    .ToList();
+            ViewBag.LicoesSub =
+                db.Licoes.SqlQuery(
+                    "SELECT * FROM Licao AS LI INNER JOIN Tipo AS TI ON LI.Tipo = TI.IdTipo WHERE TI.Area = 'Subtração'")
+                    .ToList();
+
+            // determinar explicação a apresentar dentro da lição escolhida
+            List<Licao> listLicao =
+                db.Licoes.SqlQuery("SELECT * FROM Licao WHERE IdLicao = " + id + " AND NumExpl = 3").ToList();
+            LicoesViewModel lvm = new LicoesViewModel(listLicao.First());
+            Tipo t = db.Tipos.Find(lvm.Tipo);
+            string area = t.Area;
+            lvm.Area = area;
+            ViewBag.LicaoAtual = lvm;
+
+            // determinar exercício a apresentar no final da lição
+            ViewBag.ExercicioAtual = new ExercicioDAO().GetNextExercicioLicaoAluno(avm.IdAluno, id);
+            
+            return View();
         }
     }
 }

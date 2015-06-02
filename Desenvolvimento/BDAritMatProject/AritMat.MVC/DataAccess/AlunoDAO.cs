@@ -35,6 +35,12 @@ namespace AritMat.MVC.DataAccess
             }
         }
 
+        public Aluno GetAluno(string username)
+        {
+            BDAritMatProjectEntities db = new BDAritMatProjectEntities();
+            return db.Alunos.First(al => al.Username.Equals(username));
+        }
+
         public Boolean AddAluno(AlunoRegisterModel m)
         {
 

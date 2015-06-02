@@ -15,6 +15,8 @@ namespace AritMat.MVC.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        private BDAritMatProjectEntities db = new BDAritMatProjectEntities();
+
         public HomeController()
         {
         }
@@ -83,9 +85,20 @@ namespace AritMat.MVC.Controllers
 
             if (result)
             {
-                                return RedirectToAction("Index", "Aluno");
+                Aluno al = db.Alunos.SqlQuery("SELECT * FROM Aluno WHERE Username = '" + model.Username + "'").FirstOrDefault();
+                Session["User"] = new AlunoViewModel(al);
+
+                TempData["User"] = model;
+                return RedirectToAction("Index", "Alunos");
             }
+            if (TempData["User"] != null) return RedirectToAction("Index", "Alunos", model);
+            
+            ViewData["User"] = null;
             ModelState.AddModelError("Login", "Falha na autenticação");
+            ViewBag.User = null;
+            Session["User"] = null;
+            TempData["User"] = null;
+
             return View(model);
         }
 
@@ -99,8 +112,6 @@ namespace AritMat.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(AlunoRegisterModel model)
         {
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
            var result = new AlunoDAO().AddAluno(model);
 
             if (result)
@@ -111,5 +122,10 @@ namespace AritMat.MVC.Controllers
             return View(model);
         }
 
+        public ActionResult Logout()
+        {
+            Session["User"] = null;
+            return RedirectToAction("Index");
+        }
     }
 }

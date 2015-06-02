@@ -24,11 +24,11 @@ namespace AritMat.MVC.Models
         public int idLicao { get; set; }
         public int NumExpl { get; set; }
         public int Tipo { get; set; }
-        public int Administrador { get; set; }
+        public int? Administrador { get; set; }
         public string Texto { get; set; }
         public string Video { get; set; }
         public byte[] Imagem { get; set; }
-        public Nullable<int> TempoLicao { get; set; }
+        public int TempoLicao { get; set; }
     
         public virtual Administrador Administrador1 { get; set; }
         public virtual ICollection<AlunoExercicioLicao> AlunoExercicioLicoes { get; set; }
