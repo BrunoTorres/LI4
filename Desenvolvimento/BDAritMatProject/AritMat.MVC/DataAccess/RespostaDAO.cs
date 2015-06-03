@@ -17,7 +17,8 @@ namespace AritMat.MVC.DataAccess
 
         public List<Resposta> GetRespostasExercicio(int idExercicio)
         {
-            return db.Respostas.Where(r => r.Exercicio == idExercicio).ToList();
+            System.Diagnostics.Debug.WriteLine("SELECT * FROM Resposta WHERE Exercicio = " + idExercicio + " COUNT: " + db.Respostas.Where(ex => ex.Exercicio == idExercicio).ToList().Count);
+            return db.Respostas.SqlQuery("SELECT * FROM Resposta WHERE Exercicio = " + idExercicio).ToList();
         } 
     }
 }

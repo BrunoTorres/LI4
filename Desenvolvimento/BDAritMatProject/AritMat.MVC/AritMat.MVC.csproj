@@ -168,6 +168,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TestesController.cs" />
     <Compile Include="DataAccess\AlunoDAO.cs" />
+    <Compile Include="DataAccess\DicaDAO.cs" />
     <Compile Include="DataAccess\ExercicioDAO.cs" />
     <Compile Include="DataAccess\LicaoDAO.cs" />
     <Compile Include="DataAccess\RespostaDAO.cs" />
@@ -243,6 +244,8 @@
     <Content Include="Content\camera.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\isotope.css" />
+    <Content Include="Content\jquery.rondell.css" />
+    <Content Include="Content\jquery.rondell.min.css" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -262,6 +265,8 @@
     <Content Include="Images\camera-loader.gif" />
     <Content Include="Images\camera_skins.png" />
     <Content Include="Images\coisa.jpg" />
+    <Content Include="Images\Dicas\4.jpg" />
+    <Content Include="Images\Exercicios\3.jpg" />
     <Content Include="Images\favicon.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\mqdefault.jpg" />
@@ -1063,6 +1068,8 @@
     <Content Include="Scripts\fancybox\fancybox_sprite_402x.png" />
     <Content Include="Scripts\fancybox\jquery.fancybox.css" />
     <Content Include="Scripts\fancybox\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\jquery.rondell.js" />
+    <Content Include="Scripts\jquery.rondell.min.js" />
     <Content Include="Scripts\google-map.js" />
     <Content Include="Scripts\html5shiv.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

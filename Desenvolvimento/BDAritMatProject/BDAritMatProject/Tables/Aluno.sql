@@ -1,13 +1,16 @@
-﻿CREATE TABLE [dbo].[Aluno]
-(
-	[IdAluno] INT NOT NULL PRIMARY KEY IDENTITY, 
-    [Nome] VARCHAR(150) NOT NULL, 
-    [Username] VARCHAR(75) NOT NULL UNIQUE, 
-    [Password] VARCHAR(75) NOT NULL, 
-    [DataNasc] DATE NULL, 
-    [Dica] BIT NOT NULL DEFAULT 1, 
-    [Tema] INT NOT NULL DEFAULT 1, 
-    [Explicacao] BIT NOT NULL DEFAULT 1, 
-    [Pontuacao] INT NOT NULL DEFAULT 0,
-	CONSTRAINT AK_USERNAME UNIQUE (Username)
-)
+﻿CREATE TABLE [dbo].[Aluno] (
+    [IdAluno]    INT           IDENTITY (1, 1) NOT NULL,
+    [Nome]       VARCHAR (150) NOT NULL,
+    [Username]   VARCHAR (75)  NOT NULL,
+    [Password]   VARCHAR (75)  NOT NULL,
+    [DataNasc]   DATE          NULL,
+    [Dica]       TINYINT       DEFAULT ((1)) NOT NULL,
+    [Tema]       INT           DEFAULT ((1)) NOT NULL,
+    [Explicacao] TINYINT       DEFAULT ((1)) NOT NULL,
+    [Pontuacao]  INT           DEFAULT ((0)) NOT NULL,
+    PRIMARY KEY CLUSTERED ([IdAluno] ASC),
+    UNIQUE NONCLUSTERED ([Username] ASC),
+    CONSTRAINT [AK_USERNAME] UNIQUE NONCLUSTERED ([Username] ASC)
+);
+
+

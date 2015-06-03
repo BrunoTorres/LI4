@@ -24,7 +24,7 @@ namespace AritMat.MVC.Models
         public int idLicao { get; set; }
         public int NumExpl { get; set; }
         public int Tipo { get; set; }
-        public int? Administrador { get; set; }
+        public Nullable<int> Administrador { get; set; }
         public string Texto { get; set; }
         public string Video { get; set; }
         public byte[] Imagem { get; set; }

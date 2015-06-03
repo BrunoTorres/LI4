@@ -540,7 +540,7 @@
           <Property Name="Licao" Type="Int32" Nullable="false" />
           <Property Name="Explicacao" Type="Int32" Nullable="false" />
           <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RespErradas" Type="Int32" />
+          <Property Name="RespErradas" Type="Int32" Nullable="true" />
           <NavigationProperty Name="Aluno1" Relationship="Self.FK_AlunoLicao_ToTable" FromRole="AlunoLicao" ToRole="Aluno" />
           <NavigationProperty Name="Licao1" Relationship="Self.FK_AlunoLicao_ToTable_1" FromRole="AlunoLicao" ToRole="Licao" />
         </EntityType>

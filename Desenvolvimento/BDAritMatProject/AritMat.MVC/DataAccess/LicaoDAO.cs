@@ -22,32 +22,64 @@ namespace AritMat.MVC.DataAccess
         }
 
 
-        public int GetNextLicaoAluno(int idAluno)
+        public Licao GetNextLicaoAluno(int idAluno)
         {
-            AlunoExercicioLicao l = db.AlunoExercicioLicoes.SqlQuery("SELECT TOP 1 * FROM AlunoExercicioLicao WHERE Aluno = " + idAluno + " ORDER BY Data DESC").First();
-            List<AlunoExercicioLicao> lista = db.AlunoExercicioLicoes.SqlQuery("SELECT * FROM AlunoExercicioLicao WHERE Aluno = " + idAluno + 
-                " AND Licao = " + l.Licao).ToList();
+            int lastId = db.AlunoLicoes.OrderByDescending(a => a.Data).First(a => a.Aluno == idAluno).Licao;
+            List<AlunoLicao> explsVistas = db.AlunoLicoes.OrderByDescending(a => a.Data).ToList();
+            Licao l = new Licao();
 
-            List<Exercicio> exs =
-                db.Exercicios.SqlQuery("SELECT * FROM Exercicio WHERE Tipo = (SELECT DISTINCT Tipo FROM Licao WHERE IdLicao = " +
-                                       l.Licao + ")").ToList();
+            bool todasNull = true;
+            int i = 0;
 
-            int totExs = exs.Count;
+            while (i < explsVistas.Count && todasNull)
+            {
+                if (explsVistas.ElementAt(i).RespErradas != null)
+                    todasNull = false;
+                i++;
+            }
+
+
+            // ainda não fez nenhum exercício da última lição que viu
+            if (todasNull)
+            {
+                l.idLicao = explsVistas.ElementAt(0).Licao;
+                l.NumExpl = explsVistas.ElementAt(0).Explicacao;
+                return l;
+            }
+
+            List<AlunoExercicioLicao> lista =
+                db.AlunoExercicioLicoes.Where(a => a.Aluno == idAluno && a.Licao == lastId).ToList();
+
+            int totExs = new ExercicioDAO().GetNumExerciciosTipo(GetTipoLicao(lastId));
 
             int total = 0, certas = 0;
-            foreach (var ael in lista)
+            foreach (var aeel in lista)
             {
                 total++;
-                if (ael.Resposta > 0)
+                if (aeel.Resposta > 0)
                     certas++;
             }
 
             float percentCertas = certas/total;
 
             if (percentCertas > 0.75 && lista.Count > (0.5*totExs))
-                return l.Licao + 1;
+            {
+                l.idLicao = lastId + 1;
+                l.NumExpl = 1;
+                return l;
+            }
 
-            return l.Licao;
+            bool existeProx = GetNumExplicacoesLicao(lastId) > explsVistas.ElementAt(0).Explicacao;
+
+            if (existeProx)
+                return db.Licoes.Find(lastId, explsVistas.ElementAt(0).Explicacao + 1);
+
+            return db.Licoes.Find(lastId, 1);
+        }
+
+        private int GetNumExplicacoesLicao(int idLicao)
+        {
+            return db.Licoes.Count(l => l.idLicao == idLicao);
         }
 
         public int GetTipoLicao(int nextLicao)
@@ -57,7 +89,7 @@ namespace AritMat.MVC.DataAccess
 
         public List<Licao> GetLicoesAdd()
         {
-            return db.Licoes.Where(l => l.Tipo == 1).ToList();
+            return db.Licoes.Distinct().Where(l => l.Tipo == 1).ToList();
         }
 
         public List<Licao> GetLicoesSub()
@@ -87,5 +119,10 @@ namespace AritMat.MVC.DataAccess
                         .First();
 
         }*/
+
+        public Licao GetLicao(int id, int exp)
+        {
+            return db.Licoes.Find(id, exp);
+        }
     }
 }

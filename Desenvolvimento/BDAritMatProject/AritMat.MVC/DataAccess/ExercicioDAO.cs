@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using AritMat.MVC.Models;
@@ -44,7 +45,6 @@ namespace AritMat.MVC.DataAccess
             int dificuldade = db.Exercicios.Find(ael.Exercicio).Dificuldade;
 
             if (ael.Resposta > 0)  // acertou resposta do último exercício
-                
             {
                 // não está a verificar se já fez o exercício selecionado
                 int tipoLicao = new LicaoDAO().GetTipoLicao(idLicao);
@@ -53,7 +53,13 @@ namespace AritMat.MVC.DataAccess
                         .OrderBy(ex => ex.Dificuldade)
                         .First();
 
-                exer.Respostas = new RespostaDAO().GetRespostasExercicio(exer.IdExercicio);
+                List<Resposta> lResp = new RespostaDAO().GetRespostasExercicio(exer.IdExercicio);
+                System.Diagnostics.Debug.WriteLine("R Count LISTA: " + lResp.Count);
+                //exer.Respostas = new HashSet<Resposta>();
+
+                //exer.Respostas.A
+
+                System.Diagnostics.Debug.WriteLine("R Count IF: " + exer.Respostas.Count);
 
                 return exer;
 
@@ -63,9 +69,27 @@ namespace AritMat.MVC.DataAccess
                         .OrderByDescending(ex => ex.Dificuldade)
                         .First();
 
-            exe.Respostas = new RespostaDAO().GetRespostasExercicio(exe.IdExercicio);
+           // exe.Respostas = new HashSet<Resposta>(new RespostaDAO().GetRespostasExercicio(exe.IdExercicio));
 
+            System.Diagnostics.Debug.WriteLine("R Count OUTSIDE IF: " + exe.Respostas.Count);
+            
             return exe;
+        }
+
+        public int GetNumExerciciosTipo(int tipo)
+        {
+            return db.Exercicios.Count(a => a.Tipo == tipo);
+        }
+
+        public Exercicio GetExercicio(int id)
+        {
+            return db.Exercicios.Find(id);
+        }
+
+        public void UpdateExercicio(Exercicio exe)
+        {
+            db.Exercicios.AddOrUpdate(exe);
+            db.SaveChanges();
         }
     }
 }

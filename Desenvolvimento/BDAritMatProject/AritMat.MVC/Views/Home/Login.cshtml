@@ -1,9 +1,18 @@
 ﻿@using System.Web.UI.WebControls
+@using AritMat.MVC.Models
+@using AritMat.MVC.Models.ViewModels
 @using WebGrease.Css
 @model AritMat.MVC.Models.ViewModels.AlunoLoginModel
 @{
     ViewBag.Title = "Entrar";
     //Layout = null;
+
+    if (Session["User"] != null)
+    {
+        <script type="text/javascript">
+            window.location = "@Url.Action("Index", "Alunos")";
+        </script>
+    }
 
 }
 

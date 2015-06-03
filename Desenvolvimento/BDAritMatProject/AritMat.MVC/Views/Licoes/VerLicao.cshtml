@@ -1,0 +1,454 @@
+﻿@using System.Web.UI.WebControls
+@using AritMat.MVC.Models
+@using AritMat.MVC.Models.ViewModels
+@model AritMat.MVC.Models.ViewModels.AlunoViewModel
+
+@if (Session["User"] == null || ViewBag.LicaoAtual == null)
+{
+    <script type="text/javascript">
+        window.location = "@Url.Action("Login", "Home")";
+    </script>
+}
+
+@{
+    AlunoViewModel al = ((AlunoViewModel)(Session["User"]));
+}
+
+@{
+    List<Licao> licoesAdd = ViewBag.LicoesAdd as List<Licao>;
+    List<Licao> licoesSub = ViewBag.LicoesSub as List<Licao>;
+
+    LicoesViewModel lvm = ViewBag.LicaoAtual as LicoesViewModel;
+
+    Exercicio ex = ViewBag.ExercicioAtual as Exercicio;
+
+    List<Dica> dicasEx = ViewBag.Dicas as List<Dica>;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Arit-Mat - @ViewBag.Title</title>
+
+
+    <link rel="stylesheet" href="~/Content/jquery.rondell.css" type="text/css" media="all" title="Screen"/>
+    <!-- Bootstrap Core CSS -->
+    <link href="../../Scripts/AlunoTheme/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../../Scripts/AlunoTheme/bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../Scripts/AlunoTheme/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="../../Scripts/AlunoTheme/dist/css/timeline.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../../Scripts/AlunoTheme/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="~/Content/style.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- Button for smallest screens -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <img src="~/Images/logo.png" alt="Techro HTML5 template">
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav pull-right mainNav">
+                    <li class="c1">@Html.ActionLink("Início", "Index", "Home")</li>
+                    <li class="c2">@Html.ActionLink("Sobre", "About", "Home") </li>
+                    @if (al != null)
+                    {
+                        <li class="c3">@Html.ActionLink("Editar perfil", "Edit", "Aluno", new {id = al.IdAluno})</li>
+                    }
+                    <li class="c4">@Html.ActionLink("Sair", "Logout", "Home") </li>
+
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+            
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <h1 class="page-header">@if (al != null) { @al.Username }</h1>
+                                
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Alunos")"><i class="fa fa-dashboard fa-fw"></i>&nbsp;&nbsp;O teu painel</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;Lições<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="#"><span class="fa fa-plus-circle"></span>&nbsp;&nbsp;Adição<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        @if (licoesAdd != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var l in licoesAdd)
+                                            {
+                                                <li>
+                                                    <a href="#"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
+                                                </li>
+                                                i++;
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="fa fa-minus-circle"></span>&nbsp;&nbsp;Subtração<span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        @if (licoesSub != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var l in licoesSub)
+                                            {
+                                                <li>
+                                                    <a href="#"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
+                                                </li>
+                                                i++;
+                                            }
+                                        }
+                                    </ul>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i>&nbsp;&nbsp;Testes<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="@Url.Action("Adicao", "Teste")"><span class="fa fa-plus-circle"></span>&nbsp;&nbsp;Adição</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("Adicao", "Teste")"><span class="fa fa-minus-circle"></span>&nbsp;&nbsp;Subtração</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+
+        <!-- Page Content -->
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Lição @lvm.IdLicao - @lvm.Area</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="row container">
+                <div class="col-lg-8">
+                    @{
+                        if (lvm.Video == null)
+                        {
+
+                            <div class="panel panel-default">
+                                <!--<div class="panel-heading">
+                                    <i class="fa fa-clock-o fa-fw"></i> Avisos
+                                </div>-->
+                                <!-- /.panel-heading -->
+
+                                <div class="panel-body">
+                                    <ul class="timeline">
+                                        <li>
+                                            <div class="timeline-badge success">
+                                                <i class="fa fa-check"></i>
+                                            </div>
+                                            <div class="timeline-panel">
+                                                <div class="timeline-heading">
+                                                    <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                                    <p>
+                                                        <small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small>
+                                                    </p>
+                                                </div>
+                                                <div class="timeline-body">
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="timeline-inverted">
+                                            <div class="timeline-badge info">
+                                                <i class="fa fa-save"></i>
+                                            </div>
+                                            <div class="timeline-panel">
+                                                <div class="timeline-heading">
+                                                    <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                                </div>
+                                                <div class="timeline-body">
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                                    <hr>
+                                                    <div class="btn-group">
+                                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                            <i class="fa fa-gear"></i> <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li>
+                                                                <a href="#">Action</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Another action</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">Something else here</a>
+                                                            </li>
+                                                            <li class="divider"></li>
+                                                            <li>
+                                                                <a href="#">Separated link</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="timeline-badge danger">
+                                                <i class="fa fa-graduation-cap"></i>
+                                            </div>
+                                            <div class="timeline-panel">
+                                                <div class="timeline-heading">
+                                                    <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                                </div>
+                                                <div class="timeline-body">
+                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- /.panel-body -->
+                            </div>
+                        }
+                        else
+                        {
+                            <script src="https://www.youtube.com/iframe_api"></script>
+
+                            <div class="panel panel-default" id="videoDiv">
+                                <div class="panel-heading">
+                                    <i class="fa fa-video-camera fa-fw"></i> Vídeo
+                                </div>
+                                <!-- /.panel-heading -->
+
+                                <div class="panel-body">
+                                    <h3>@lvm.Video</h3>
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <div id="playerDiv"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+
+
+                        }
+                    }
+                    <!-- /.row -->
+
+                    <div class="panel panel-default" id="opcoes">
+                        <div class="panel-heading">
+                            <i class="fa fa-edit fa-fw"></i> Percebeste a Lição?
+                        </div>
+                        <!-- /.panel-heading -->
+
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <input type="button" class="btn-two btn" onclick=" apresentaExercicio() " value="Sim, quero fazer um exercício!"/>&nbsp;&nbsp;&nbsp;
+                                <input type="button" class="btn-two btn" onclick=" nextExplicacao() " value="Não, preciso de outra explicação!"/>&nbsp;&nbsp;&nbsp;
+                                <input type="button" class="btn-two btn" onclick=" avancarLicao() " value="Quero avançar para a próxima lição!"/>&nbsp;&nbsp;&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default" id="exercicio">
+                        <div class="panel-heading">
+                            <i class="fa fa-edit fa-fw"></i>Exercício
+                        </div>
+                        <!-- /.panel-heading -->
+
+                        <div class="panel-body container">
+                            <h3>Exercício</h3>
+                            <!--<div class="form-group btn-group" data-toggle="buttons">-->
+                            @{
+                                if (ex.Texto != null)
+                                {
+                                    <label>@ex.Texto</label>
+                                    <br/>
+                                }
+                                else
+                                {
+                                    <img class="img-responsive" src="@Url.Content("~/Images/Exercicios/" + ex.IdExercicio + ".jpg")" alt="Exercício @ex.IdExercicio">
+                                }
+
+                            }
+                            <br/><br/>
+                            
+                                <form role="form" id="respForm">
+                                    <div style="margin: 0 auto;">
+                                        @{
+                                            int j = 0;
+                                            foreach (var r in ex.Respostas)
+                                            {
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="optradio" id="@r.IdResposta" value="@j" />
+                                                    @r.Texto
+                                                </label>
+                                                j++;
+                                            }
+                                        }
+                                    </div>
+                                    <br/>
+                                    <div class="form-group center-block">
+                                        <input type="submit" class="btn-two btn" onclick=" respondeExercicio() " value="OK" />&nbsp;&nbsp;&nbsp;
+                                        <input type="button" class="btn-two btn" onclick=" ajudaExercicio() " value="Preciso de ajuda!" />&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                </form>
+                            <br/><br/>
+                            <!-- </div>-->
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div id="rondellPages">
+                        @{
+                            foreach (var d in dicasEx)
+                            {
+                                <div>
+                                    @{
+                                if (d.Imagem != null)
+                                {
+                                    <img src="@Url.Content("~/Images/Dicas/" + d.IdDica + ".jpg")" />
+                                }
+                                else
+                                {
+                                    <p class="text-muted text-center">@d.Texto</p>
+                                }
+                                    }
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+        </div>
+<!-- /#wrapper -->
+
+
+    <!-- jQuery -->
+    <script src="../../Scripts/AlunoTheme/bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../Scripts/AlunoTheme/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../Scripts/AlunoTheme/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../../Scripts/AlunoTheme/dist/js/sb-admin-2.js"></script>
+
+    <script type="text/javascript" src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.rondell.js"></script>
+
+<script>
+        var player;
+        jQuery("#exercicio").hide();
+        jQuery("#opcoes").hide();
+        jQuery("#rondellPages").hide();
+        function onYouTubeIframeAPIReady() {
+            //var exer = jQuery("#exercicio").hide();
+            player = new YT.Player('playerDiv', {
+                height: '390',
+                width: '640',
+                videoId: '@lvm.Video',
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            event.target.playVideo();
+        }
+
+        // when video ends
+        function onPlayerStateChange(event) {
+            if (event.data === 0) {
+                jQuery("#videoDiv").fadeOut();
+                jQuery("#opcoes").fadeIn();
+            }
+        }
+
+        function apresentaExercicio() {
+            jQuery("#opcoes").fadeOut();
+            jQuery("#exercicio").fadeIn();
+        }
+
+        $("#rondellPages").rondell({
+            preset: "pages"
+        });
+
+        $("#respForm").submit(function(event) {
+            @{
+                int k = 0;
+                bool found = false;
+                while (k < ex.Respostas.Count && !found)
+                {
+                    
+
+                }
+            }
+        })
+    </script>
+
+
+
+</body>
+
+</html>

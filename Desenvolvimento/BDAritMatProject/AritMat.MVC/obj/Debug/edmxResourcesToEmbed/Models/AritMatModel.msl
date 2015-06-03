@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BDAritMatProjectModelStoreContainer" CdmEntityContainer="BDAritMatProjectEntities">
+    <EntitySetMapping Name="administradores">
+      <EntityTypeMapping TypeName="BDAritMatProjectModel.Administrador">
+        <MappingFragment StoreEntitySet="Administrador">
+          <ScalarProperty Name="IdAdministrador" ColumnName="IdAdministrador" />
+          <ScalarProperty Name="DataNasc" ColumnName="DataNasc" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Alunos">
+      <EntityTypeMapping TypeName="BDAritMatProjectModel.Aluno">
+        <MappingFragment StoreEntitySet="Aluno">
+          <ScalarProperty Name="IdAluno" ColumnName="IdAluno" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="DataNasc" ColumnName="DataNasc" />
+          <ScalarProperty Name="Dica" ColumnName="Dica" />
+          <ScalarProperty Name="Tema" ColumnName="Tema" />
+          <ScalarProperty Name="Explicacao" ColumnName="Explicacao" />
+          <ScalarProperty Name="Pontuacao" ColumnName="Pontuacao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AlunoExercicioLicoes">
+      <EntityTypeMapping TypeName="BDAritMatProjectModel.AlunoExercicioLicao">
+        <MappingFragment StoreEntitySet="AlunoExercicioLicao">
+          <ScalarProperty Name="Aluno" ColumnName="Aluno" />
+          <ScalarProperty Name="Licao" ColumnName="Licao" />
+          <ScalarProperty Name="Explicacao" ColumnName="Explicacao" />
+          <ScalarProperty Name="Exercicio" ColumnName="Exercicio" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="Resposta" ColumnName="Resposta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AlunoLicoes">
+      <EntityTypeMapping TypeName="BDAritMatProjectModel.AlunoLicao">
+        <MappingFragment StoreEntitySet="AlunoLicao">
+          <ScalarProperty Name="Aluno" ColumnName="Aluno" />
+          <ScalarProperty Name="Licao" ColumnName="Licao" />
+          <ScalarProperty Name="Explicacao" ColumnName="Explicacao" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="RespErradas" ColumnName="RespErradas" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AlunoTesteExercicios">
+      <EntityTypeMapping TypeName="BDAritMatProjectModel.AlunoTesteExercicio">
+        <MappingFragment StoreEntitySet="AlunoTesteExercicio">
+          <ScalarProperty Name="Aluno" ColumnName="Aluno" />
+          <ScalarProperty Name="Teste" ColumnName="Teste" />
+          <ScalarProperty Name="Exercicio" ColumnName="Exercicio" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="Nota" ColumnName="Nota" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Aprendizagens">
+      <EntityTypeMapping TypeName="BDAritMatProjectModel.Aprendizagem">
+        <MappingFragment StoreEntitySet="Aprendizagem">
+          <ScalarProperty Name="IdAprendizagem" ColumnName="IdAprendizagem" />
+          <ScalarProperty Name="Aluno" ColumnName="Aluno" />
+          <ScalarProperty Name="Data" ColumnName="Data" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Dicas">
+      <EntityTypeMapping TypeName="BDAritMatProjectModel.Dica">
+        <MappingFragment StoreEntitySet="Dica">
+          <ScalarProperty Name="IdDica" ColumnName="IdDica" />
+          <ScalarProperty Name="Exercicio" ColumnName="Exercicio" />
+          <ScalarProperty Name="Texto" ColumnName="Texto" />
+          <ScalarProperty Name="Imagem" ColumnName="Imagem" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Exercicios">
+      <EntityTypeMapping TypeName="BDAritMatProjectModel.Exercicio">
+        <MappingFragment StoreEntitySet="Exercicio">
+          <ScalarProperty Name="IdExercicio" ColumnName="IdExercicio" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Administrador" ColumnName="Administrador" />
+          <ScalarProperty Name="Texto" ColumnName="Texto" />
+          <ScalarProperty Name="Dificuldade" ColumnName="Dificuldade" />
+          <ScalarProperty Name="Imagem" ColumnName="Imagem" />
+          <ScalarProperty Name="TempoEx" ColumnName="TempoEx" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Licoes">
+      <EntityTypeMapping TypeName="BDAritMatProjectModel.Licao">
+        <MappingFragment StoreEntitySet="Licao">
+          <ScalarProperty Name="idLicao" ColumnName="idLicao" />
+          <ScalarProperty Name="NumExpl" ColumnName="NumExpl" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Administrador" ColumnName="Administrador" />
+          <ScalarProperty Name="Texto" ColumnName="Texto" />
+          <ScalarProperty Name="Video" ColumnName="Video" />
+          <ScalarProperty Name="Imagem" ColumnName="Imagem" />
+          <ScalarProperty Name="TempoLicao" ColumnName="TempoLicao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Respostas">
+      <EntityTypeMapping TypeName="BDAritMatProjectModel.Resposta">
+        <MappingFragment StoreEntitySet="Resposta">
+          <ScalarProperty Name="IdResposta" ColumnName="IdResposta" />
+          <ScalarProperty Name="Exercicio" ColumnName="Exercicio" />
+          <ScalarProperty Name="Pontuacao" ColumnName="Pontuacao" />
+          <ScalarProperty Name="Texto" ColumnName="Texto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Testes">
+      <EntityTypeMapping TypeName="BDAritMatProjectModel.Teste">
+        <MappingFragment StoreEntitySet="Teste">
+          <ScalarProperty Name="IdTeste" ColumnName="IdTeste" />
+          <ScalarProperty Name="Dificuldade" ColumnName="Dificuldade" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tipos">
+      <EntityTypeMapping TypeName="BDAritMatProjectModel.Tipo">
+        <MappingFragment StoreEntitySet="Tipo">
+          <ScalarProperty Name="IdTipo" ColumnName="IdTipo" />
+          <ScalarProperty Name="Area" ColumnName="Area" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="LicaoExercicio" TypeName="BDAritMatProjectModel.LicaoExercicio" StoreEntitySet="LicaoExercicio">
+      <EndProperty Name="Licao">
+        <ScalarProperty Name="idLicao" ColumnName="Licao" />
+        <ScalarProperty Name="NumExpl" ColumnName="Explicacao" />
+      </EndProperty>
+      <EndProperty Name="Exercicio">
+        <ScalarProperty Name="IdExercicio" ColumnName="Exercicio" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="TesteExercicio" TypeName="BDAritMatProjectModel.TesteExercicio" StoreEntitySet="TesteExercicio">
+      <EndProperty Name="Teste">
+        <ScalarProperty Name="IdTeste" ColumnName="Teste" />
+      </EndProperty>
+      <EndProperty Name="Exercicio">
+        <ScalarProperty Name="IdExercicio" ColumnName="Exercicio" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -4,7 +4,7 @@
     [Licao] INT NOT NULL, 
     [Explicacao] INT NOT NULL, 
     [Exercicio] INT NOT NULL, 
-    [Data] DATE NOT NULL, 
+    [Data] DATETIME NOT NULL, 
     [Resposta] FLOAT NULL, 
     PRIMARY KEY ([Exercicio], [Aluno], [Licao], [Explicacao]), 
     CONSTRAINT [FK_AlunoExercicioLicao_ToTable] FOREIGN KEY ([Aluno]) REFERENCES [Aluno]([IdAluno]), 

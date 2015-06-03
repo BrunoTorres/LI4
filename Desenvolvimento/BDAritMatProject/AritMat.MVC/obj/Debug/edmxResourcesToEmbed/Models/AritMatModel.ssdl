@@ -1,0 +1,477 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BDAritMatProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Administrador">
+    <Key>
+      <PropertyRef Name="IdAdministrador" />
+    </Key>
+    <Property Name="IdAdministrador" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DataNasc" Type="date" />
+    <Property Name="Username" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Aluno">
+    <Key>
+      <PropertyRef Name="IdAluno" />
+    </Key>
+    <Property Name="IdAluno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="150" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="75" Nullable="false" />
+    <Property Name="DataNasc" Type="date" />
+    <Property Name="Dica" Type="tinyint" Nullable="false" />
+    <Property Name="Tema" Type="int" Nullable="false" />
+    <Property Name="Explicacao" Type="tinyint" Nullable="false" />
+    <Property Name="Pontuacao" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AlunoExercicioLicao">
+    <Key>
+      <PropertyRef Name="Aluno" />
+      <PropertyRef Name="Licao" />
+      <PropertyRef Name="Explicacao" />
+      <PropertyRef Name="Exercicio" />
+    </Key>
+    <Property Name="Aluno" Type="int" Nullable="false" />
+    <Property Name="Licao" Type="int" Nullable="false" />
+    <Property Name="Explicacao" Type="int" Nullable="false" />
+    <Property Name="Exercicio" Type="int" Nullable="false" />
+    <Property Name="Data" Type="datetime" Nullable="false" />
+    <Property Name="Resposta" Type="float" />
+  </EntityType>
+  <EntityType Name="AlunoLicao">
+    <Key>
+      <PropertyRef Name="Aluno" />
+      <PropertyRef Name="Licao" />
+      <PropertyRef Name="Explicacao" />
+    </Key>
+    <Property Name="Aluno" Type="int" Nullable="false" />
+    <Property Name="Licao" Type="int" Nullable="false" />
+    <Property Name="Explicacao" Type="int" Nullable="false" />
+    <Property Name="Data" Type="datetime" Nullable="false" />
+    <Property Name="RespErradas" Type="int" />
+  </EntityType>
+  <EntityType Name="AlunoTesteExercicio">
+    <Key>
+      <PropertyRef Name="Aluno" />
+      <PropertyRef Name="Teste" />
+      <PropertyRef Name="Exercicio" />
+    </Key>
+    <Property Name="Aluno" Type="int" Nullable="false" />
+    <Property Name="Teste" Type="int" Nullable="false" />
+    <Property Name="Exercicio" Type="int" Nullable="false" />
+    <Property Name="Data" Type="date" Nullable="false" />
+    <Property Name="Nota" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Aprendizagem">
+    <Key>
+      <PropertyRef Name="IdAprendizagem" />
+    </Key>
+    <Property Name="IdAprendizagem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Aluno" Type="int" Nullable="false" />
+    <Property Name="Data" Type="date" Nullable="false" />
+    <Property Name="Estado" Type="float" Nullable="false" />
+    <Property Name="Tipo" Type="int" />
+  </EntityType>
+  <EntityType Name="Dica">
+    <Key>
+      <PropertyRef Name="IdDica" />
+    </Key>
+    <Property Name="IdDica" Type="int" Nullable="false" />
+    <Property Name="Exercicio" Type="int" Nullable="false" />
+    <Property Name="Texto" Type="text" />
+    <Property Name="Imagem" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Exercicio">
+    <Key>
+      <PropertyRef Name="IdExercicio" />
+    </Key>
+    <Property Name="IdExercicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tipo" Type="int" Nullable="false" />
+    <Property Name="Administrador" Type="int" />
+    <Property Name="Texto" Type="text" />
+    <Property Name="Dificuldade" Type="int" Nullable="false" />
+    <Property Name="Imagem" Type="varbinary(max)" />
+    <Property Name="TempoEx" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Licao">
+    <Key>
+      <PropertyRef Name="idLicao" />
+      <PropertyRef Name="NumExpl" />
+    </Key>
+    <Property Name="idLicao" Type="int" Nullable="false" />
+    <Property Name="NumExpl" Type="int" Nullable="false" />
+    <Property Name="Tipo" Type="int" Nullable="false" />
+    <Property Name="Administrador" Type="int" />
+    <Property Name="Texto" Type="text" />
+    <Property Name="Video" Type="varchar" MaxLength="500" />
+    <Property Name="Imagem" Type="varbinary(max)" />
+    <Property Name="TempoLicao" Type="int" />
+  </EntityType>
+  <EntityType Name="LicaoExercicio">
+    <Key>
+      <PropertyRef Name="Licao" />
+      <PropertyRef Name="Explicacao" />
+      <PropertyRef Name="Exercicio" />
+    </Key>
+    <Property Name="Licao" Type="int" Nullable="false" />
+    <Property Name="Explicacao" Type="int" Nullable="false" />
+    <Property Name="Exercicio" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Resposta">
+    <Key>
+      <PropertyRef Name="IdResposta" />
+    </Key>
+    <Property Name="IdResposta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Exercicio" Type="int" Nullable="false" />
+    <Property Name="Pontuacao" Type="int" Nullable="false" />
+    <Property Name="Texto" Type="text" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Teste">
+    <Key>
+      <PropertyRef Name="IdTeste" />
+    </Key>
+    <Property Name="IdTeste" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Dificuldade" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TesteExercicio">
+    <Key>
+      <PropertyRef Name="Teste" />
+      <PropertyRef Name="Exercicio" />
+    </Key>
+    <Property Name="Teste" Type="int" Nullable="false" />
+    <Property Name="Exercicio" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tipo">
+    <Key>
+      <PropertyRef Name="IdTipo" />
+    </Key>
+    <Property Name="IdTipo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Area" Type="varchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_AlunoExercicioLicao_ToTable">
+    <End Role="Aluno" Type="Self.Aluno" Multiplicity="1" />
+    <End Role="AlunoExercicioLicao" Type="Self.AlunoExercicioLicao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Aluno">
+        <PropertyRef Name="IdAluno" />
+      </Principal>
+      <Dependent Role="AlunoExercicioLicao">
+        <PropertyRef Name="Aluno" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AlunoExercicioLicao_ToTable_1">
+    <End Role="Licao" Type="Self.Licao" Multiplicity="1" />
+    <End Role="AlunoExercicioLicao" Type="Self.AlunoExercicioLicao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Licao">
+        <PropertyRef Name="idLicao" />
+        <PropertyRef Name="NumExpl" />
+      </Principal>
+      <Dependent Role="AlunoExercicioLicao">
+        <PropertyRef Name="Licao" />
+        <PropertyRef Name="Explicacao" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AlunoExercicioLicao_ToTable_3">
+    <End Role="Exercicio" Type="Self.Exercicio" Multiplicity="1" />
+    <End Role="AlunoExercicioLicao" Type="Self.AlunoExercicioLicao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exercicio">
+        <PropertyRef Name="IdExercicio" />
+      </Principal>
+      <Dependent Role="AlunoExercicioLicao">
+        <PropertyRef Name="Exercicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AlunoLicao_ToTable">
+    <End Role="Aluno" Type="Self.Aluno" Multiplicity="1" />
+    <End Role="AlunoLicao" Type="Self.AlunoLicao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Aluno">
+        <PropertyRef Name="IdAluno" />
+      </Principal>
+      <Dependent Role="AlunoLicao">
+        <PropertyRef Name="Aluno" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AlunoLicao_ToTable_1">
+    <End Role="Licao" Type="Self.Licao" Multiplicity="1" />
+    <End Role="AlunoLicao" Type="Self.AlunoLicao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Licao">
+        <PropertyRef Name="idLicao" />
+        <PropertyRef Name="NumExpl" />
+      </Principal>
+      <Dependent Role="AlunoLicao">
+        <PropertyRef Name="Licao" />
+        <PropertyRef Name="Explicacao" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AlunoTesteExercicio_ToTable">
+    <End Role="Aluno" Type="Self.Aluno" Multiplicity="1" />
+    <End Role="AlunoTesteExercicio" Type="Self.AlunoTesteExercicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Aluno">
+        <PropertyRef Name="IdAluno" />
+      </Principal>
+      <Dependent Role="AlunoTesteExercicio">
+        <PropertyRef Name="Aluno" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AlunoTesteExercicio_ToTable_1">
+    <End Role="Teste" Type="Self.Teste" Multiplicity="1" />
+    <End Role="AlunoTesteExercicio" Type="Self.AlunoTesteExercicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teste">
+        <PropertyRef Name="IdTeste" />
+      </Principal>
+      <Dependent Role="AlunoTesteExercicio">
+        <PropertyRef Name="Teste" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AlunoTesteExercicio_ToTable_2">
+    <End Role="Exercicio" Type="Self.Exercicio" Multiplicity="1" />
+    <End Role="AlunoTesteExercicio" Type="Self.AlunoTesteExercicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exercicio">
+        <PropertyRef Name="IdExercicio" />
+      </Principal>
+      <Dependent Role="AlunoTesteExercicio">
+        <PropertyRef Name="Exercicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Aprendizagem_ToTable">
+    <End Role="Aluno" Type="Self.Aluno" Multiplicity="1" />
+    <End Role="Aprendizagem" Type="Self.Aprendizagem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Aluno">
+        <PropertyRef Name="IdAluno" />
+      </Principal>
+      <Dependent Role="Aprendizagem">
+        <PropertyRef Name="Aluno" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dica_ToTable_1">
+    <End Role="Exercicio" Type="Self.Exercicio" Multiplicity="1" />
+    <End Role="Dica" Type="Self.Dica" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exercicio">
+        <PropertyRef Name="IdExercicio" />
+      </Principal>
+      <Dependent Role="Dica">
+        <PropertyRef Name="Exercicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Exercicio_ToTable">
+    <End Role="Tipo" Type="Self.Tipo" Multiplicity="1" />
+    <End Role="Exercicio" Type="Self.Exercicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo">
+        <PropertyRef Name="IdTipo" />
+      </Principal>
+      <Dependent Role="Exercicio">
+        <PropertyRef Name="Tipo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Exercicio_ToTable_1">
+    <End Role="Administrador" Type="Self.Administrador" Multiplicity="0..1" />
+    <End Role="Exercicio" Type="Self.Exercicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Administrador">
+        <PropertyRef Name="IdAdministrador" />
+      </Principal>
+      <Dependent Role="Exercicio">
+        <PropertyRef Name="Administrador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Licao_ToTable">
+    <End Role="Tipo" Type="Self.Tipo" Multiplicity="1" />
+    <End Role="Licao" Type="Self.Licao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tipo">
+        <PropertyRef Name="IdTipo" />
+      </Principal>
+      <Dependent Role="Licao">
+        <PropertyRef Name="Tipo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Licao_ToTable2">
+    <End Role="Administrador" Type="Self.Administrador" Multiplicity="0..1" />
+    <End Role="Licao" Type="Self.Licao" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Administrador">
+        <PropertyRef Name="IdAdministrador" />
+      </Principal>
+      <Dependent Role="Licao">
+        <PropertyRef Name="Administrador" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LicaoExercicio_ToTable_1">
+    <End Role="Licao" Type="Self.Licao" Multiplicity="1" />
+    <End Role="LicaoExercicio" Type="Self.LicaoExercicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Licao">
+        <PropertyRef Name="idLicao" />
+        <PropertyRef Name="NumExpl" />
+      </Principal>
+      <Dependent Role="LicaoExercicio">
+        <PropertyRef Name="Licao" />
+        <PropertyRef Name="Explicacao" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LicaoExercicio_ToTable_2">
+    <End Role="Exercicio" Type="Self.Exercicio" Multiplicity="1" />
+    <End Role="LicaoExercicio" Type="Self.LicaoExercicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exercicio">
+        <PropertyRef Name="IdExercicio" />
+      </Principal>
+      <Dependent Role="LicaoExercicio">
+        <PropertyRef Name="Exercicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Resposta_ToTable">
+    <End Role="Exercicio" Type="Self.Exercicio" Multiplicity="1" />
+    <End Role="Resposta" Type="Self.Resposta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exercicio">
+        <PropertyRef Name="IdExercicio" />
+      </Principal>
+      <Dependent Role="Resposta">
+        <PropertyRef Name="Exercicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TesteExercicio_ToTable">
+    <End Role="Teste" Type="Self.Teste" Multiplicity="1" />
+    <End Role="TesteExercicio" Type="Self.TesteExercicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teste">
+        <PropertyRef Name="IdTeste" />
+      </Principal>
+      <Dependent Role="TesteExercicio">
+        <PropertyRef Name="Teste" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TesteExercicio_ToTable_1">
+    <End Role="Exercicio" Type="Self.Exercicio" Multiplicity="1" />
+    <End Role="TesteExercicio" Type="Self.TesteExercicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exercicio">
+        <PropertyRef Name="IdExercicio" />
+      </Principal>
+      <Dependent Role="TesteExercicio">
+        <PropertyRef Name="Exercicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BDAritMatProjectModelStoreContainer">
+    <EntitySet Name="Administrador" EntityType="Self.Administrador" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Aluno" EntityType="Self.Aluno" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AlunoExercicioLicao" EntityType="Self.AlunoExercicioLicao" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AlunoLicao" EntityType="Self.AlunoLicao" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AlunoTesteExercicio" EntityType="Self.AlunoTesteExercicio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Aprendizagem" EntityType="Self.Aprendizagem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Dica" EntityType="Self.Dica" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Exercicio" EntityType="Self.Exercicio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Licao" EntityType="Self.Licao" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LicaoExercicio" EntityType="Self.LicaoExercicio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Resposta" EntityType="Self.Resposta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Teste" EntityType="Self.Teste" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TesteExercicio" EntityType="Self.TesteExercicio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tipo" EntityType="Self.Tipo" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_AlunoExercicioLicao_ToTable" Association="Self.FK_AlunoExercicioLicao_ToTable">
+      <End Role="Aluno" EntitySet="Aluno" />
+      <End Role="AlunoExercicioLicao" EntitySet="AlunoExercicioLicao" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AlunoExercicioLicao_ToTable_1" Association="Self.FK_AlunoExercicioLicao_ToTable_1">
+      <End Role="Licao" EntitySet="Licao" />
+      <End Role="AlunoExercicioLicao" EntitySet="AlunoExercicioLicao" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AlunoExercicioLicao_ToTable_3" Association="Self.FK_AlunoExercicioLicao_ToTable_3">
+      <End Role="Exercicio" EntitySet="Exercicio" />
+      <End Role="AlunoExercicioLicao" EntitySet="AlunoExercicioLicao" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AlunoLicao_ToTable" Association="Self.FK_AlunoLicao_ToTable">
+      <End Role="Aluno" EntitySet="Aluno" />
+      <End Role="AlunoLicao" EntitySet="AlunoLicao" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AlunoLicao_ToTable_1" Association="Self.FK_AlunoLicao_ToTable_1">
+      <End Role="Licao" EntitySet="Licao" />
+      <End Role="AlunoLicao" EntitySet="AlunoLicao" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AlunoTesteExercicio_ToTable" Association="Self.FK_AlunoTesteExercicio_ToTable">
+      <End Role="Aluno" EntitySet="Aluno" />
+      <End Role="AlunoTesteExercicio" EntitySet="AlunoTesteExercicio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AlunoTesteExercicio_ToTable_1" Association="Self.FK_AlunoTesteExercicio_ToTable_1">
+      <End Role="Teste" EntitySet="Teste" />
+      <End Role="AlunoTesteExercicio" EntitySet="AlunoTesteExercicio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AlunoTesteExercicio_ToTable_2" Association="Self.FK_AlunoTesteExercicio_ToTable_2">
+      <End Role="Exercicio" EntitySet="Exercicio" />
+      <End Role="AlunoTesteExercicio" EntitySet="AlunoTesteExercicio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Aprendizagem_ToTable" Association="Self.FK_Aprendizagem_ToTable">
+      <End Role="Aluno" EntitySet="Aluno" />
+      <End Role="Aprendizagem" EntitySet="Aprendizagem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dica_ToTable_1" Association="Self.FK_Dica_ToTable_1">
+      <End Role="Exercicio" EntitySet="Exercicio" />
+      <End Role="Dica" EntitySet="Dica" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Exercicio_ToTable" Association="Self.FK_Exercicio_ToTable">
+      <End Role="Tipo" EntitySet="Tipo" />
+      <End Role="Exercicio" EntitySet="Exercicio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Exercicio_ToTable_1" Association="Self.FK_Exercicio_ToTable_1">
+      <End Role="Administrador" EntitySet="Administrador" />
+      <End Role="Exercicio" EntitySet="Exercicio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Licao_ToTable" Association="Self.FK_Licao_ToTable">
+      <End Role="Tipo" EntitySet="Tipo" />
+      <End Role="Licao" EntitySet="Licao" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Licao_ToTable2" Association="Self.FK_Licao_ToTable2">
+      <End Role="Administrador" EntitySet="Administrador" />
+      <End Role="Licao" EntitySet="Licao" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LicaoExercicio_ToTable_1" Association="Self.FK_LicaoExercicio_ToTable_1">
+      <End Role="Licao" EntitySet="Licao" />
+      <End Role="LicaoExercicio" EntitySet="LicaoExercicio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LicaoExercicio_ToTable_2" Association="Self.FK_LicaoExercicio_ToTable_2">
+      <End Role="Exercicio" EntitySet="Exercicio" />
+      <End Role="LicaoExercicio" EntitySet="LicaoExercicio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Resposta_ToTable" Association="Self.FK_Resposta_ToTable">
+      <End Role="Exercicio" EntitySet="Exercicio" />
+      <End Role="Resposta" EntitySet="Resposta" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TesteExercicio_ToTable" Association="Self.FK_TesteExercicio_ToTable">
+      <End Role="Teste" EntitySet="Teste" />
+      <End Role="TesteExercicio" EntitySet="TesteExercicio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TesteExercicio_ToTable_1" Association="Self.FK_TesteExercicio_ToTable_1">
+      <End Role="Exercicio" EntitySet="Exercicio" />
+      <End Role="TesteExercicio" EntitySet="TesteExercicio" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

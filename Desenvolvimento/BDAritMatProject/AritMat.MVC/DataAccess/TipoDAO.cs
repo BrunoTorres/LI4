@@ -15,5 +15,9 @@ namespace AritMat.MVC.DataAccess
             db = new BDAritMatProjectEntities();
         }
 
+        public Tipo GetTipoLicao(int idTipo)
+        {
+            return db.Tipos.Find(idTipo);
+        }
     }
 }

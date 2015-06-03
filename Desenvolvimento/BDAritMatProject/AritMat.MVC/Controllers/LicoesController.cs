@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -135,30 +138,49 @@ namespace AritMat.MVC.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult VerLicao(int id)
+        public ActionResult VerLicao(int id, int exp = 1)
         {
             AlunoViewModel avm = Session["User"] as AlunoViewModel;
-            ViewBag.LicoesAdd =
-                db.Licoes.SqlQuery(
-                    "SELECT * FROM Licao AS LI INNER JOIN Tipo AS TI ON LI.Tipo = TI.IdTipo WHERE TI.Area = 'Adição'")
-                    .ToList();
-            ViewBag.LicoesSub =
-                db.Licoes.SqlQuery(
-                    "SELECT * FROM Licao AS LI INNER JOIN Tipo AS TI ON LI.Tipo = TI.IdTipo WHERE TI.Area = 'Subtração'")
-                    .ToList();
+            if (avm != null)
+            {
+                ViewBag.LicoesAdd = new LicaoDAO().GetLicoesAdd();
+                ViewBag.LicoesSub = new LicaoDAO().GetLicoesSub();
 
-            // determinar explicação a apresentar dentro da lição escolhida
-            List<Licao> listLicao =
-                db.Licoes.SqlQuery("SELECT * FROM Licao WHERE IdLicao = " + id + " AND NumExpl = 3").ToList();
-            LicoesViewModel lvm = new LicoesViewModel(listLicao.First());
-            Tipo t = db.Tipos.Find(lvm.Tipo);
-            string area = t.Area;
-            lvm.Area = area;
-            ViewBag.LicaoAtual = lvm;
+                // determinar explicação a apresentar dentro da lição escolhida
+                LicoesViewModel lvm = new LicoesViewModel(new LicaoDAO().GetLicao(id, exp));
+                Tipo t = new TipoDAO().GetTipoLicao(lvm.Tipo);
+                string area = t.Area;
+                lvm.Area = area;
+                ViewBag.LicaoAtual = lvm;
 
-            // determinar exercício a apresentar no final da lição
-            ViewBag.ExercicioAtual = new ExercicioDAO().GetNextExercicioLicaoAluno(avm.IdAluno, id);
-            
+                // determinar exercício a apresentar no final da lição
+                //Exercicio e = new ExercicioDAO().GetNextExercicioLicaoAluno(avm.IdAluno, id);
+                Exercicio e = new ExercicioDAO().GetExercicio(3);
+                Image img = null;
+                string path = null;
+                if (e.Imagem != null)
+                {
+                    MemoryStream ms = new MemoryStream(e.Imagem);
+                    img = Image.FromStream(ms);
+                    path = Server.MapPath("~") + @"Images\Exercicios\3.jpg";
+                    img.Save(path, ImageFormat.Jpeg);
+
+                }
+                else
+                {
+                    Image imag = Image.FromFile(Server.MapPath("~") + @"Images\Exercicios\3.jpg");
+                    MemoryStream mstream = new MemoryStream();
+                    imag.Save(mstream, ImageFormat.Jpeg);
+                    byte[] arr = mstream.ToArray();
+                    e.Imagem = arr;
+                    new ExercicioDAO().UpdateExercicio(e);
+                    
+                }
+                ViewBag.ImagePath = Server.MapPath("~") + @"Images\Exercicios\3.jpg";
+                ViewBag.ExercicioAtual = e;
+                ViewBag.Dicas = new DicaDAO().GetDicasExercicio(e.IdExercicio);
+            }
+
             return View();
         }
     }

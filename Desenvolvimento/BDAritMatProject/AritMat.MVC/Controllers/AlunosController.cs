@@ -26,18 +26,14 @@ namespace AritMat.MVC.Controllers
         // GET: Alunos
         public ActionResult Index(AlunoViewModel model)
         {
-            //ViewBag.LicoesAdd = licaoDAO.GetLicoesAdd();
-
-            ViewBag.LicoesAdd = db.Licoes.ToList();
-            ViewBag.LicoesSub = db.Licoes.ToList();
-            //ViewBag.LicoesSub = licaoDAO.GetLicoesSub();
-
             var avm = Session["User"] as AlunoViewModel;
 
             if (avm != null)
             {
                 ViewBag.NextLicao = new LicaoDAO().GetNextLicaoAluno(avm.IdAluno);
 
+                ViewBag.LicoesAdd = new LicaoDAO().GetLicoesAdd();
+                ViewBag.LicoesSub = new LicaoDAO().GetLicoesSub();
 
                 return View(avm);
             }
