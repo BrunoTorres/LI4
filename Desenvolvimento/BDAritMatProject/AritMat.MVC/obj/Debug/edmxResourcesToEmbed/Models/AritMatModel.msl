@@ -42,6 +42,7 @@
     <EntitySetMapping Name="AlunoLicoes">
       <EntityTypeMapping TypeName="BDAritMatProjectModel.AlunoLicao">
         <MappingFragment StoreEntitySet="AlunoLicao">
+          <ScalarProperty Name="RespCertas" ColumnName="RespCertas" />
           <ScalarProperty Name="Aluno" ColumnName="Aluno" />
           <ScalarProperty Name="Licao" ColumnName="Licao" />
           <ScalarProperty Name="Explicacao" ColumnName="Explicacao" />

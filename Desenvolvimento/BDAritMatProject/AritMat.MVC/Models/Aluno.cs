@@ -16,9 +16,9 @@ namespace AritMat.MVC.Models
     {
         public Aluno()
         {
-            this.AlunoExercicioLicoes = new HashSet<AlunoExercicioLicao>();
-            this.AlunoLicoes = new HashSet<AlunoLicao>();
-            this.AlunoTesteExercicios = new HashSet<AlunoTesteExercicio>();
+            this.ExerciciosEmLicao = new HashSet<AlunoExercicioLicao>();
+            this.LicoesVistas = new HashSet<AlunoLicao>();
+            this.ExerciciosEmTestes = new HashSet<AlunoTesteExercicio>();
             this.Aprendizagens = new HashSet<Aprendizagem>();
         }
     
@@ -32,9 +32,9 @@ namespace AritMat.MVC.Models
         public byte Explicacao { get; set; }
         public int Pontuacao { get; set; }
     
-        public virtual ICollection<AlunoExercicioLicao> AlunoExercicioLicoes { get; set; }
-        public virtual ICollection<AlunoLicao> AlunoLicoes { get; set; }
-        public virtual ICollection<AlunoTesteExercicio> AlunoTesteExercicios { get; set; }
+        public virtual ICollection<AlunoExercicioLicao> ExerciciosEmLicao { get; set; }
+        public virtual ICollection<AlunoLicao> LicoesVistas { get; set; }
+        public virtual ICollection<AlunoTesteExercicio> ExerciciosEmTestes { get; set; }
         public virtual ICollection<Aprendizagem> Aprendizagens { get; set; }
     }
 }

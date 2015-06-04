@@ -18,7 +18,7 @@ namespace AritMat.MVC.Models
         public int Aluno { get; set; }
         public System.DateTime Data { get; set; }
         public double Estado { get; set; }
-        public Nullable<int> Tipo { get; set; }
+        public int Tipo { get; set; }
     
         public virtual Aluno Aluno1 { get; set; }
     }

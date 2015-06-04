@@ -123,7 +123,8 @@
                                 <li>
                                     <a href="#"><span class="fa fa-minus-circle"></span>&nbsp;&nbsp;Subtração<span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
-                                        @if (licoesSub != null)
+                                    @{
+                                      if (licoesSub != null)
                                         {
                                             int i = 1;
                                             foreach (var l in licoesSub)
@@ -134,6 +135,7 @@
                                                 i++;
                                             }
                                         }
+                                    }
                                     </ul>
                                 </li>
                             </ul>
@@ -197,34 +199,41 @@
                                             <i class="fa fa-save"></i>
                                         </div>
                                         <div class="timeline-panel">
-                                            <div class="timeline-heading">
-                                                <h4 class="timeline-title">Tens esta lição para aprender!</h4>
-                                            </div>
-                                            <div class="timeline-body">
-                                                <p>Clica no botão</p>
-                                                <hr>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" onclick="window.location = '@Url.Action("VerLicao", "Licoes", new {id = ViewBag.NextLicao.idLicao, exp = ViewBag.NextLicao.NumExpl})'">
-                                                            <i class="fa fa-edit"></i>
-                                                    </button>
-
-                                                    <!--<ul class="dropdown-menu" role="menu">
-            <li>
-                <a href="#">Action</a>
-            </li>
-            <li>
-                <a href="#">Another action</a>
-            </li>
-            <li>
-                <a href="#">Something else here</a>
-            </li>
-            <li class="divider"></li>
-            <li>
-                <a href="#">Separated link</a>
-            </li>
-        </ul>-->
-                                                </div>
-                                            </div>
+                                            @{
+                                                if (ViewBag.NextLicao == null)
+                                                {
+                                                    <div class="timeline-heading">
+                                                        <h4 class="timeline-title">Já aprendeste todas as lições!</h4>
+                                                    </div>
+                                                    <div class="timeline-body">
+                                                        <p>Clica no botão para repetires a primeira lição</p>
+                                                        <hr>
+                                                        <div class="btn-group">
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" onclick=" window.location = '@Url.Action("VerLicao", "Licoes", new {id = 1, exp = 1})' ">
+                                                                <i class=" fa fa-edit">
+                                                                </i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="timeline-heading">
+                                                        <h4 class="timeline-title">Tens esta lição para aprender!</h4>
+                                                    </div>
+                                                    <div class="timeline-body">
+                                                        <p>Clica no botão</p>
+                                                        <hr>
+                                                        <div class="btn-group">
+                                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" onclick=" window.location = '@Url.Action("VerLicao", "Licoes", new {id = ViewBag.NextLicao.idLicao, exp = ViewBag.NextLicao.NumExpl})'">
+                                                                <i class=" fa fa-edit">
+                                                                </i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                            
                                         </div>
                                     </li>
                                     <li>

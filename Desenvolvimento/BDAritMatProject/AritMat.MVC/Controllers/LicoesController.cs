@@ -22,7 +22,7 @@ namespace AritMat.MVC.Controllers
         // GET: Licoes
         public ActionResult Index()
         {
-            var licoes = db.Licoes.Include(l => l.Administrador1).Include(l => l.Tipo1);
+            var licoes = db.Licoes.Include(l => l.AdministradorCriou).Include(l => l.TipoLicao);
             return View(licoes.ToList());
         }
 
@@ -155,20 +155,20 @@ namespace AritMat.MVC.Controllers
 
                 // determinar exercício a apresentar no final da lição
                 //Exercicio e = new ExercicioDAO().GetNextExercicioLicaoAluno(avm.IdAluno, id);
-                Exercicio e = new ExercicioDAO().GetExercicio(3);
+                Exercicio e = new ExercicioDAO().GetNextExercicioLicaoAluno(avm.IdAluno, id, exp);
                 Image img = null;
                 string path = null;
-                if (e.Imagem != null)
+                if (e.Imagem != null && e.IdExercicio == 3)
                 {
                     MemoryStream ms = new MemoryStream(e.Imagem);
                     img = Image.FromStream(ms);
-                    path = Server.MapPath("~") + @"Images\Exercicios\3.jpg";
+                    path = Server.MapPath("~") + @"Images\Exercicios\"+e.IdExercicio+".jpg";
                     img.Save(path, ImageFormat.Jpeg);
 
                 }
                 else
                 {
-                    Image imag = Image.FromFile(Server.MapPath("~") + @"Images\Exercicios\3.jpg");
+                    Image imag = Image.FromFile(Server.MapPath("~") + @"Images\Exercicios\"+e.IdExercicio+".jpg");
                     MemoryStream mstream = new MemoryStream();
                     imag.Save(mstream, ImageFormat.Jpeg);
                     byte[] arr = mstream.ToArray();
@@ -176,12 +176,29 @@ namespace AritMat.MVC.Controllers
                     new ExercicioDAO().UpdateExercicio(e);
                     
                 }
-                ViewBag.ImagePath = Server.MapPath("~") + @"Images\Exercicios\3.jpg";
+                ViewBag.ImagePath = Server.MapPath("~") + @"Images\Exercicios\"+e.IdExercicio+".jpg";
                 ViewBag.ExercicioAtual = e;
                 ViewBag.Dicas = new DicaDAO().GetDicasExercicio(e.IdExercicio);
-            }
 
-            return View();
+                return View();
+            }
+    
+            return RedirectToAction("Login", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult AnalisaResposta(int licao, int expl, int aluno, int ex, int r)
+        {
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var result = new RespostaDAO().IsRespostaCerta(r);
+
+            string message = "ACERTOU";
+            new LicaoDAO().RegistaResposta(licao, expl, aluno, ex, r);
+            
+            message = result ? "ACERTOU" : "FALHOU!";
+
+            return Json(message);
         }
     }
 }

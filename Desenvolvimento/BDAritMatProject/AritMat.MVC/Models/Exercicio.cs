@@ -20,8 +20,8 @@ namespace AritMat.MVC.Models
             this.AlunoTesteExercicios = new HashSet<AlunoTesteExercicio>();
             this.Dicas = new HashSet<Dica>();
             this.Respostas = new HashSet<Resposta>();
-            this.Licoes = new HashSet<Licao>();
-            this.Testes = new HashSet<Teste>();
+            this.LicoesEmQueEsta = new HashSet<Licao>();
+            this.TestesEmQueEsta = new HashSet<Teste>();
         }
     
         public int IdExercicio { get; set; }
@@ -32,13 +32,13 @@ namespace AritMat.MVC.Models
         public byte[] Imagem { get; set; }
         public int TempoEx { get; set; }
     
-        public virtual Administrador Administrador1 { get; set; }
+        public virtual Administrador AdministradorCriou { get; set; }
         public virtual ICollection<AlunoExercicioLicao> AlunoExercicioLicoes { get; set; }
         public virtual ICollection<AlunoTesteExercicio> AlunoTesteExercicios { get; set; }
         public virtual ICollection<Dica> Dicas { get; set; }
-        public virtual Tipo Tipo1 { get; set; }
+        public virtual Tipo TipoExercicio { get; set; }
         public virtual ICollection<Resposta> Respostas { get; set; }
-        public virtual ICollection<Licao> Licoes { get; set; }
-        public virtual ICollection<Teste> Testes { get; set; }
+        public virtual ICollection<Licao> LicoesEmQueEsta { get; set; }
+        public virtual ICollection<Teste> TestesEmQueEsta { get; set; }
     }
 }

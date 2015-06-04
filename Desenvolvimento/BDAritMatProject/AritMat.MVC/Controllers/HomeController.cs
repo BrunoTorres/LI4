@@ -71,6 +71,7 @@ namespace AritMat.MVC.Controllers
 
         public ActionResult Login()
         {
+
             return View();
         }
 
@@ -125,6 +126,7 @@ namespace AritMat.MVC.Controllers
         public ActionResult Logout()
         {
             Session["User"] = null;
+            ViewBag.LicaoAtual = null;
             return RedirectToAction("Index");
         }
     }

@@ -19,6 +19,6 @@ namespace AritMat.MVC.Models
         public int Pontuacao { get; set; }
         public string Texto { get; set; }
     
-        public virtual Exercicio Exercicio1 { get; set; }
+        public virtual Exercicio ExercicioAQuePertence { get; set; }
     }
 }

@@ -21,8 +21,8 @@ namespace AritMat.MVC.Models
         public System.DateTime Data { get; set; }
         public Nullable<double> Resposta { get; set; }
     
-        public virtual Aluno Aluno1 { get; set; }
-        public virtual Licao Licao1 { get; set; }
-        public virtual Exercicio Exercicio1 { get; set; }
+        public virtual Aluno AlunoRealizou { get; set; }
+        public virtual Licao LicaoAQuePertence { get; set; }
+        public virtual Exercicio ExercicioRealizado { get; set; }
     }
 }

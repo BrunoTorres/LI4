@@ -266,7 +266,10 @@
     <Content Include="Images\camera_skins.png" />
     <Content Include="Images\coisa.jpg" />
     <Content Include="Images\Dicas\4.jpg" />
+    <Content Include="Images\Exercicios\1.jpg" />
+    <Content Include="Images\Exercicios\2.jpg" />
     <Content Include="Images\Exercicios\3.jpg" />
+    <Content Include="Images\Exercicios\5.jpg" />
     <Content Include="Images\favicon.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\mqdefault.jpg" />
@@ -1068,6 +1071,8 @@
     <Content Include="Scripts\fancybox\fancybox_sprite_402x.png" />
     <Content Include="Scripts\fancybox\jquery.fancybox.css" />
     <Content Include="Scripts\fancybox\jquery.fancybox.pack.js" />
+    <Content Include="Scripts\jquery.countdown.js" />
+    <Content Include="Scripts\jquery.countdown.min.js" />
     <Content Include="Scripts\jquery.rondell.js" />
     <Content Include="Scripts\jquery.rondell.min.js" />
     <Content Include="Scripts\google-map.js" />

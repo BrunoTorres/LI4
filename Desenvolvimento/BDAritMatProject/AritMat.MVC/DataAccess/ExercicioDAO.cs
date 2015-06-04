@@ -4,6 +4,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using AritMat.MVC.Models;
+using WebGrease.Css.Extensions;
 
 namespace AritMat.MVC.DataAccess
 {
@@ -32,53 +33,89 @@ namespace AritMat.MVC.DataAccess
             return db.Exercicios.Where(ex => ex.Tipo == tipoLicao).OrderBy(ex => ex.Dificuldade).First();
         }
 
-        public Exercicio GetNextExercicioLicaoAluno(int idAluno, int idLicao)
+        public Exercicio GetNextExercicioLicaoAluno(int idAluno, int idLicao, int exp)
         {
-            AlunoExercicioLicao ael =
-                db.AlunoExercicioLicoes.Where(ex => ex.Aluno == idAluno && ex.Licao == idLicao)
-                    .OrderByDescending(alexli => alexli.Data)
-                    .First();
+            Aluno a = db.Alunos.Find(idAluno);
+            Licao l = db.Licoes.Find(idLicao, exp);
 
-            if (ael == null)
-                return GetFirstExercicioTipo(new LicaoDAO().GetTipoLicao(idLicao));
-
-            int dificuldade = db.Exercicios.Find(ael.Exercicio).Dificuldade;
-
-            if (ael.Resposta > 0)  // acertou resposta do último exercício
+            System.Diagnostics.Debug.WriteLine("ID: " + l.idLicao + " | EXP: " + l.NumExpl);
+            if (a.ExerciciosEmLicao.Count(li => li.Licao == idLicao) > 0)
             {
-                // não está a verificar se já fez o exercício selecionado
-                int tipoLicao = new LicaoDAO().GetTipoLicao(idLicao);
-                Exercicio exer =
-                    db.Exercicios.Where(ex => ex.Tipo == tipoLicao && ex.Dificuldade > dificuldade)
-                        .OrderBy(ex => ex.Dificuldade)
-                        .First();
 
-                List<Resposta> lResp = new RespostaDAO().GetRespostasExercicio(exer.IdExercicio);
-                System.Diagnostics.Debug.WriteLine("R Count LISTA: " + lResp.Count);
-                //exer.Respostas = new HashSet<Resposta>();
+                List<AlunoExercicioLicao> ael = a.ExerciciosEmLicao.Where(ex => ex.Licao == idLicao)
+                    .OrderByDescending(alexli => alexli.Data).ToList();
 
-                //exer.Respostas.A
+                if (!ael.Any())
+                    return GetFirstExercicioLicao(idLicao);
 
-                System.Diagnostics.Debug.WriteLine("R Count IF: " + exer.Respostas.Count);
+                AlunoExercicioLicao ae = ael.First();
 
-                return exer;
+                int dificuldade = db.Exercicios.Find(ael.First().Exercicio).Dificuldade;
 
+               // não está a verificar se já fez o exercício selecionado
+                List<Exercicio> exerciciosLicao = new List<Exercicio>();
+                List<Licao> expls = db.Licoes.Where(ll => ll.idLicao == l.idLicao).ToList();
+                if (ae.Resposta > 0) // acertou resposta do último exercício
+                {
+                    
+                    foreach (var lic in expls)
+                    {
+                        exerciciosLicao.AddRange(lic.ExerciciosDaLicao.OrderBy(e => e.Dificuldade).Where(e => e.Dificuldade > dificuldade).ToList());
+                    }
+
+                    // existem exercicios mais dificeis
+                    if (exerciciosLicao.Count > 0)
+                        return exerciciosLicao.First();
+
+                    int r1 = new Random().Next(1, expls.Count);
+                    System.Diagnostics.Debug.WriteLine("R1: " + r1);
+                    Licao l1 = db.Licoes.Find(idLicao, r1);
+                    int r2 = new Random().Next(0, l1.ExerciciosDaLicao.Count - 1);
+
+
+                    return l1.ExerciciosDaLicao.ElementAt(r2);
+
+                }
+
+                // falhou resposta no último exercício
+                // ir buscar todos os exercícios da lição atual em que a dificuldade é <= que o anterior e ainda nao tenha realizado
+                foreach (var lic in expls)
+                {
+                    exerciciosLicao.AddRange(lic.ExerciciosDaLicao.OrderByDescending(e => e.Dificuldade).Where(e => e.Dificuldade <= dificuldade && e.IdExercicio != ae.Exercicio).ToList());
+                }
+
+                if (exerciciosLicao.Any())
+                    return exerciciosLicao.First();
+
+                int r11 = new Random().Next(1, expls.Count);
+                Licao l11 = db.Licoes.Find(idLicao, r11);
+                int r22 = new Random().Next(0, l11.ExerciciosDaLicao.Count - 1);
+
+
+                return l11.ExerciciosDaLicao.ElementAt(r22);
             }
 
-            Exercicio exe = db.Exercicios.Where(ex => ex.Dificuldade <= dificuldade && ex.IdExercicio != ael.Exercicio)
-                        .OrderByDescending(ex => ex.Dificuldade)
-                        .First();
+           return GetFirstExercicioLicao(idLicao);
+        }
 
-           // exe.Respostas = new HashSet<Resposta>(new RespostaDAO().GetRespostasExercicio(exe.IdExercicio));
-
-            System.Diagnostics.Debug.WriteLine("R Count OUTSIDE IF: " + exe.Respostas.Count);
-            
-            return exe;
+        private Exercicio GetFirstExercicioLicao(int idLicao)
+        {
+            return db.Licoes.Find(idLicao, 1).ExerciciosDaLicao.OrderBy(ex => ex.Dificuldade).First();
         }
 
         public int GetNumExerciciosTipo(int tipo)
         {
             return db.Exercicios.Count(a => a.Tipo == tipo);
+        }
+
+        public int GetNumExerciciosLicao(int idLicao)
+        {
+            int num = 0;
+            foreach (var l in db.Licoes.Where(l => l.idLicao == idLicao))
+            {
+                num += l.ExerciciosDaLicao.Count;
+            }
+            return num;
         }
 
         public Exercicio GetExercicio(int id)

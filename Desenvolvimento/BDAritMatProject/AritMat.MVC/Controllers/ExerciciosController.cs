@@ -17,7 +17,7 @@ namespace AritMat.MVC.Controllers
         // GET: Exercicios
         public ActionResult Index()
         {
-            var exercicios = db.Exercicios.Include(e => e.Administrador1).Include(e => e.Tipo1);
+            var exercicios = db.Exercicios.Include(e => e.AdministradorCriou).Include(e => e.TipoExercicio);
             return View(exercicios.ToList());
         }
 

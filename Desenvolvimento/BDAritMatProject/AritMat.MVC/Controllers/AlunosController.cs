@@ -30,11 +30,11 @@ namespace AritMat.MVC.Controllers
 
             if (avm != null)
             {
-                ViewBag.NextLicao = new LicaoDAO().GetNextLicaoAluno(avm.IdAluno);
+                Licao l = new LicaoDAO().GetNextLicaoAluno(avm.IdAluno);
+                ViewBag.NextLicao = l;
 
                 ViewBag.LicoesAdd = new LicaoDAO().GetLicoesAdd();
                 ViewBag.LicoesSub = new LicaoDAO().GetLicoesSub();
-
                 return View(avm);
             }
 

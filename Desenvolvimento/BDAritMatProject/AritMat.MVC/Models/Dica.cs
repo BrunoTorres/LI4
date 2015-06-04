@@ -19,6 +19,6 @@ namespace AritMat.MVC.Models
         public string Texto { get; set; }
         public byte[] Imagem { get; set; }
     
-        public virtual Exercicio Exercicio1 { get; set; }
+        public virtual Exercicio ExercicioAQuePertence { get; set; }
     }
 }

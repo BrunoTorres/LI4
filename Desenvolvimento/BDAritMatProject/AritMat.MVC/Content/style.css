@@ -6,6 +6,12 @@ Licence: Creative Commons Attribution 3.0** - http://creativecommons.org/license
 */
 @import url(http://fonts.googleapis.com/css?family=Oswald:400,700);
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700);
+.vbottom {
+    display: table-cell;
+    vertical-align: bottom;
+    float: none;
+}
+
 body {
 	font-family: 'Lato', sans-serif;
 	font-weight: normal;

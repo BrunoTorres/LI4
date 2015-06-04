@@ -20,8 +20,8 @@ namespace AritMat.MVC.Models
         public System.DateTime Data { get; set; }
         public double Nota { get; set; }
     
-        public virtual Aluno Aluno1 { get; set; }
-        public virtual Teste Teste1 { get; set; }
-        public virtual Exercicio Exercicio1 { get; set; }
+        public virtual Aluno AlunoQueRealizou { get; set; }
+        public virtual Teste TesteRealizado { get; set; }
+        public virtual Exercicio ExercicioFeito { get; set; }
     }
 }

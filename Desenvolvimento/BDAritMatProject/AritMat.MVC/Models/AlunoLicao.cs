@@ -19,8 +19,9 @@ namespace AritMat.MVC.Models
         public int Explicacao { get; set; }
         public System.DateTime Data { get; set; }
         public Nullable<int> RespErradas { get; set; }
+        public Nullable<int> RespCertas { get; set; }
     
-        public virtual Aluno Aluno1 { get; set; }
-        public virtual Licao Licao1 { get; set; }
+        public virtual Aluno AlunoQueViuLicao { get; set; }
+        public virtual Licao LicaoVista { get; set; }
     }
 }

@@ -17,13 +17,13 @@ namespace AritMat.MVC.Models
         public Teste()
         {
             this.AlunoTesteExercicios = new HashSet<AlunoTesteExercicio>();
-            this.Exercicios = new HashSet<Exercicio>();
+            this.ExerciciosDoTeste = new HashSet<Exercicio>();
         }
     
         public int IdTeste { get; set; }
         public double Dificuldade { get; set; }
     
         public virtual ICollection<AlunoTesteExercicio> AlunoTesteExercicios { get; set; }
-        public virtual ICollection<Exercicio> Exercicios { get; set; }
+        public virtual ICollection<Exercicio> ExerciciosDoTeste { get; set; }
     }
 }

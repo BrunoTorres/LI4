@@ -23,6 +23,8 @@
     Exercicio ex = ViewBag.ExercicioAtual as Exercicio;
 
     List<Dica> dicasEx = ViewBag.Dicas as List<Dica>;
+
+    int valor = 0;
 }
 
 <!DOCTYPE html>
@@ -94,289 +96,307 @@
         </div>
     </div>
 
-    <div id="wrapper">
+<div id="wrapper">
 
-        <!-- Navigation -->
-            
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <h1 class="page-header">@if (al != null) { @al.Username }</h1>
-                                
-                            <!-- /input-group -->
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Index", "Alunos")"><i class="fa fa-dashboard fa-fw"></i>&nbsp;&nbsp;O teu painel</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;Lições<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="#"><span class="fa fa-plus-circle"></span>&nbsp;&nbsp;Adição<span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        @if (licoesAdd != null)
+<!-- Navigation -->
+
+<div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="sidebar-search">
+                <h1 class="page-header">@if (al != null)
                                         {
-                                            int i = 1;
-                                            foreach (var l in licoesAdd)
-                                            {
-                                                <li>
-                                                    <a href="#"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
-                                                </li>
-                                                i++;
-                                            }
-                                        }
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#"><span class="fa fa-minus-circle"></span>&nbsp;&nbsp;Subtração<span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        @if (licoesSub != null)
-                                        {
-                                            int i = 1;
-                                            foreach (var l in licoesSub)
-                                            {
-                                                <li>
-                                                    <a href="#"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
-                                                </li>
-                                                i++;
-                                            }
-                                        }
-                                    </ul>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i>&nbsp;&nbsp;Testes<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="@Url.Action("Adicao", "Teste")"><span class="fa fa-plus-circle"></span>&nbsp;&nbsp;Adição</a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Adicao", "Teste")"><span class="fa fa-minus-circle"></span>&nbsp;&nbsp;Subtração</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
+                                            @al.Username
+                                        }</h1>
 
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
+                <!-- /input-group -->
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Alunos")"><i class="fa fa-dashboard fa-fw"></i>&nbsp;&nbsp;O teu painel</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;Lições<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="#"><span class="fa fa-plus-circle"></span>&nbsp;&nbsp;Adição<span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level">
+                            @if (licoesAdd != null)
+                            {
+                                int i = 1;
+                                foreach (var l in licoesAdd)
+                                {
+                                    <li>
+                                        <a href="#"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
+                                    </li>
+                                    i++;
+                                }
+                            }
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><span class="fa fa-minus-circle"></span>&nbsp;&nbsp;Subtração<span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level">
+                            @if (licoesSub != null)
+                            {
+                                int i = 1;
+                                foreach (var l in licoesSub)
+                                {
+                                    <li>
+                                        <a href="#"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
+                                    </li>
+                                    i++;
+                                }
+                            }
+                        </ul>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-files-o fa-fw"></i>&nbsp;&nbsp;Testes<span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="@Url.Action("Adicao", "Teste")"><span class="fa fa-plus-circle"></span>&nbsp;&nbsp;Adição</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Adicao", "Teste")"><span class="fa fa-minus-circle"></span>&nbsp;&nbsp;Subtração</a>
+                    </li>
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
 
-        <!-- Page Content -->
-    <div id="page-wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Lição @lvm.IdLicao - @lvm.Area</h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <div class="row container">
-                <div class="col-lg-8">
-                    @{
-                        if (lvm.Video == null)
-                        {
+        </ul>
+    </div>
+    <!-- /.sidebar-collapse -->
+</div>
+<!-- /.navbar-static-side -->
 
-                            <div class="panel panel-default">
-                                <!--<div class="panel-heading">
-                                    <i class="fa fa-clock-o fa-fw"></i> Avisos
-                                </div>-->
-                                <!-- /.panel-heading -->
+<!-- Page Content -->
+<div id="page-wrapper">
+<div class="container-fluid">
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Lição @lvm.IdLicao - @lvm.Area</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+    <div class="row container">
+        <div class="col-lg-8">
+            @{
+                if (lvm.Video == null)
+                {
 
-                                <div class="panel-body">
-                                    <ul class="timeline">
-                                        <li>
-                                            <div class="timeline-badge success">
-                                                <i class="fa fa-check"></i>
-                                            </div>
-                                            <div class="timeline-panel">
-                                                <div class="timeline-heading">
-                                                    <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                                                    <p>
-                                                        <small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small>
-                                                    </p>
-                                                </div>
-                                                <div class="timeline-body">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="timeline-inverted">
-                                            <div class="timeline-badge info">
-                                                <i class="fa fa-save"></i>
-                                            </div>
-                                            <div class="timeline-panel">
-                                                <div class="timeline-heading">
-                                                    <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                                                </div>
-                                                <div class="timeline-body">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                                    <hr>
-                                                    <div class="btn-group">
-                                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                            <i class="fa fa-gear"></i> <span class="caret"></span>
-                                                        </button>
-                                                        <ul class="dropdown-menu" role="menu">
-                                                            <li>
-                                                                <a href="#">Action</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">Another action</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">Something else here</a>
-                                                            </li>
-                                                            <li class="divider"></li>
-                                                            <li>
-                                                                <a href="#">Separated link</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge danger">
-                                                <i class="fa fa-graduation-cap"></i>
-                                            </div>
-                                            <div class="timeline-panel">
-                                                <div class="timeline-heading">
-                                                    <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                                                </div>
-                                                <div class="timeline-body">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- /.panel-body -->
+                    <div class="panel panel-default">
+                        <!--<div class="panel-heading">
+                            <i class="fa fa-clock-o fa-fw"></i> Avisos
+                        </div>-->
+                        <!-- /.panel-heading -->
+
+                        <div class="panel-body">
+                            <div id="timer">
+                                <!--<p> <span id="minutes"></span> Minutes </p><div class="space">:</div><p> <span id="seconds"></span> Seconds </p>-->
                             </div>
-                        }
-                        else
-                        {
-                            <script src="https://www.youtube.com/iframe_api"></script>
-
-                            <div class="panel panel-default" id="videoDiv">
-                                <div class="panel-heading">
-                                    <i class="fa fa-video-camera fa-fw"></i> Vídeo
-                                </div>
-                                <!-- /.panel-heading -->
-
-                                <div class="panel-body">
-                                    <h3>@lvm.Video</h3>
-                                    <div class="embed-responsive embed-responsive-16by9">
-                                        <div id="playerDiv"></div>
+                            <ul class="timeline">
+                                <li>
+                                    <div class="timeline-badge success">
+                                        <i class="fa fa-check"></i>
                                     </div>
-                                </div>
-                            </div>
-                            <br/>
-                            <br/>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                            <p>
+                                                <small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small>
+                                            </p>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="timeline-inverted">
+                                    <div class="timeline-badge info">
+                                        <i class="fa fa-save"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                            <hr>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                    <i class="fa fa-gear"></i> <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li>
+                                                        <a href="#">Action</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Another action</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#">Something else here</a>
+                                                    </li>
+                                                    <li class="divider"></li>
+                                                    <li>
+                                                        <a href="#">Separated link</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="timeline-badge danger">
+                                        <i class="fa fa-graduation-cap"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                        <div class="timeline-heading">
+                                            <h4 class="timeline-title">Lorem ipsum dolor</h4>
+                                        </div>
+                                        <div class="timeline-body">
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                }
+                else
+                {
+                    <script src="https://www.youtube.com/iframe_api"></script>
 
-
-                        }
-                    }
-                    <!-- /.row -->
-
-                    <div class="panel panel-default" id="opcoes">
+                    <div class="panel panel-default" id="videoDiv">
                         <div class="panel-heading">
-                            <i class="fa fa-edit fa-fw"></i> Percebeste a Lição?
+                            <i class="fa fa-video-camera fa-fw"></i> Vídeo
                         </div>
                         <!-- /.panel-heading -->
 
                         <div class="panel-body">
-                            <div class="form-group">
-                                <input type="button" class="btn-two btn" onclick=" apresentaExercicio() " value="Sim, quero fazer um exercício!"/>&nbsp;&nbsp;&nbsp;
-                                <input type="button" class="btn-two btn" onclick=" nextExplicacao() " value="Não, preciso de outra explicação!"/>&nbsp;&nbsp;&nbsp;
-                                <input type="button" class="btn-two btn" onclick=" avancarLicao() " value="Quero avançar para a próxima lição!"/>&nbsp;&nbsp;&nbsp;
+                            <h3>@lvm.Video</h3>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <div id="playerDiv"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default" id="exercicio">
-                        <div class="panel-heading">
-                            <i class="fa fa-edit fa-fw"></i>Exercício
-                        </div>
-                        <!-- /.panel-heading -->
-
-                        <div class="panel-body container">
-                            <h3>Exercício</h3>
-                            <!--<div class="form-group btn-group" data-toggle="buttons">-->
-                            @{
-                                if (ex.Texto != null)
-                                {
-                                    <label>@ex.Texto</label>
-                                    <br/>
-                                }
-                                else
-                                {
-                                    <img class="img-responsive" src="@Url.Content("~/Images/Exercicios/" + ex.IdExercicio + ".jpg")" alt="Exercício @ex.IdExercicio">
-                                }
-
-                            }
-                            <br/><br/>
-                            
-                                <form role="form" id="respForm">
-                                    <div style="margin: 0 auto;">
-                                        @{
-                                            int j = 0;
-                                            foreach (var r in ex.Respostas)
-                                            {
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="optradio" id="@r.IdResposta" value="@j" />
-                                                    @r.Texto
-                                                </label>
-                                                j++;
-                                            }
-                                        }
-                                    </div>
-                                    <br/>
-                                    <div class="form-group center-block">
-                                        <input type="submit" class="btn-two btn" onclick=" respondeExercicio() " value="OK" />&nbsp;&nbsp;&nbsp;
-                                        <input type="button" class="btn-two btn" onclick=" ajudaExercicio() " value="Preciso de ajuda!" />&nbsp;&nbsp;&nbsp;
-                                    </div>
-                                </form>
-                            <br/><br/>
-                            <!-- </div>-->
+                    <br/>
+                    <br/>
 
 
+                }
+            }
+            <!-- /.row -->
 
+            <div class="panel panel-default" id="opcoes">
+                <div class="panel-heading">
+                    <i class="fa fa-edit fa-fw"></i> Percebeste a Lição?
+                </div>
+                <!-- /.panel-heading -->
 
-
-                        </div>
+                <div class="panel-body">
+                    <br/><br/>
+                    <div class="form-group">
+                        <input type="button" class="btn-two btn" onclick=" apresentaExercicio() " value="Sim, quero fazer um exercício!"/>&nbsp;&nbsp;&nbsp;
+                        <input type="button" class="btn-two btn" onclick=" nextExplicacao() " value="Não, preciso de outra explicação!"/>&nbsp;&nbsp;&nbsp;
+                        <input type="button" class="btn-two btn" onclick=" avancarLicao() " value="Quero avançar para a próxima lição!"/>&nbsp;&nbsp;&nbsp;
                     </div>
                 </div>
-                <div class="col-lg-4">
-                    <div id="rondellPages">
-                        @{
-                            foreach (var d in dicasEx)
-                            {
-                                <div>
-                                    @{
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="panel panel-default" id="exercicio">
+                <div class="panel-heading">
+                    <i class="fa fa-edit fa-fw"></i>Exercício
+                </div>
+                <!-- /.panel-heading -->
+
+                <div class="panel-body container">
+                    <h3>Exercício</h3>
+                    <!--<div class="form-group btn-group" data-toggle="buttons">-->
+                    @{
+                        if (ex.Imagem == null)
+                        {
+                            <label>@ex.Texto</label>
+                            <br />
+                        }
+                        else
+                        {
+                            <img class="img-responsive" src="@Url.Content("~/Images/Exercicios/" + ex.IdExercicio + ".jpg")" alt="Exercício @ex.IdExercicio">
+                        }
+
+                    }
+                    <br /><br />
+
+                    <form role="form" id="respForm">
+                        <div style="margin: 0 auto;">
+                            @{
+                                int j = 0;
+                                foreach (var r in ex.Respostas)
+                                {
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optradio" id="@r.IdResposta" value="@r.IdResposta" />
+                                        @r.Texto
+                                    </label>
+                                    j++;
+                                }
+                            }
+                        </div>
+                        <br />
+                        <div class="form-group center-block">
+                            <input type="submit" class="btn-two btn" value="OK" />&nbsp;&nbsp;&nbsp;
+                            <input type="button" class="btn-two btn" onclick="ajudaExercicio()" value="Preciso de ajuda!" />&nbsp;&nbsp;&nbsp;
+                        </div>
+                    </form>
+                    <br /><br />
+                    <!-- </div>-->
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+        <!--
+    -->
+        <div class="col-sm-4">
+            <h3>Dicas</h3>
+            <div id="rondellPages">
+                @{
+                    foreach (var d in dicasEx)
+                    {
+                        <div>
+                            @{
                                 if (d.Imagem != null)
                                 {
-                                    <img src="@Url.Content("~/Images/Dicas/" + d.IdDica + ".jpg")" />
+                                    <img src="@Url.Content("~/Images/Dicas/" + d.IdDica + ".jpg")"/>
                                 }
                                 else
                                 {
                                     <p class="text-muted text-center">@d.Texto</p>
                                 }
-                                    }
-                                </div>
                             }
-                        }
-                    </div>
-                </div>
-
-            <!-- /.container-fluid -->
+                        </div>
+                    }
+                }
+            </div>
         </div>
-        <!-- /#page-wrapper -->
 
+        </div>
     </div>
-        </div>
+
+    <!-- /.container-fluid -->
+</div>
+<!-- /#page-wrapper -->
+
+</div>
+</div>
+</div>
 <!-- /#wrapper -->
 
 
@@ -394,58 +414,95 @@
 
     <script type="text/javascript" src="~/Scripts/modernizr-2.6.2.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.rondell.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.countdown.min.js"></script>
+    <!--<script type="text/javascript" src="~/Scripts/jquery.countdown.js"></script>-->
 
+@{
+    if (lvm.Video == null)
+    {
+        <script type="text/javascript">
+            function scrollBottom() {
+                $("html, body").animate({ scrollTop: $(document).height() }, 500);
+            }
+            function addMinutes(date, minutes) {
+                return new Date(date.getTime() + minutes * 60000);
+            }
+
+            $(function() {
+                var now = new Date();
+                var newDate = addMinutes(now, @lvm.TempoLicao);
+                $('div#timer').countdown(newDate).on('update.countddown', function(event) {
+                    $('div#timer').text(
+                        event.strftime('%M:%S'));
+                }).on('finish.countdown', function(event) {
+                    scrollBottom();
+                });
+
+            }); 
+        </script>
+    }
+    else
+    {
+        <script type="text/javascript">
+            $("#opcoes").hide();
+        </script>
+    }
+}
 <script>
-        var player;
-        jQuery("#exercicio").hide();
-        jQuery("#opcoes").hide();
-        jQuery("#rondellPages").hide();
-        function onYouTubeIframeAPIReady() {
-            //var exer = jQuery("#exercicio").hide();
-            player = new YT.Player('playerDiv', {
-                height: '390',
-                width: '640',
-                videoId: '@lvm.Video',
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            event.target.playVideo();
-        }
-
-        // when video ends
-        function onPlayerStateChange(event) {
-            if (event.data === 0) {
-                jQuery("#videoDiv").fadeOut();
-                jQuery("#opcoes").fadeIn();
+    var player;
+    jQuery("#exercicio").hide();
+    
+    function onYouTubeIframeAPIReady() {
+        //var exer = jQuery("#exercicio").hide();
+        player = new YT.Player('playerDiv', {
+            height: '390',
+            width: '640',
+            videoId: '@lvm.Video',
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
             }
-        }
-
-        function apresentaExercicio() {
-            jQuery("#opcoes").fadeOut();
-            jQuery("#exercicio").fadeIn();
-        }
-
-        $("#rondellPages").rondell({
-            preset: "pages"
         });
-
-        $("#respForm").submit(function(event) {
-            @{
-                int k = 0;
-                bool found = false;
-                while (k < ex.Respostas.Count && !found)
-                {
-                    
-
-                }
-            }
-        })
-    </script>
+    }
+    
+    function onPlayerReady(event) {
+        event.target.playVideo();
+    }
+    
+    // when video ends
+    function onPlayerStateChange(event) {
+        if (event.data === 0) {
+            jQuery("#videoDiv").fadeOut();
+            jQuery("#opcoes").fadeIn();
+        }
+    }
+    
+    function apresentaExercicio() {
+        jQuery("#opcoes").fadeOut();
+        jQuery("#exercicio").fadeIn();
+        scrollBottom();
+    }
+    
+    function ajudaExercicio() {
+        $("#rondellPages").fadeIn();
+    }
+    
+    $("#rondellPages").rondell({
+        preset: "pages"
+    });
+    jQuery("#rondellPages").hide();
+    
+    
+    $("#respForm").submit(function(event) {
+    
+        event.preventDefault();
+        $.post("@Url.Action("AnalisaResposta")", { licao: @ViewContext.RouteData.Values["id"], expl: @Request.Params["exp"], aluno: @al.IdAluno, ex: @ex.IdExercicio, r: $('input:radio[name=optradio]:checked').val() },
+            function(data) {
+                alert(data);
+            });
+    
+    });
+</script>
 
 
 

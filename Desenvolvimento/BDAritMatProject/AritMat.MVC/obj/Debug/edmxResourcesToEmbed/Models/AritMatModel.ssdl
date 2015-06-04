@@ -49,6 +49,7 @@
     <Property Name="Explicacao" Type="int" Nullable="false" />
     <Property Name="Data" Type="datetime" Nullable="false" />
     <Property Name="RespErradas" Type="int" />
+    <Property Name="RespCertas" Type="int" />
   </EntityType>
   <EntityType Name="AlunoTesteExercicio">
     <Key>
@@ -68,7 +69,7 @@
     </Key>
     <Property Name="IdAprendizagem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Aluno" Type="int" Nullable="false" />
-    <Property Name="Data" Type="date" Nullable="false" />
+    <Property Name="Data" Type="datetime" Nullable="false" />
     <Property Name="Estado" Type="float" Nullable="false" />
     <Property Name="Tipo" Type="int" />
   </EntityType>
@@ -105,7 +106,7 @@
     <Property Name="Texto" Type="text" />
     <Property Name="Video" Type="varchar" MaxLength="500" />
     <Property Name="Imagem" Type="varbinary(max)" />
-    <Property Name="TempoLicao" Type="int" />
+    <Property Name="TempoLicao" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="LicaoExercicio">
     <Key>

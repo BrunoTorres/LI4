@@ -25,9 +25,9 @@
     <Property Name="Tema" Type="Int32" Nullable="false" />
     <Property Name="Explicacao" Type="Byte" Nullable="false" />
     <Property Name="Pontuacao" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="AlunoExercicioLicoes" Relationship="Self.FK_AlunoExercicioLicao_ToTable" FromRole="Aluno" ToRole="AlunoExercicioLicao" />
-    <NavigationProperty Name="AlunoLicoes" Relationship="Self.FK_AlunoLicao_ToTable" FromRole="Aluno" ToRole="AlunoLicao" />
-    <NavigationProperty Name="AlunoTesteExercicios" Relationship="Self.FK_AlunoTesteExercicio_ToTable" FromRole="Aluno" ToRole="AlunoTesteExercicio" />
+    <NavigationProperty Name="ExerciciosEmLicao" Relationship="Self.FK_AlunoExercicioLicao_ToTable" FromRole="Aluno" ToRole="AlunoExercicioLicao" />
+    <NavigationProperty Name="LicoesVistas" Relationship="Self.FK_AlunoLicao_ToTable" FromRole="Aluno" ToRole="AlunoLicao" />
+    <NavigationProperty Name="ExerciciosEmTestes" Relationship="Self.FK_AlunoTesteExercicio_ToTable" FromRole="Aluno" ToRole="AlunoTesteExercicio" />
     <NavigationProperty Name="Aprendizagens" Relationship="Self.FK_Aprendizagem_ToTable" FromRole="Aluno" ToRole="Aprendizagem" />
   </EntityType>
   <EntityType Name="AlunoExercicioLicao">
@@ -43,9 +43,9 @@
     <Property Name="Exercicio" Type="Int32" Nullable="false" />
     <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Resposta" Type="Double" />
-    <NavigationProperty Name="Aluno1" Relationship="Self.FK_AlunoExercicioLicao_ToTable" FromRole="AlunoExercicioLicao" ToRole="Aluno" />
-    <NavigationProperty Name="Licao1" Relationship="Self.FK_AlunoExercicioLicao_ToTable_1" FromRole="AlunoExercicioLicao" ToRole="Licao" />
-    <NavigationProperty Name="Exercicio1" Relationship="Self.FK_AlunoExercicioLicao_ToTable_3" FromRole="AlunoExercicioLicao" ToRole="Exercicio" />
+    <NavigationProperty Name="AlunoRealizou" Relationship="Self.FK_AlunoExercicioLicao_ToTable" FromRole="AlunoExercicioLicao" ToRole="Aluno" />
+    <NavigationProperty Name="LicaoAQuePertence" Relationship="Self.FK_AlunoExercicioLicao_ToTable_1" FromRole="AlunoExercicioLicao" ToRole="Licao" />
+    <NavigationProperty Name="ExercicioRealizado" Relationship="Self.FK_AlunoExercicioLicao_ToTable_3" FromRole="AlunoExercicioLicao" ToRole="Exercicio" />
   </EntityType>
   <EntityType Name="AlunoLicao">
     <Key>
@@ -58,8 +58,9 @@
     <Property Name="Explicacao" Type="Int32" Nullable="false" />
     <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="RespErradas" Type="Int32" Nullable="true" />
-    <NavigationProperty Name="Aluno1" Relationship="Self.FK_AlunoLicao_ToTable" FromRole="AlunoLicao" ToRole="Aluno" />
-    <NavigationProperty Name="Licao1" Relationship="Self.FK_AlunoLicao_ToTable_1" FromRole="AlunoLicao" ToRole="Licao" />
+    <NavigationProperty Name="AlunoQueViuLicao" Relationship="Self.FK_AlunoLicao_ToTable" FromRole="AlunoLicao" ToRole="Aluno" />
+    <NavigationProperty Name="LicaoVista" Relationship="Self.FK_AlunoLicao_ToTable_1" FromRole="AlunoLicao" ToRole="Licao" />
+    <Property Name="RespCertas" Type="Int32" />
   </EntityType>
   <EntityType Name="AlunoTesteExercicio">
     <Key>
@@ -72,9 +73,9 @@
     <Property Name="Exercicio" Type="Int32" Nullable="false" />
     <Property Name="Data" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="Nota" Type="Double" Nullable="false" />
-    <NavigationProperty Name="Aluno1" Relationship="Self.FK_AlunoTesteExercicio_ToTable" FromRole="AlunoTesteExercicio" ToRole="Aluno" />
-    <NavigationProperty Name="Teste1" Relationship="Self.FK_AlunoTesteExercicio_ToTable_1" FromRole="AlunoTesteExercicio" ToRole="Teste" />
-    <NavigationProperty Name="Exercicio1" Relationship="Self.FK_AlunoTesteExercicio_ToTable_2" FromRole="AlunoTesteExercicio" ToRole="Exercicio" />
+    <NavigationProperty Name="AlunoQueRealizou" Relationship="Self.FK_AlunoTesteExercicio_ToTable" FromRole="AlunoTesteExercicio" ToRole="Aluno" />
+    <NavigationProperty Name="TesteRealizado" Relationship="Self.FK_AlunoTesteExercicio_ToTable_1" FromRole="AlunoTesteExercicio" ToRole="Teste" />
+    <NavigationProperty Name="ExercicioFeito" Relationship="Self.FK_AlunoTesteExercicio_ToTable_2" FromRole="AlunoTesteExercicio" ToRole="Exercicio" />
   </EntityType>
   <EntityType Name="Aprendizagem">
     <Key>
@@ -82,9 +83,9 @@
     </Key>
     <Property Name="IdAprendizagem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Aluno" Type="Int32" Nullable="false" />
-    <Property Name="Data" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
     <Property Name="Estado" Type="Double" Nullable="false" />
-    <Property Name="Tipo" Type="Int32" />
+    <Property Name="Tipo" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Aluno1" Relationship="Self.FK_Aprendizagem_ToTable" FromRole="Aprendizagem" ToRole="Aluno" />
   </EntityType>
   <EntityType Name="Dica">
@@ -95,7 +96,7 @@
     <Property Name="Exercicio" Type="Int32" Nullable="false" />
     <Property Name="Texto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="Imagem" Type="Binary" MaxLength="Max" FixedLength="false" />
-    <NavigationProperty Name="Exercicio1" Relationship="Self.FK_Dica_ToTable_1" FromRole="Dica" ToRole="Exercicio" />
+    <NavigationProperty Name="ExercicioAQuePertence" Relationship="Self.FK_Dica_ToTable_1" FromRole="Dica" ToRole="Exercicio" />
   </EntityType>
   <EntityType Name="Exercicio">
     <Key>
@@ -108,14 +109,14 @@
     <Property Name="Dificuldade" Type="Int32" Nullable="false" />
     <Property Name="Imagem" Type="Binary" MaxLength="Max" FixedLength="false" />
     <Property Name="TempoEx" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Administrador1" Relationship="Self.FK_Exercicio_ToTable_1" FromRole="Exercicio" ToRole="Administrador" />
+    <NavigationProperty Name="AdministradorCriou" Relationship="Self.FK_Exercicio_ToTable_1" FromRole="Exercicio" ToRole="Administrador" />
     <NavigationProperty Name="AlunoExercicioLicoes" Relationship="Self.FK_AlunoExercicioLicao_ToTable_3" FromRole="Exercicio" ToRole="AlunoExercicioLicao" />
     <NavigationProperty Name="AlunoTesteExercicios" Relationship="Self.FK_AlunoTesteExercicio_ToTable_2" FromRole="Exercicio" ToRole="AlunoTesteExercicio" />
     <NavigationProperty Name="Dicas" Relationship="Self.FK_Dica_ToTable_1" FromRole="Exercicio" ToRole="Dica" />
-    <NavigationProperty Name="Tipo1" Relationship="Self.FK_Exercicio_ToTable" FromRole="Exercicio" ToRole="Tipo" />
+    <NavigationProperty Name="TipoExercicio" Relationship="Self.FK_Exercicio_ToTable" FromRole="Exercicio" ToRole="Tipo" />
     <NavigationProperty Name="Respostas" Relationship="Self.FK_Resposta_ToTable" FromRole="Exercicio" ToRole="Resposta" />
-    <NavigationProperty Name="Licoes" Relationship="Self.LicaoExercicio" FromRole="Exercicio" ToRole="Licao" />
-    <NavigationProperty Name="Testes" Relationship="Self.TesteExercicio" FromRole="Exercicio" ToRole="Teste" />
+    <NavigationProperty Name="LicoesEmQueEsta" Relationship="Self.LicaoExercicio" FromRole="Exercicio" ToRole="Licao" />
+    <NavigationProperty Name="TestesEmQueEsta" Relationship="Self.TesteExercicio" FromRole="Exercicio" ToRole="Teste" />
   </EntityType>
   <EntityType Name="Licao">
     <Key>
@@ -130,11 +131,11 @@
     <Property Name="Video" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
     <Property Name="Imagem" Type="Binary" MaxLength="Max" FixedLength="false" />
     <Property Name="TempoLicao" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Administrador1" Relationship="Self.FK_Licao_ToTable2" FromRole="Licao" ToRole="Administrador" />
+    <NavigationProperty Name="AdministradorCriou" Relationship="Self.FK_Licao_ToTable2" FromRole="Licao" ToRole="Administrador" />
     <NavigationProperty Name="AlunoExercicioLicoes" Relationship="Self.FK_AlunoExercicioLicao_ToTable_1" FromRole="Licao" ToRole="AlunoExercicioLicao" />
     <NavigationProperty Name="AlunoLicoes" Relationship="Self.FK_AlunoLicao_ToTable_1" FromRole="Licao" ToRole="AlunoLicao" />
-    <NavigationProperty Name="Tipo1" Relationship="Self.FK_Licao_ToTable" FromRole="Licao" ToRole="Tipo" />
-    <NavigationProperty Name="Exercicios" Relationship="Self.LicaoExercicio" FromRole="Licao" ToRole="Exercicio" />
+    <NavigationProperty Name="TipoLicao" Relationship="Self.FK_Licao_ToTable" FromRole="Licao" ToRole="Tipo" />
+    <NavigationProperty Name="ExerciciosDaLicao" Relationship="Self.LicaoExercicio" FromRole="Licao" ToRole="Exercicio" />
   </EntityType>
   <EntityType Name="Resposta">
     <Key>
@@ -144,7 +145,7 @@
     <Property Name="Exercicio" Type="Int32" Nullable="false" />
     <Property Name="Pontuacao" Type="Int32" Nullable="false" />
     <Property Name="Texto" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Exercicio1" Relationship="Self.FK_Resposta_ToTable" FromRole="Resposta" ToRole="Exercicio" />
+    <NavigationProperty Name="ExercicioAQuePertence" Relationship="Self.FK_Resposta_ToTable" FromRole="Resposta" ToRole="Exercicio" />
   </EntityType>
   <EntityType Name="Teste">
     <Key>
@@ -153,7 +154,7 @@
     <Property Name="IdTeste" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Dificuldade" Type="Double" Nullable="false" />
     <NavigationProperty Name="AlunoTesteExercicios" Relationship="Self.FK_AlunoTesteExercicio_ToTable_1" FromRole="Teste" ToRole="AlunoTesteExercicio" />
-    <NavigationProperty Name="Exercicios" Relationship="Self.TesteExercicio" FromRole="Teste" ToRole="Exercicio" />
+    <NavigationProperty Name="ExerciciosDoTeste" Relationship="Self.TesteExercicio" FromRole="Teste" ToRole="Exercicio" />
   </EntityType>
   <EntityType Name="Tipo">
     <Key>

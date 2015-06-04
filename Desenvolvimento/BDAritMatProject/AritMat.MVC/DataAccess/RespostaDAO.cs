@@ -19,6 +19,16 @@ namespace AritMat.MVC.DataAccess
         {
             System.Diagnostics.Debug.WriteLine("SELECT * FROM Resposta WHERE Exercicio = " + idExercicio + " COUNT: " + db.Respostas.Where(ex => ex.Exercicio == idExercicio).ToList().Count);
             return db.Respostas.SqlQuery("SELECT * FROM Resposta WHERE Exercicio = " + idExercicio).ToList();
-        } 
+        }
+
+        public bool IsRespostaCerta(int r)
+        {
+            return db.Respostas.Find(r).Pontuacao > 0;
+        }
+
+        public int GetPontuacao(int r)
+        {
+            return db.Respostas.Find(r).Pontuacao;
+        }
     }
 }
