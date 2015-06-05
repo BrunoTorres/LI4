@@ -158,6 +158,13 @@ namespace AritMat.MVC.Controllers
                 Tipo t = new TipoDAO().GetTipoLicao(lvm.Tipo);
                 string area = t.Area;
                 lvm.Area = area;
+                if (lvm.Imagem != null)
+                {
+                    MemoryStream ms = new MemoryStream(lvm.Imagem);
+                    Image img = Image.FromStream(ms);
+                    img.Save(Server.MapPath("~/Images/Licoes/L" + lvm.IdLicao + "E" + lvm.NumExpl + ".png"), ImageFormat.Png);
+                }
+                
                 ViewBag.LicaoAtual = lvm;
                 ViewBag.Exercicio = new ExercicioDAO().GetNextExercicioLicaoAluno(avm.IdAluno, lvm.IdLicao, lvm.NumExpl).IdExercicio;
                 Session["NextLicao"] = lvm;

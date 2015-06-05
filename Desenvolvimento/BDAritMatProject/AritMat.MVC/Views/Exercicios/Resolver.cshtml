@@ -206,15 +206,15 @@
                             <form role='form' id='respForm'>
                                 <div style='margin: 0 auto;'>
                                     @{
-                                int j = 0;
-                                foreach (var r in Model.Respostas)
-                                {
-                                    <label class='radio-inline'>
-                                        <input type='radio' name='optradio' id='@r.IdResposta' value='@r.IdResposta' />
-                                        @r.Texto
-                                    </label>
-                                    j++;
-                                }
+                                        int j = 0;
+                                        foreach (var r in Model.Respostas)
+                                        {
+                                            <label class='radio-inline'>
+                                                <input type='radio' name='optradio' id='@r.IdResposta' value='@r.IdResposta' />
+                                                @r.Texto
+                                            </label>
+                                            j++;
+                                        }
                                     }
                                 </div>
                                 <br />

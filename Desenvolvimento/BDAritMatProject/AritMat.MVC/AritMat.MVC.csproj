@@ -267,23 +267,7 @@
     <Content Include="Images\camera_skins.png" />
     <Content Include="Images\coisa.jpg" />
     <Content Include="Images\Dicas\4.jpg" />
-    <Content Include="Images\Exercicios\E1.png" />
-    <Content Include="Images\Exercicios\E2.png" />
-    <Content Include="Images\Exercicios\L1D3.png" />
-    <Content Include="Images\Exercicios\L1D4.png" />
-    <Content Include="Images\Exercicios\L1D5.png" />
-    <Content Include="Images\Exercicios\L3D1.png" />
-    <Content Include="Images\Exercicios\L3D2.png" />
-    <Content Include="Images\Exercicios\L3D3.png" />
-    <Content Include="Images\Exercicios\L3D4.png" />
-    <Content Include="Images\Exercicios\L3D5.png" />
     <Content Include="Images\favicon.png" />
-    <Content Include="Images\Licoes\L1E1.png" />
-    <Content Include="Images\Licoes\L1E2.png" />
-    <Content Include="Images\Licoes\L2E1.png" />
-    <Content Include="Images\Licoes\L3E1.png" />
-    <Content Include="Images\Licoes\L3E2.png" />
-    <Content Include="Images\Licoes\L4E1.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\mqdefault.jpg" />
     <Content Include="Images\news2.jpg" />
@@ -1164,6 +1148,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\Exercicios\" />
+    <Folder Include="Images\Licoes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

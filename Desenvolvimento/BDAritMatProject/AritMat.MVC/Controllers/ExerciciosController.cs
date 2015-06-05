@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -36,10 +39,19 @@ namespace AritMat.MVC.Controllers
                 return RedirectToAction("Login","Home");
 
             Exercicio exercicio = db.Exercicios.Find(id);
+            
             if (exercicio == null)
             {
                 return HttpNotFound();
             }
+
+            if (exercicio.Imagem != null)
+            {
+                MemoryStream ms = new MemoryStream(exercicio.Imagem);
+                Image img = Image.FromStream(ms);
+                img.Save(Server.MapPath("~/Images/Exercicios/E" + exercicio.IdExercicio + ".png"), ImageFormat.Png);
+            }
+            
             ViewBag.Dicas = exercicio.Dicas.ToList();
             ViewBag.LicaoAtual = Session["NextLicao"] as LicoesViewModel;
             return View(exercicio);
