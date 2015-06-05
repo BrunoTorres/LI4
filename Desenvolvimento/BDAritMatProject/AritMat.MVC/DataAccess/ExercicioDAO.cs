@@ -38,7 +38,6 @@ namespace AritMat.MVC.DataAccess
             Aluno a = db.Alunos.Find(idAluno);
             Licao l = db.Licoes.Find(idLicao, exp);
 
-            System.Diagnostics.Debug.WriteLine("ID: " + l.idLicao + " | EXP: " + l.NumExpl);
             if (a.ExerciciosEmLicao.Count(li => li.Licao == idLicao) > 0)
             {
 
@@ -128,5 +127,60 @@ namespace AritMat.MVC.DataAccess
             db.Exercicios.AddOrUpdate(exe);
             db.SaveChanges();
         }
+
+        public List<Exercicio> GetExerciciosLicaoMaxDificuldade(int licao)
+        {
+            List<Licao> explsLicao = db.Licoes.Where(l => l.idLicao == licao).ToList();
+            List<Exercicio> res = new List<Exercicio>();
+
+            foreach (var l in explsLicao)
+            {
+                res.AddRange(l.ExerciciosDaLicao.Where(ex => ex.Dificuldade == 5));
+            }
+
+            return res;
+        }
+
+        public List<Exercicio> GetExerciciosLicao(int licao)
+        {
+            List<Licao> explsLicao = db.Licoes.Where(l => l.idLicao == licao).ToList();
+            List<Exercicio> res = new List<Exercicio>();
+
+            foreach (var l in explsLicao)
+            {
+                res.AddRange(l.ExerciciosDaLicao);
+            }
+
+            return res;
+        }
+
+        public Exercicio ExisteOutroExercicioMesmaDifDisponivel(int aluno, int licao, int ex)
+        {
+            int dif = db.Exercicios.Find(ex).Dificuldade;
+            List<Exercicio> exsLicao = GetExerciciosLicao(licao);
+            List<Exercicio> exsMesmaDif = exsLicao.Where(e => e.Dificuldade == dif).ToList();
+
+            Aluno a = db.Alunos.Find(aluno);
+            bool cont = true;
+            Exercicio res = null;
+
+            for (int i = 0; i < exsMesmaDif.Count && cont; i++)
+            {
+                if (!a.ExerciciosEmLicao.Any(al => al.Licao == licao && al.Exercicio == exsMesmaDif.ElementAt(i).IdExercicio))
+                {
+                    res = exsMesmaDif.ElementAt(i);
+                    cont = false;
+                }
+                else if (a.ExerciciosEmLicao.Any(al => al.Licao == licao && al.Exercicio == exsMesmaDif.ElementAt(i).IdExercicio && al.Resposta < 0))
+                {
+                    res = exsMesmaDif.ElementAt(i);
+                    cont = false;
+                }
+            }
+
+            return res;
+        }
+
+
     }
 }

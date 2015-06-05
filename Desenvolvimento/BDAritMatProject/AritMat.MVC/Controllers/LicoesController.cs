@@ -10,8 +10,10 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AritMat.MVC.DataAccess;
+using AritMat.MVC.JSonAux;
 using AritMat.MVC.Models;
 using AritMat.MVC.Models.ViewModels;
+using Newtonsoft.Json;
 
 namespace AritMat.MVC.Controllers
 {
@@ -54,7 +56,8 @@ namespace AritMat.MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idLicao,NumExpl,Tipo,Administrador,Texto,Video,Imagem,TempoLicao")] Licao licao)
+        public ActionResult Create(
+            [Bind(Include = "idLicao,NumExpl,Tipo,Administrador,Texto,Video,Imagem,TempoLicao")] Licao licao)
         {
             if (ModelState.IsValid)
             {
@@ -63,7 +66,8 @@ namespace AritMat.MVC.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Administrador = new SelectList(db.administradores, "IdAdministrador", "Username", licao.Administrador);
+            ViewBag.Administrador = new SelectList(db.administradores, "IdAdministrador", "Username",
+                licao.Administrador);
             ViewBag.Tipo = new SelectList(db.Tipos, "IdTipo", "Area", licao.Tipo);
             return View(licao);
         }
@@ -80,7 +84,8 @@ namespace AritMat.MVC.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Administrador = new SelectList(db.administradores, "IdAdministrador", "Username", licao.Administrador);
+            ViewBag.Administrador = new SelectList(db.administradores, "IdAdministrador", "Username",
+                licao.Administrador);
             ViewBag.Tipo = new SelectList(db.Tipos, "IdTipo", "Area", licao.Tipo);
             return View(licao);
         }
@@ -90,7 +95,8 @@ namespace AritMat.MVC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idLicao,NumExpl,Tipo,Administrador,Texto,Video,Imagem,TempoLicao")] Licao licao)
+        public ActionResult Edit(
+            [Bind(Include = "idLicao,NumExpl,Tipo,Administrador,Texto,Video,Imagem,TempoLicao")] Licao licao)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +104,8 @@ namespace AritMat.MVC.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Administrador = new SelectList(db.administradores, "IdAdministrador", "Username", licao.Administrador);
+            ViewBag.Administrador = new SelectList(db.administradores, "IdAdministrador", "Username",
+                licao.Administrador);
             ViewBag.Tipo = new SelectList(db.Tipos, "IdTipo", "Area", licao.Tipo);
             return View(licao);
         }
@@ -152,53 +159,14 @@ namespace AritMat.MVC.Controllers
                 string area = t.Area;
                 lvm.Area = area;
                 ViewBag.LicaoAtual = lvm;
-
-                // determinar exercício a apresentar no final da lição
-                //Exercicio e = new ExercicioDAO().GetNextExercicioLicaoAluno(avm.IdAluno, id);
-                Exercicio e = new ExercicioDAO().GetNextExercicioLicaoAluno(avm.IdAluno, id, exp);
-                Image img = null;
-                string path = null;
-                if (e.Imagem != null && e.IdExercicio == 3)
-                {
-                    MemoryStream ms = new MemoryStream(e.Imagem);
-                    img = Image.FromStream(ms);
-                    path = Server.MapPath("~") + @"Images\Exercicios\"+e.IdExercicio+".jpg";
-                    img.Save(path, ImageFormat.Jpeg);
-
-                }
-                else
-                {
-                    Image imag = Image.FromFile(Server.MapPath("~") + @"Images\Exercicios\"+e.IdExercicio+".jpg");
-                    MemoryStream mstream = new MemoryStream();
-                    imag.Save(mstream, ImageFormat.Jpeg);
-                    byte[] arr = mstream.ToArray();
-                    e.Imagem = arr;
-                    new ExercicioDAO().UpdateExercicio(e);
-                    
-                }
-                ViewBag.ImagePath = Server.MapPath("~") + @"Images\Exercicios\"+e.IdExercicio+".jpg";
-                ViewBag.ExercicioAtual = e;
-                ViewBag.Dicas = new DicaDAO().GetDicasExercicio(e.IdExercicio);
+                ViewBag.Exercicio = new ExercicioDAO().GetNextExercicioLicaoAluno(avm.IdAluno, lvm.IdLicao, lvm.NumExpl).IdExercicio;
+                Session["NextLicao"] = lvm;
 
                 return View();
             }
-    
+
             return RedirectToAction("Login", "Home");
         }
 
-        [HttpPost]
-        public ActionResult AnalisaResposta(int licao, int expl, int aluno, int ex, int r)
-        {
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = new RespostaDAO().IsRespostaCerta(r);
-
-            string message = "ACERTOU";
-            new LicaoDAO().RegistaResposta(licao, expl, aluno, ex, r);
-            
-            message = result ? "ACERTOU" : "FALHOU!";
-
-            return Json(message);
-        }
     }
 }

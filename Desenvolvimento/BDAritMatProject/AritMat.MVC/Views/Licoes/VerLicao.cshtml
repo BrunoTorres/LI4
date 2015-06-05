@@ -1,4 +1,5 @@
 ﻿@using System.Web.UI.WebControls
+@using AritMat.MVC.DataAccess
 @using AritMat.MVC.Models
 @using AritMat.MVC.Models.ViewModels
 @model AritMat.MVC.Models.ViewModels.AlunoViewModel
@@ -183,7 +184,7 @@
     <div class="row container">
         <div class="col-lg-8">
             @{
-                if (lvm.Video == null)
+                if (lvm.Video == null && lvm.Imagem == null)
                 {
 
                     <div class="panel panel-default">
@@ -265,6 +266,20 @@
                         <!-- /.panel-body -->
                     </div>
                 }
+                else if (lvm.Imagem != null)
+                {
+                    <div class="panel panel-default" id="imgDiv">
+                        <div class="panel-heading">
+                            <i class="fa fa-video-camera fa-fw"></i> Vídeo
+                        </div>
+                        <!-- /.panel-heading -->
+
+                        <div class="panel-body">
+                            <h3>Lição</h3>
+                            <img class="img-responsive" src="@Url.Content("~/Images/Licoes/L" + lvm.IdLicao + "E" + lvm.NumExpl + ".png")">
+                        </div>
+                    </div>
+                }
                 else
                 {
                     <script src="https://www.youtube.com/iframe_api"></script>
@@ -307,95 +322,12 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-8">
-            <div class="panel panel-default" id="exercicio">
-                <div class="panel-heading">
-                    <i class="fa fa-edit fa-fw"></i>Exercício
-                </div>
-                <!-- /.panel-heading -->
-
-                <div class="panel-body container">
-                    <h3>Exercício</h3>
-                    <!--<div class="form-group btn-group" data-toggle="buttons">-->
-                    @{
-                        if (ex.Imagem == null)
-                        {
-                            <label>@ex.Texto</label>
-                            <br />
-                        }
-                        else
-                        {
-                            <img class="img-responsive" src="@Url.Content("~/Images/Exercicios/" + ex.IdExercicio + ".jpg")" alt="Exercício @ex.IdExercicio">
-                        }
-
-                    }
-                    <br /><br />
-
-                    <form role="form" id="respForm">
-                        <div style="margin: 0 auto;">
-                            @{
-                                int j = 0;
-                                foreach (var r in ex.Respostas)
-                                {
-                                    <label class="radio-inline">
-                                        <input type="radio" name="optradio" id="@r.IdResposta" value="@r.IdResposta" />
-                                        @r.Texto
-                                    </label>
-                                    j++;
-                                }
-                            }
-                        </div>
-                        <br />
-                        <div class="form-group center-block">
-                            <input type="submit" class="btn-two btn" value="OK" />&nbsp;&nbsp;&nbsp;
-                            <input type="button" class="btn-two btn" onclick="ajudaExercicio()" value="Preciso de ajuda!" />&nbsp;&nbsp;&nbsp;
-                        </div>
-                    </form>
-                    <br /><br />
-                    <!-- </div>-->
-
-
-
-
-
-                </div>
-            </div>
-        </div>
-        <!--
-    -->
-        <div class="col-sm-4">
-            <h3>Dicas</h3>
-            <div id="rondellPages">
-                @{
-                    foreach (var d in dicasEx)
-                    {
-                        <div>
-                            @{
-                                if (d.Imagem != null)
-                                {
-                                    <img src="@Url.Content("~/Images/Dicas/" + d.IdDica + ".jpg")"/>
-                                }
-                                else
-                                {
-                                    <p class="text-muted text-center">@d.Texto</p>
-                                }
-                            }
-                        </div>
-                    }
-                }
-            </div>
-        </div>
-
-        </div>
     </div>
 
     <!-- /.container-fluid -->
 </div>
 <!-- /#page-wrapper -->
 
-</div>
-</div>
 </div>
 <!-- /#wrapper -->
 
@@ -451,7 +383,7 @@
 <script>
     var player;
     jQuery("#exercicio").hide();
-    
+
     function onYouTubeIframeAPIReady() {
         //var exer = jQuery("#exercicio").hide();
         player = new YT.Player('playerDiv', {
@@ -464,11 +396,11 @@
             }
         });
     }
-    
+
     function onPlayerReady(event) {
         event.target.playVideo();
     }
-    
+
     // when video ends
     function onPlayerStateChange(event) {
         if (event.data === 0) {
@@ -476,36 +408,12 @@
             jQuery("#opcoes").fadeIn();
         }
     }
-    
+
     function apresentaExercicio() {
-        jQuery("#opcoes").fadeOut();
-        jQuery("#exercicio").fadeIn();
-        scrollBottom();
+        window.location = "@Url.Action("Resolver","Exercicios", new { id = ViewBag.Exercicio })";
     }
-    
-    function ajudaExercicio() {
-        $("#rondellPages").fadeIn();
-    }
-    
-    $("#rondellPages").rondell({
-        preset: "pages"
-    });
-    jQuery("#rondellPages").hide();
-    
-    
-    $("#respForm").submit(function(event) {
-    
-        event.preventDefault();
-        $.post("@Url.Action("AnalisaResposta")", { licao: @ViewContext.RouteData.Values["id"], expl: @Request.Params["exp"], aluno: @al.IdAluno, ex: @ex.IdExercicio, r: $('input:radio[name=optradio]:checked').val() },
-            function(data) {
-                alert(data);
-            });
-    
-    });
+
 </script>
-
-
-
 </body>
 
 </html>

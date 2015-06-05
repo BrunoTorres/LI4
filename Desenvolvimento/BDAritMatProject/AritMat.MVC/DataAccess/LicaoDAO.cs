@@ -14,6 +14,15 @@ namespace AritMat.MVC.DataAccess
         private ExercicioDAO exercicioDAO;
         private TipoDAO tipoDAO;
 
+        public static readonly int EXER_MAIS_DIFICIL = 1;
+        public static readonly int PROX_LICAO = 2;
+        public static readonly int PROX_EXER = 3;
+        public static readonly int PROX_EXPLICACAO = 4;
+        public static readonly int LICAO_ANTERIOR = 5;
+        public static readonly int EXER_MAX_DIF = 6;
+        public static readonly int EXER_RANDOM = 7;
+        public static readonly int APRENDEU_TODAS = 8;
+
 
         public LicaoDAO()
         {
@@ -53,10 +62,7 @@ namespace AritMat.MVC.DataAccess
             int totalResp = a.ExerciciosEmLicao.Count(l => l.Licao == lastId);
             double percentCertas = (double)certas/(double)totalResp;
 
-            System.Diagnostics.Debug.WriteLine("CERTAS: " + certas + " | % CERTAS: " + percentCertas + " | TOTAL: " + totalResp);
-
             int totalExsLicao = new ExercicioDAO().GetNumExerciciosLicao(lastId);
-            System.Diagnostics.Debug.WriteLine("TOTAL EXS: " + totalExsLicao);
 
             // aprendeu a lição anterior
             if (percentCertas > 0.75 && a.ExerciciosEmLicao.Count(l => l.Licao == lastId) > (int)(0.5 * totalExsLicao))
@@ -88,7 +94,6 @@ namespace AritMat.MVC.DataAccess
             if(db.Licoes.Count(l => l.idLicao == lastId && l.NumExpl == lastExpl + 1) > 0)
                 return GetLicao(lastId, explsVistas.First().Explicacao + 1);
 
-            System.Diagnostics.Debug.WriteLine("GET NEXT LESSON - FIM");
             // não existem mais explicações -> mostrar a primeira
             return GetLicao(lastId, 1);
         }
@@ -118,29 +123,6 @@ namespace AritMat.MVC.DataAccess
         {
             return db.Licoes.Where(l => l.Tipo == 2).ToList();
         }
-        /*public Exercicio GetNextExercicioLicaoAluno(int idAluno, int idLicao)
-        {
-            List<AlunoExercicioLicao> exercicios = exercicioDAO.GetExerciciosAlunoLicao(idAluno, idLicao);
-
-            if(exercicios.Count == 0)
-                return exercicioDAO.GetFirstExercicioTipo(GetTipoLicao(idLicao));
-
-            AlunoExercicioLicao ael = new ExercicioDAO().GetLastExercicioDone(idAluno, idLicao);
-
-            int dificuldade = db.Exercicios.Find(ael.Exercicio).Dificuldade;
-
-            if (ael.Resposta > 0) // acertou resposta do último exercício
-                // não está a verificar se já fez o exercício selecionado
-                return
-                    db.Exercicios.Where(ex => ex.Tipo == GetTipoLicao(idLicao) && ex.Dificuldade > dificuldade)
-                        .OrderBy(ex => ex.Dificuldade)
-                        .First();
-
-            return db.Exercicios.Where(ex => ex.Dificuldade <= dificuldade && ex.IdExercicio != ael.Exercicio)
-                        .OrderByDescending(ex => ex.Dificuldade)
-                        .First();
-
-        }*/
 
         public Licao GetLicao(int id, int exp)
         {
@@ -164,32 +146,36 @@ namespace AritMat.MVC.DataAccess
         {
             var dbTransaction = db.Database.BeginTransaction();
             Aluno a = db.Alunos.Find(aluno);
-            System.Diagnostics.Debug.WriteLine("ALUNO");
+
             try
             {
-                AlunoExercicioLicao ael = new AlunoExercicioLicao();
+                AlunoExercicioLicao ael = new AlunoExercicioLicao
+                {
+                    Licao = licao,
+                    Explicacao = expl,
+                    Aluno = aluno,
+                    Resposta = new RespostaDAO().GetPontuacao(r),
+                    Exercicio = ex,
+                    Data = System.DateTime.Now
+                };
 
-                ael.Licao = licao;
-                ael.Explicacao = expl;
-                ael.Aluno = aluno;
-                ael.Resposta = new RespostaDAO().GetPontuacao(r);
-                ael.Exercicio = ex;
-                ael.Data = System.DateTime.Now;
 
                 db.AlunoExercicioLicoes.AddOrUpdate(ael);
-                System.Diagnostics.Debug.WriteLine("ALUNO-EXERCICIO-LICAO");
-                //AlunoLicao alAnterior = GetAlunoLicaoMaisRecente(aluno, licao);
+
+                a.Pontuacao += (int) ael.Resposta;
+                db.Alunos.AddOrUpdate(a);
 
                 AlunoLicao alAnterior = null;
                 if (a.LicoesVistas.Any(l => l.Licao == licao && l.Explicacao == expl))
                     alAnterior = a.LicoesVistas.First(l => l.Licao == licao && l.Explicacao == expl);
 
-                System.Diagnostics.Debug.WriteLine("AFTER ALANTERIOR");
-                AlunoLicao al = new AlunoLicao();
-                al.Aluno = aluno;
-                al.Explicacao = expl;
-                al.Licao = licao;
-                al.Data = System.DateTime.Now;
+                AlunoLicao al = new AlunoLicao
+                {
+                    Aluno = aluno,
+                    Explicacao = expl,
+                    Licao = licao,
+                    Data = System.DateTime.Now
+                };
                 if (alAnterior == null)
                 {
                     if (ael.Resposta < 0)
@@ -217,22 +203,27 @@ namespace AritMat.MVC.DataAccess
                     }
                 }
                 db.AlunoLicoes.AddOrUpdate(al);
-                System.Diagnostics.Debug.WriteLine("ALUNO-LICAO");
+
                 Tipo tipo = db.Licoes.Find(licao,expl).TipoLicao;
                 float estadoAnterior = 0;
 
                 if (a.Aprendizagens.Count(aprend => aprend.Tipo == tipo.IdTipo) > 0)
                     estadoAnterior = (float) a.Aprendizagens.OrderByDescending(aprend => aprend.Data).First().Estado;
 
-                System.Diagnostics.Debug.WriteLine("TIPO: " + tipo.IdTipo + " | AREA: " + tipo.Area);
-                Aprendizagem ap = new Aprendizagem();
-                ap.Aluno = aluno;
-                ap.Data = System.DateTime.Now;
-                ap.Estado = estadoAnterior + Formula((int)ael.Resposta, new ExercicioDAO().GetExercicio(ex).Dificuldade, GetNumRespostasCertas(aluno, tipo.IdTipo), GetNumRespostasErradas(aluno, tipo.IdTipo), GetNumLicoesTipo(tipo.IdTipo));
-                ap.Tipo = tipo.IdTipo;
+                Aprendizagem ap = new Aprendizagem
+                {
+                    Aluno = aluno,
+                    Data = System.DateTime.Now,
+                    Estado =
+                        estadoAnterior +
+                        Formula((int) ael.Resposta, new ExercicioDAO().GetExercicio(ex).Dificuldade,
+                            GetNumRespostasCertas(aluno, tipo.IdTipo), GetNumRespostasErradas(aluno, tipo.IdTipo),
+                            GetNumLicoesTipo(tipo.IdTipo)),
+                    Tipo = tipo.IdTipo
+                };
 
                 db.Aprendizagens.Add(ap);
-                System.Diagnostics.Debug.WriteLine("APRENDIZAGEM");
+
                 db.SaveChanges();
                 dbTransaction.Commit();
                 //dbTransaction.Rollback();
@@ -282,6 +273,63 @@ namespace AritMat.MVC.DataAccess
 
             return erradas;
 
+        }
+
+        public int OQueFazer(int aluno, int licao, int expl, int ex, bool result)
+        {
+            Exercicio e = db.Exercicios.Find(ex);
+            Aluno a = db.Alunos.Find(aluno);
+
+            int certas = (int) a.LicoesVistas.Where(l => l.Licao == licao && l.RespCertas != null).Sum(l => l.RespCertas);
+            int totalResp = (int) a.LicoesVistas.Where(l => l.Licao == licao && l.RespCertas != null).Sum(l => l.RespCertas);
+            totalResp += (int)a.LicoesVistas.Where(l => l.Licao == licao && l.RespErradas != null).Sum(l => l.RespErradas);
+
+            double percentCertas = (double)certas / (double)totalResp;
+
+            int totalExsLicao = new ExercicioDAO().GetNumExerciciosLicao(licao);
+            List<Exercicio> exerMaxDif = new ExercicioDAO().GetExerciciosLicaoMaxDificuldade(licao);
+
+            // se já acertou um exercicio de maxima dificuldade
+            bool acertouEmMax = false;
+            for (int i = 0; i < exerMaxDif.Count && !acertouEmMax; i++)
+            {
+                if (a.ExerciciosEmLicao.Any(el => el.Exercicio == exerMaxDif.ElementAt(i).IdExercicio && el.Resposta > 0))
+                    acertouEmMax = true;
+            }
+
+            if (result)
+            {
+                bool existeProx = db.Licoes.Any(ll => ll.idLicao == licao + 1);
+                // recomendar prox lição ou exercicio de max dif
+                if (percentCertas > 0.75 && a.ExerciciosEmLicao.Count(l => l.Licao == licao) > (int) (0.5*totalExsLicao))
+                {
+                    if (existeProx && acertouEmMax)
+                        return PROX_LICAO;
+
+                    if(!existeProx && acertouEmMax)
+                        return APRENDEU_TODAS;
+
+                    return EXER_MAX_DIF;
+                }
+
+                return e.Dificuldade == 5 ? EXER_RANDOM : EXER_MAIS_DIFICIL;
+            }
+
+            int erradas = totalResp - certas;
+            System.Diagnostics.Debug.WriteLine("ERRADAS SWITCH: " + erradas);
+            switch (erradas)
+            {
+                case 1:
+                    if(new ExercicioDAO().ExisteOutroExercicioMesmaDifDisponivel(aluno, licao, ex) != null)
+                        return PROX_EXER;
+                    
+                    return PROX_EXPLICACAO;
+                case 2:
+                case 3:
+                    return PROX_EXPLICACAO;
+                default:
+                    return LICAO_ANTERIOR;
+            }
         }
     }
 }

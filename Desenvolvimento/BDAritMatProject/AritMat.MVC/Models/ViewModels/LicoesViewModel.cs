@@ -23,6 +23,7 @@ namespace AritMat.MVC.Models.ViewModels
             Texto = l.Texto;
             Video = l.Video;
             TempoLicao = l.TempoLicao;
+            Imagem = l.Imagem;
 
             AlunoExercicioLicoes = new HashSet<AlunoExercicioLicao>();
             AlunoLicoes = new HashSet<AlunoLicao>();
