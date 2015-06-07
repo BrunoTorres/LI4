@@ -166,13 +166,51 @@ namespace AritMat.MVC.Controllers
                 }
                 
                 ViewBag.LicaoAtual = lvm;
-                ViewBag.Exercicio = new ExercicioDAO().GetNextExercicioLicaoAluno(avm.IdAluno, lvm.IdLicao, lvm.NumExpl).IdExercicio;
+                ViewBag.Exercicio = new ExercicioDAO(db).GetNextExercicioLicaoAluno(avm.IdAluno, lvm.IdLicao, lvm.NumExpl).IdExercicio;
                 Session["NextLicao"] = lvm;
 
                 return View();
             }
 
             return RedirectToAction("Login", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult ProximaExplicacao(int licao, int numExpl)
+        {
+            Licao l = db.Licoes.Find(licao, numExpl + 1);
+            if (l != null)
+                return Json(JsonConvert.SerializeObject(
+                    new RespostaAExercicio
+                    {
+                        NextLesson = licao,
+                        NextExpl = numExpl + 1
+                    }));
+
+            return Json(JsonConvert.SerializeObject(
+                new RespostaAExercicio
+                {
+                    NextExpl = numExpl
+                }));
+        }
+
+        [HttpPost]
+        public ActionResult ProximaLicao(int licao, int numExpl)
+        {
+            Licao l = db.Licoes.Find(licao, numExpl + 1);
+            if (l != null)
+                return Json(JsonConvert.SerializeObject(
+                    new RespostaAExercicio
+                    {
+                        NextLesson = licao,
+                        NextExpl = numExpl + 1
+                    }));
+
+            return Json(JsonConvert.SerializeObject(
+                new RespostaAExercicio
+                {
+                    NextExpl = numExpl
+                }));
         }
 
     }

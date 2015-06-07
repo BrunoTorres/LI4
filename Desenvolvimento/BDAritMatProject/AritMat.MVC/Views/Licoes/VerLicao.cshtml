@@ -315,9 +315,28 @@
                     <br/><br/>
                     <div class="form-group">
                         <input type="button" class="btn-two btn" onclick=" apresentaExercicio() " value="Sim, quero fazer um exercício!"/>&nbsp;&nbsp;&nbsp;
-                        <input type="button" class="btn-two btn" onclick=" nextExplicacao() " value="Não, preciso de outra explicação!"/>&nbsp;&nbsp;&nbsp;
+                        <input type="button" id="btnNextExpl" class="btn-two btn" onclick=" nextExplicacao() " value="Não, preciso de outra explicação!"/>&nbsp;&nbsp;&nbsp;
                         <input type="button" class="btn-two btn" onclick=" avancarLicao() " value="Quero avançar para a próxima lição!"/>&nbsp;&nbsp;&nbsp;
                     </div>
+                </div>
+            </div>
+            <div id="myModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-circle info" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title" id="modalHeader"></h4>
+                        </div>
+                        <div class="modal-body">
+                            <p id="modalText"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="btnOK" type="button" class="btn btn-info" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -382,6 +401,25 @@
 }
 <script>
     var player;
+    $(document).ready(function(e) {
+        $.post("@Url.Action("ProximaExplicacao")", { licao: @lvm.IdLicao, numExpl: @lvm.NumExpl },
+            function(data) {
+                var json = JSON.parse(data);
+                if (json.NextExpl <= @lvm.NumExpl) {
+                    var btnNextExp = document.getElementById("btnNextExpl");
+                    btnNextExp.style.visibility = 'hidden';
+                }
+        });
+        $.post("@Url.Action("ProximaLicao")", { licao: @lvm.IdLicao, numExpl: @lvm.NumExpl },
+        function(data) {
+            var json = JSON.parse(data);
+            if (json.NextExpl <= @lvm.NumExpl) {
+                var btnNextExp = document.getElementById("btnNextExpl");
+                btnNextExp.style.visibility = 'hidden';
+            }
+        });
+    })
+
     jQuery("#exercicio").hide();
 
     function onYouTubeIframeAPIReady() {
@@ -412,6 +450,17 @@
     function apresentaExercicio() {
         window.location = "@Url.Action("Resolver","Exercicios", new { id = ViewBag.Exercicio })";
     }
+
+    function nextExplicacao() {
+        $.post("@Url.Action("ProximaExplicacao")", { licao: @lvm.IdLicao, numExpl: @lvm.NumExpl },
+            function(data) {
+                var json = JSON.parse(data);
+                if (json.NextExpl > @lvm.NumExpl)
+                    window.location = "@Url.Action("VerLicao", new {id = lvm.IdLicao, exp = lvm.NumExpl + 1})";
+                else 
+                    $("#myModal").modal('show');
+            });
+    };
 
 </script>
 </body>

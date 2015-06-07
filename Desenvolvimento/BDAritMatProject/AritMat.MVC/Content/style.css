@@ -251,17 +251,36 @@ display: inline-block;
 .camera_overlayer {
 	opacity: .1;
 }
-.panel {
-	margin-bottom: 0px;
-	background-color: transparent;
-	border: 1px solid transparent;
-	border-radius: 0px;
-	-webkit-box-shadow: none;
-	box-shadow: none;
+.panel{
+	margin-bottom:20px;
+	background-color:#fff;
+	border:1px solid transparent;
+	border-radius:4px;
+	-webkit-box-shadow:0 1px 1px rgba(0,0,0,.05);
+	box-shadow:0 1px 1px rgba(0,0,0,.05)
 }
-.panel-body {
-	padding: 0px;
+
+.center-div-content {
+    margin: 0px auto;
+    float: none;
 }
+}
+
+.panel-body{
+	padding:15px
+}
+
+.panel-default {
+    border-color: #DDD;
+}
+
+.panel-heading{
+	padding:10px 15px;
+	border-bottom:1px solid transparent;
+	border-top-left-radius:3px;
+	border-top-right-radius:3px
+}
+
 .btn-action, .btn-primary {
 	color: #FFEFD7;
 	background-image: -webkit-linear-gradient(top, #0ecfec 0%, #09bed9 100%);

@@ -172,18 +172,18 @@ namespace AritMat.MVC.Controllers
                     return Json(JsonConvert.SerializeObject(
                         new RespostaAExercicio { OQueFazer = LicaoDAO.APRENDEU_TODAS }));
                 case 1: // EXER_MAIS_DIFICIL
-                    Exercicio newEx = new ExercicioDAO().GetNextExercicioLicaoAluno(aluno, licao, expl);
+                    Exercicio newEx = new ExercicioDAO(db).GetNextExercicioLicaoAluno(aluno, licao, expl);
                     return Json(JsonConvert.SerializeObject(
                         new RespostaAExercicio { OQueFazer = LicaoDAO.EXER_MAIS_DIFICIL, NextExercicio = newEx.IdExercicio }));
                 case 6: // EXER_MAX_DIF
-                    List<Exercicio> exsMax = new ExercicioDAO().GetExerciciosLicaoMaxDificuldade(licao);
+                    List<Exercicio> exsMax = new ExercicioDAO(db).GetExerciciosLicaoMaxDificuldade(licao);
 
                     // há a possibilidade de sair um que já tenha realizado e falhado
                     Exercicio exMaxDif = exsMax.ElementAt(new Random().Next(0, exsMax.Count - 1));
                     return Json(JsonConvert.SerializeObject(
                         new RespostaAExercicio { OQueFazer = LicaoDAO.EXER_MAX_DIF, NextExercicio = exMaxDif.IdExercicio }));
                 case 7: // EXER_RANDOM
-                    List<Exercicio> exs = new ExercicioDAO().GetExerciciosLicao(licao);
+                    List<Exercicio> exs = new ExercicioDAO(db).GetExerciciosLicao(licao);
 
                     // podem sair exercicios repetidos
                     Exercicio exRand = exs.ElementAt(new Random().Next(0, exs.Count - 1));
@@ -191,14 +191,16 @@ namespace AritMat.MVC.Controllers
                         new RespostaAExercicio { OQueFazer = LicaoDAO.EXER_RANDOM, NextExercicio = exRand.IdExercicio }));
                 case 5: // Lição anterior
                     int tipoAnterior = new LicaoDAO().GetTipoLicao(licao);
-                    int nextLesson = db.Licoes.Any(l => l.Tipo == tipoAnterior && l.idLicao < licao)
+                    bool existeAnterior = db.Licoes.Any(l => l.Tipo == tipoAnterior && l.idLicao < licao);
+                    int nextLesson = existeAnterior
                             ? licao - 1
-                            : 1;
+                            : licao;
+                    int decisao = existeAnterior ? LicaoDAO.LICAO_ANTERIOR : LicaoDAO.NAO_HA_ANTERIOR;
                     return Json(JsonConvert.SerializeObject(
-                        new RespostaAExercicio{ OQueFazer = LicaoDAO.LICAO_ANTERIOR, NextLesson = nextLesson, NextExpl = 1 }));
+                        new RespostaAExercicio{ OQueFazer = decisao, NextLesson = nextLesson, NextExpl = 1 }));
                 case 3: // prox exercicio
                     return Json(JsonConvert.SerializeObject(
-                        new RespostaAExercicio { OQueFazer = LicaoDAO.PROX_EXER, NextExercicio = new ExercicioDAO().ExisteOutroExercicioMesmaDifDisponivel(aluno, licao, ex).IdExercicio }));
+                        new RespostaAExercicio { OQueFazer = LicaoDAO.PROX_EXER, NextExercicio = new ExercicioDAO(db).ExisteOutroExercicioMesmaDifDisponivel(aluno, licao, ex).IdExercicio }));
                 case 4: // prox explicação
                     Licao nextL = new LicaoDAO().GetLicao(licao, expl + 1);
                     return Json(JsonConvert.SerializeObject(

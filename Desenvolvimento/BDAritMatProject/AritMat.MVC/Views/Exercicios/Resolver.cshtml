@@ -187,7 +187,7 @@
                         </div>
                         <!-- /.panel-heading -->
 
-                        <div class='panel-body container'>
+                        <div class='panel-body>
                             <!--<div class='form-group btn-group' data-toggle='buttons'>-->
                             @{
                         if (Model.Imagem == null)
@@ -336,11 +336,6 @@
 
     }
 
-    //$("#btnOK").hide();
-    //$("#btnProxLicao").hide();
-    //$("#btnRefuse").hide();
-    //$("#myModal").hide();
-
     $("#respForm").submit(function(event) {
 
         event.preventDefault();
@@ -378,6 +373,13 @@
                         modalHeader.setAttribute("class", "text-danger");
                         modalHeader.innerHTML = "Oh não, falhaste a resposta :(";
                         modalText.innerHTML = "Talvez seja melhor reveres a lição anterior, ok?";
+                        btnOk.setAttribute("onClick", "window.location = '/Licoes/VerLicao/" + json.NextLesson + "?exp=" + json.NextExpl + "'");
+                        $("#myModal").modal('show');
+                        break;
+                    case @LicaoDAO.NAO_HA_ANTERIOR:
+                        modalHeader.setAttribute("class", "text-danger");
+                        modalHeader.innerHTML = "Oh não, falhaste a resposta :(";
+                        modalText.innerHTML = "Esta é a primeira lição deste tema, talvez seja melhor estudares mais um bocadinho...";
                         btnOk.setAttribute("onClick", "window.location = '/Licoes/VerLicao/" + json.NextLesson + "?exp=" + json.NextExpl + "'");
                         $("#myModal").modal('show');
                         break;

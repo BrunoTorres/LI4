@@ -172,6 +172,7 @@
     <Compile Include="DataAccess\ExercicioDAO.cs" />
     <Compile Include="DataAccess\LicaoDAO.cs" />
     <Compile Include="DataAccess\RespostaDAO.cs" />
+    <Compile Include="DataAccess\TesteDAO.cs" />
     <Compile Include="DataAccess\TipoDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1141,7 +1142,7 @@
     <Content Include="Views\Exercicios\Index.cshtml" />
     <Content Include="Views\Testes\Create.cshtml" />
     <Content Include="Views\Testes\Delete.cshtml" />
-    <Content Include="Views\Testes\Details.cshtml" />
+    <Content Include="Views\Testes\Resolver.cshtml" />
     <Content Include="Views\Testes\Edit.cshtml" />
     <Content Include="Views\Testes\Index.cshtml" />
     <Content Include="Views\Licoes\VerLicao.cshtml" />

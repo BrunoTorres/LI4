@@ -11,5 +11,7 @@ namespace AritMat.MVC.JSonAux
         public int NextLesson { get; set; }
         public int NextExpl { get; set; }
         public int NextExercicio { get; set; }
+        public int Certas { get; set; }
+        public int Erradas { get; set; }
     }
 }

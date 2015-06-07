@@ -13,9 +13,10 @@ namespace AritMat.MVC.DataAccess
         private BDAritMatProjectEntities db;
         private LicaoDAO licaoDAO;
 
-        public ExercicioDAO()
+        public ExercicioDAO(BDAritMatProjectEntities bd)
         {
-            db = new BDAritMatProjectEntities();
+            //db = new BDAritMatProjectEntities();
+            db = bd;
             //licaoDAO = new LicaoDAO();
         }
         public List<AlunoExercicioLicao> GetExerciciosAlunoLicao(int idAluno, int idLicao)
@@ -182,5 +183,11 @@ namespace AritMat.MVC.DataAccess
         }
 
 
+        public List<Exercicio> GetTodosExercicios()
+        {
+            List<Exercicio> exs = db.Exercicios.ToList();
+
+            return exs;
+        }
     }
 }
