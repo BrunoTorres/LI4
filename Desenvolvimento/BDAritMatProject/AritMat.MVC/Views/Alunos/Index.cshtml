@@ -11,6 +11,7 @@
 
 @{
     AlunoViewModel al = ((AlunoViewModel)(Session["User"]));
+    ViewBag.Title = al.Username;
 }
 
 @{
@@ -76,7 +77,7 @@
                     <li class="c2">@Html.ActionLink("Sobre", "About", "Home") </li>
                     @if (al != null)
                     {
-                        <li class="c3">@Html.ActionLink("Editar perfil", "Edit", "Aluno", new {id = al.IdAluno})</li>
+                        <li class="c3"><a href="@Url.Action("Edit","Alunos", new { id = al.IdAluno })">Editar Perfil</a></li>
                     }
                     <li class="c4">@Html.ActionLink("Sair", "Logout", "Home") </li>
 
@@ -99,7 +100,7 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="@Url.Action("Index")"><i class="fa fa-dashboard fa-fw"></i>&nbsp;&nbsp;O teu painel</a>
+                            <a href="@Url.Action("Index","Alunos")"><i class="fa fa-dashboard fa-fw"></i>&nbsp;&nbsp;O teu painel</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;Lições<span class="fa arrow"></span></a>
@@ -142,15 +143,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i>&nbsp;&nbsp;Testes<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="@Url.Action("Adicao", "Teste")"><span class="fa fa-plus-circle"></span>&nbsp;&nbsp;Adição</a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Subtracao", "Teste")"><span class="fa fa-minus-circle"></span>&nbsp;&nbsp;Subtração</a>
-                                </li>
-                            </ul>
+                            <a href="@Url.Action("Resolver","Testes")"><i class="fa fa-files-o fa-fw"></i>&nbsp;&nbsp;Fazer um teste</a>
                             <!-- /.nav-second-level -->
                         </li>
 
@@ -173,7 +166,7 @@
                     <div class="col-lg-8">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <i class="fa fa-clock-o fa-fw"></i> Avisos
+                                <i class="fa fa-clock-o fa-fw"></i> Informações
                             </div>
                             <!-- /.panel-heading -->
                             <div class="panel-body">
@@ -184,13 +177,12 @@
                                         </div>
                                         <div class="timeline-panel">
                                             <div class="timeline-heading">
-                                                <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                                                <p>
-                                                    <small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small>
-                                                </p>
+                                                <h4 class="timeline-title">Estatísticas</h4>
                                             </div>
                                             <div class="timeline-body">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+                                                <p>Acertaste em <strong class="text-success">@ViewBag.Certas</strong> perguntas, ou seja em <strong class="text-success">@Math.Round(ViewBag.PercentCertas*100, 2) %</strong> das que fizeste
+                                                </p>
+                                                <p>Fizeste <strong class="text-success">@ViewBag.TestesFeitos</strong> testes e tens uma média de <strong class="text-success">@Math.Round(ViewBag.PercentTestes*100, 2) %</strong></p>
                                             </div>
                                         </div>
                                     </li>
@@ -209,7 +201,7 @@
                                                         <p>Clica no botão para repetires a primeira lição</p>
                                                         <hr>
                                                         <div class="btn-group">
-                                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" onclick=" window.location = '@Url.Action("VerLicao", "Licoes", new {id = 1, exp = 1})' ">
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" onclick="window.location = '@Url.Action("VerLicao", "Licoes", new {id = 1, exp = 1})'">
                                                                 <i class=" fa fa-edit">
                                                                 </i>
                                                             </button>
@@ -225,7 +217,7 @@
                                                         <p>Clica no botão</p>
                                                         <hr>
                                                         <div class="btn-group">
-                                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" onclick=" window.location = '@Url.Action("VerLicao", "Licoes", new {id = ViewBag.NextLicao.idLicao, exp = ViewBag.NextLicao.NumExpl})'">
+                                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" onclick="window.location = '@Url.Action("VerLicao", "Licoes", new {id = ViewBag.NextLicao.idLicao, exp = ViewBag.NextLicao.NumExpl})'">
                                                                 <i class=" fa fa-edit">
                                                                 </i>
                                                             </button>
@@ -234,19 +226,6 @@
                                                 }
                                             }
                                             
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="timeline-badge danger">
-                                            <i class="fa fa-graduation-cap"></i>
-                                        </div>
-                                        <div class="timeline-panel">
-                                            <div class="timeline-heading">
-                                                <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                                            </div>
-                                            <div class="timeline-body">
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-                                            </div>
                                         </div>
                                     </li>
                                 </ul>

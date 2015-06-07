@@ -179,6 +179,9 @@ namespace AritMat.MVC.DataAccess
                 }
             }
 
+            if(res == null)
+                System.Diagnostics.Debug.WriteLine("NULL");
+
             return res;
         }
 
@@ -188,6 +191,21 @@ namespace AritMat.MVC.DataAccess
             List<Exercicio> exs = db.Exercicios.ToList();
 
             return exs;
+        }
+
+        public int GetNumCertas(int idAluno)
+        {
+            Aluno a = db.Alunos.Find(idAluno);
+            return (int) a.LicoesVistas.Where(ax => ax.RespCertas != null).Sum(ax => ax.RespCertas);
+        }
+
+        public double GetPercentCertas(int idAluno)
+        {
+            Aluno a = db.Alunos.Find(idAluno);
+            int certas = GetNumCertas(idAluno);
+            int erradas = (int) a.LicoesVistas.Where(ax => ax.RespErradas != null).Sum(ax => ax.RespErradas);
+
+            return (double) certas / (certas + erradas);
         }
     }
 }

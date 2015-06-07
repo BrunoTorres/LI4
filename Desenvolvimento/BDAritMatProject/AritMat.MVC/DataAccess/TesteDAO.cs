@@ -4,16 +4,18 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using AritMat.MVC.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace AritMat.MVC.DataAccess
 {
     public class TesteDAO
     {
-        BDAritMatProjectEntities db = new BDAritMatProjectEntities();
+        private BDAritMatProjectEntities db;
         ExercicioDAO exercicioDAO;
 
-        public TesteDAO()
+        public TesteDAO(BDAritMatProjectEntities bd)
         {
+            db = bd;
             exercicioDAO = new ExercicioDAO(db);
         }
         
@@ -75,8 +77,57 @@ namespace AritMat.MVC.DataAccess
             }
             catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine("ROOOLLBACK!");
                 dbTransaction.Rollback();
             }
+        }
+
+        public int GetNumTestesFeitosAluno(int aluno)
+        {
+            return db.AlunoTesteExercicios.DistinctBy(al => al.Teste).Count(al => al.Aluno == aluno);
+        }
+
+        public double GetPercentTestesAluno(int aluno)
+        {
+            Aluno a = db.Alunos.Find(aluno);
+            Dictionary<int, List<AlunoTesteExercicio>> testes = new Dictionary<int, List<AlunoTesteExercicio>>();
+
+            foreach (var ext in a.ExerciciosEmTestes)
+            {
+                if (!testes.ContainsKey(ext.Teste))
+                {
+                    List<AlunoTesteExercicio> l = new List<AlunoTesteExercicio>();
+                    l.Add(ext);
+                    testes.Add(ext.Teste, l);
+                }
+                else
+                {
+                    testes[ext.Teste].Add(ext);
+                }
+            }
+
+            Dictionary<int, double> pontuacoes = new Dictionary<int, double>();
+            foreach (var t in testes.Keys)
+            {
+                pontuacoes.Add(t, 0.0);
+                foreach (var listElem in testes[t])
+                {
+                    pontuacoes[t] += listElem.Nota > 0 ? 1 : 0;
+                }
+            }
+
+            // medias dos testes
+            double somaMedias = 0.0;
+            Dictionary<int, double> medias = new Dictionary<int, double>();
+            foreach (var pont in pontuacoes.Keys)
+            {
+                medias.Add(pont, pontuacoes[pont] / 8);
+                somaMedias += medias[pont];
+            }
+
+            double mediaTestes = somaMedias / pontuacoes.Count;
+
+            return mediaTestes;
         }
     }
 }

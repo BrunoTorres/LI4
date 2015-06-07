@@ -1,0 +1,5 @@
+C:\Users\John\Documents\Repos\LI4\Desenvolvimento\BDAritMatProject\BDAritMatProject\bin\Debug\BDAritMatProject.dacpac
+C:\Users\John\Documents\Repos\LI4\Desenvolvimento\BDAritMatProject\BDAritMatProject\bin\Debug\BDAritMatProject.dll
+C:\Users\John\Documents\Repos\LI4\Desenvolvimento\BDAritMatProject\BDAritMatProject\bin\Debug\BDAritMatProject.pdb
+C:\Users\John\Documents\Repos\LI4\Desenvolvimento\BDAritMatProject\BDAritMatProject\obj\Debug\BDAritMatProject.dll
+C:\Users\John\Documents\Repos\LI4\Desenvolvimento\BDAritMatProject\BDAritMatProject\obj\Debug\BDAritMatProject.pdb

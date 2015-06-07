@@ -31,6 +31,19 @@ namespace AritMat.MVC.Controllers
             if (avm != null)
             {
                 Licao l = new LicaoDAO().GetNextLicaoAluno(avm.IdAluno);
+                double percCertas = new ExercicioDAO(db).GetPercentCertas(avm.IdAluno);
+                int certas = new ExercicioDAO(db).GetNumCertas(avm.IdAluno);
+                int testesFeitos = new TesteDAO(db).GetNumTestesFeitosAluno(avm.IdAluno);
+                double percentTestes = new TesteDAO(db).GetPercentTestesAluno(avm.IdAluno);
+
+                ViewBag.PercentCertas = percCertas;
+                ViewBag.Certas = certas;
+                ViewBag.TestesFeitos = testesFeitos;
+                ViewBag.PercentTestes = percentTestes;
+
+                System.Diagnostics.Debug.WriteLine("NTestes: " + testesFeitos + "\nMEDIA TESTES: " + percentTestes +
+                    "\nNCertas: " + certas + "\nPercCertas: " + percCertas);
+
                 ViewBag.NextLicao = l;
 
                 ViewBag.LicoesAdd = new LicaoDAO().GetLicoesAdd();
@@ -55,13 +68,20 @@ namespace AritMat.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Aluno aluno = db.Alunos.Find(id);
-            if (aluno == null)
+            var avm = Session["User"] as AlunoViewModel;
+
+            if (avm != null && avm.IdAluno == id)
             {
-                return HttpNotFound();
+                Aluno aluno = db.Alunos.Find(id);
+                if (aluno == null)
+                {
+                    return HttpNotFound();
+                }
+                AlunoEditModel aem = new AlunoEditModel(aluno);
+                return View(aem);
             }
-            AlunoEditModel aem = new AlunoEditModel(aluno);
-            return View(aem);
+            
+            return RedirectToAction("Login", "Home");
         }
 
         // POST: Alunos/Edit/5
@@ -89,13 +109,19 @@ namespace AritMat.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Aluno aluno = db.Alunos.Find(id);
-            if (aluno == null)
+            var avm = Session["User"] as AlunoViewModel;
+
+            if (avm != null && avm.IdAluno == id)
             {
-                return HttpNotFound();
+                Aluno aluno = db.Alunos.Find(id);
+                if (aluno == null)
+                {
+                    return HttpNotFound();
+                }
+                AlunoDetailsModel adm = new AlunoDetailsModel(aluno);
+                return View(adm);
             }
-            AlunoDetailsModel adm = new AlunoDetailsModel(aluno);
-            return View(adm);
+            return RedirectToAction("Login", "Home");
         }
 
 

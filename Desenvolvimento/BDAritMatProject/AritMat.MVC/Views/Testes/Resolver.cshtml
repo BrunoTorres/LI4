@@ -82,7 +82,7 @@
                     <li class="c2">@Html.ActionLink("Sobre", "About", "Home") </li>
                     @if (al != null)
                     {
-                        <li class="c3">@Html.ActionLink("Editar perfil", "Edit", "Aluno", new { id = al.IdAluno })</li>
+                        <li class="c3"><a href="@Url.Action("Edit","Alunos", new { id = al.IdAluno })">Editar Perfil</a></li>
                     }
                     <li class="c4">@Html.ActionLink("Sair", "Logout", "Home") </li>
 
@@ -100,17 +100,13 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li class="sidebar-search">
-                        <h1 class="page-header">
-                            @if (al != null)
-                            {
-                                @al.Username
-                            }
-                        </h1>
+                        <h1 class="page-header">@if (al != null)
+                        { @al.Username }</h1>
 
                         <!-- /input-group -->
                     </li>
                     <li>
-                        <a href="@Url.Action("Index", "Alunos")"><i class="fa fa-dashboard fa-fw"></i>&nbsp;&nbsp;O teu painel</a>
+                        <a href="@Url.Action("Index","Alunos")"><i class="fa fa-dashboard fa-fw"></i>&nbsp;&nbsp;O teu painel</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;Lições<span class="fa arrow"></span></a>
@@ -124,7 +120,7 @@
                                         foreach (var l in licoesAdd)
                                         {
                                             <li>
-                                                <a href="#"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
+                                                <a href="@Url.Action("VerLicao", "Licoes", new { id = l.idLicao })"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
                                             </li>
                                             i++;
                                         }
@@ -134,37 +130,45 @@
                             <li>
                                 <a href="#"><span class="fa fa-minus-circle"></span>&nbsp;&nbsp;Subtração<span class="fa arrow"></span></a>
                                 <ul class="nav nav-third-level">
-                                    @if (licoesSub != null)
-                                    {
-                                        int i = 1;
-                                        foreach (var l in licoesSub)
+                                    @{
+                                        if (licoesSub != null)
                                         {
-                                            <li>
-                                                <a href="#"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
-                                            </li>
-                                            i++;
+                                            int i = 1;
+                                            foreach (var l in licoesSub)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("VerLicao", "Licoes", new { id = l.idLicao })"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
+                                                </li>
+                                                i++;
+                                            }
                                         }
                                     }
                                 </ul>
                             </li>
                         </ul>
+
                         <!-- /.nav-second-level -->
                     </li>
                     <li>
-                        <a href="@Url.Action("Resolver", "Testes")"><i class="fa fa-files-o fa-fw"></i>&nbsp;&nbsp;Fazer teste</a>
+                        <a href="@Url.Action("Resolver","Testes")"><i class="fa fa-files-o fa-fw"></i>&nbsp;&nbsp;Fazer um teste</a>
+                        <!-- /.nav-second-level -->
                     </li>
 
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
         </div>
+
         <!-- /.navbar-static-side -->
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-10">
                         <h1 class="page-header">Teste</h1>
+                    </div>
+                    <div class="col-lg-2" id="timerDiv">
+                        
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -226,24 +230,22 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /#page-wrapper -->
-        <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+    <div id="myModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-circle info" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title" id="modalHeader"></h4>
-                    </div>
-                    <div class="modal-body">
-                        <p id="modalText"></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button id="btnOK" type="button" class="btn btn-info" data-dismiss="modal" onclick="window.location = '@Url.Action("Index","Alunos")'">OK</button>
-                    </div>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalHeader"></h4>
                 </div>
-
+                <div class="modal-body">
+                    <p id="modalText"></p>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnOK" type="button" class="btn btn-info" data-dismiss="modal" onclick="window.location = '@Url.Action("Index","Alunos")'">OK</button>
+                </div>
             </div>
+
         </div>
     </div>
     <!-- /#wrapper -->
@@ -261,10 +263,30 @@
 
     <script type="text/javascript" src="~/Scripts/modernizr-2.6.2.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.rondell.js"></script>
-    <script type="text/javascript" src="~/Scripts/jquery.countdown.min.js"></script>
-<!--<script type="text/javascript" src="~/Scripts/jquery.countdown.js"></script>-->
+    <script type="text/javascript" src="~/Scripts/jquery.countdown360.js"></script>
 
 <script type="text/javascript">
+
+    var countdown;
+    $(document).ready(function() {
+        countdown = $('#timerDiv').countdown360({
+            radius: 60,
+            seconds: 30 * 8,
+            fontColor: '#FFFFFF',
+            autoStart: true,
+            fillStyle: '#29AAE2',
+            strokeStyle: '#1884B1',
+            onComplete: function(event) {
+                $("#ops").fadeOut();
+                var modalText = document.getElementById("modalText");
+                var modalHeader = document.getElementById("modalHeader");
+                btnOk.setAttribute("onClick", "location.reload()");
+                modalHeader.innerHTML = "Acabou o tempo...";
+                modalText.innerHTML = "Não acabaste este exercício!<br>Queres tentar outra vez?";
+                $("#myModal").modal('show');
+            }
+        });
+    });
     $("#formTeste").submit(function (event) {
         event.preventDefault();
         $.post("@Url.Action("AnalisaTeste")", {
@@ -279,18 +301,13 @@
             r6: $('input:radio[name=resp-6]:checked').val(),
             r7: $('input:radio[name=resp-7]:checked').val() },
             function (data) {
+                countdown.stop();
                 var json = JSON.parse(data);
                 var certas = json.Certas;
                 var erradas = json.Erradas;
                 var modalHeader = document.getElementById("modalHeader");
                 var modalText = document.getElementById("modalText");
                 var percent = certas / 8;
-
-                if (percent >= 0.5) {
-                    modalHeader.setAttribute("class", "text-success");
-                    modalHeader.innerHTML = "Oh não...";
-                    modalText.innerHTML = "Não conseguiste passar neste teste...<br/>Vamos tentar outra vez?";
-                }
 
                 if (percent < 0.5) {
                     modalHeader.setAttribute("class", "text-danger");

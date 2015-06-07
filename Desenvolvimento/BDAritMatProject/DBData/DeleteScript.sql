@@ -1,0 +1,35 @@
+DELETE FROM AlunoExercicioLicao
+
+DELETE FROM AlunoTesteExercicio
+
+DELETE FROM AlunoLicao
+
+DELETE FROM Aprendizagem
+DBCC CHECKIDENT (Aprendizagem, RESEED, 0)
+
+DELETE FROM LicaoExercicio
+
+DELETE FROM TesteExercicio
+
+DELETE FROM Resposta
+DBCC CHECKIDENT (Resposta, RESEED, 0)
+
+DELETE FROM Dica
+DBCC CHECKIDENT (Dica, RESEED, 0)
+
+DELETE FROM Exercicio
+DBCC CHECKIDENT (Exercicio, RESEED, 0)
+
+DELETE FROM Aluno
+DBCC CHECKIDENT (Aluno, RESEED, 0)
+
+DELETE FROM Licao
+
+DELETE FROM Administrador
+DBCC CHECKIDENT (Administrador, RESEED, 0)
+
+DELETE FROM Teste
+DBCC CHECKIDENT (Teste, RESEED, 0)
+
+DELETE FROM Tipo;
+DBCC CHECKIDENT (Tipo, RESEED, 0)

@@ -84,7 +84,7 @@
                     <li class="c2">@Html.ActionLink("Sobre", "About", "Home") </li>
                     @if (al != null)
                     {
-                        <li class="c3">@Html.ActionLink("Editar perfil", "Edit", "Aluno", new {id = al.IdAluno})</li>
+                        <li class="c3"><a href="@Url.Action("Edit","Alunos", new { id = al.IdAluno })">Editar Perfil</a></li>
                     }
                     <li class="c4">@Html.ActionLink("Sair", "Logout", "Home") </li>
 
@@ -102,73 +102,65 @@
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
                     <li class="sidebar-search">
-                        <h1 class="page-header">
-                            @if (al != null)
+                        <h1 class="page-header">@if (al != null)
+                        { @al.Username }</h1>
+
+                        <!-- /input-group -->
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","Alunos")"><i class="fa fa-dashboard fa-fw"></i>&nbsp;&nbsp;O teu painel</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;Lições<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="#"><span class="fa fa-plus-circle"></span>&nbsp;&nbsp;Adição<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level">
+                                    @if (licoesAdd != null)
+                                    {
+                                        int i = 1;
+                                        foreach (var l in licoesAdd)
                                         {
-                                @al.Username
+                                            <li>
+                                                <a href="@Url.Action("VerLicao", "Licoes", new { id = l.idLicao })"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
+                                            </li>
+                                            i++;
                                         }
-                    </h1>
+                                    }
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><span class="fa fa-minus-circle"></span>&nbsp;&nbsp;Subtração<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level">
+                                    @{
+                                        if (licoesSub != null)
+                                        {
+                                            int i = 1;
+                                            foreach (var l in licoesSub)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("VerLicao", "Licoes", new { id = l.idLicao })"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
+                                                </li>
+                                                i++;
+                                            }
+                                        }
+                                    }
+                                </ul>
+                            </li>
+                        </ul>
 
-                    <!-- /input-group -->
-                </li>
-                <li>
-                    <a href="@Url.Action("Index", "Alunos")"><i class="fa fa-dashboard fa-fw"></i>&nbsp;&nbsp;O teu painel</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-edit fa-fw"></i>&nbsp;&nbsp;Lições<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="#"><span class="fa fa-plus-circle"></span>&nbsp;&nbsp;Adição<span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                @if (licoesAdd != null)
-                            {
-                                int i = 1;
-                                foreach (var l in licoesAdd)
-                                {
-                                    <li>
-                                        <a href="#"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
-                                    </li>
-                                    i++;
-                                }
-                            }
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><span class="fa fa-minus-circle"></span>&nbsp;&nbsp;Subtração<span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                @if (licoesSub != null)
-                            {
-                                int i = 1;
-                                foreach (var l in licoesSub)
-                                {
-                                    <li>
-                                        <a href="#"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
-                                    </li>
-                                    i++;
-                                }
-                            }
-                            </ul>
-                        </li>
-                    </ul>
-                    <!-- /.nav-second-level -->
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-files-o fa-fw"></i>&nbsp;&nbsp;Testes<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="@Url.Action("Adicao", "Teste")"><span class="fa fa-plus-circle"></span>&nbsp;&nbsp;Adição</a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Adicao", "Teste")"><span class="fa fa-minus-circle"></span>&nbsp;&nbsp;Subtração</a>
-                        </li>
-                    </ul>
-                    <!-- /.nav-second-level -->
-                </li>
+                        <!-- /.nav-second-level -->
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Resolver","Testes")"><i class="fa fa-files-o fa-fw"></i>&nbsp;&nbsp;Fazer um teste</a>
+                        <!-- /.nav-second-level -->
+                    </li>
 
-            </ul>
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
         </div>
-        <!-- /.sidebar-collapse -->
-    </div>
+
     <!-- /.navbar-static-side -->
     <!-- Page Content -->
     <div id="page-wrapper">
@@ -187,40 +179,42 @@
                         </div>
                         <!-- /.panel-heading -->
 
-                        <div class='panel-body>
+                        <div class='panel-body'>
                             <!--<div class='form-group btn-group' data-toggle='buttons'>-->
                             @{
                         if (Model.Imagem == null)
                         {
-                            <label>@Model.Texto</label>
+                            <label class="text-center">@Model.Texto</label>
                                 <br />
                         }
                         else
                         {
-                            <img class='img-responsive' src='@Url.Content("~/Images/Exercicios/E" + Model.IdExercicio + ".png")' alt='Exercício @Model.IdExercicio'>
+                            <img class='img-responsive center-block' src='@Url.Content("~/Images/Exercicios/E" + Model.IdExercicio + ".png")' alt='Exercício @Model.IdExercicio'>
                         }
 
                             }
                             <br /><br />
 
                             <form role='form' id='respForm'>
-                                <div style='margin: 0 auto;'>
+                                <div class="form-group">
                                     @{
                                         int j = 0;
                                         foreach (var r in Model.Respostas)
                                         {
-                                            <label class='radio-inline'>
-                                                <input type='radio' name='optradio' id='@r.IdResposta' value='@r.IdResposta' />
-                                                @r.Texto
-                                            </label>
+                                            <div class="col-sm-2 col-sm-offset-5">
+                                                <label class='radio-inline'>
+                                                    <input type='radio' name='optradio' id='@r.IdResposta' value='@r.IdResposta' />
+                                                    @r.Texto
+                                                </label>
+                                            </div>
                                             j++;
                                         }
                                     }
                                 </div>
                                 <br />
-                                <div class='form-group center-block'>
+                                <div class='form-group center-block' id="ops">
                                     <input type='submit' class='btn-two btn' value='OK' />&nbsp;&nbsp;&nbsp;
-                                    <input type='button' class='btn-two btn' onclick='ajudaExercicio()' value='Preciso de ajuda!' />&nbsp;&nbsp;&nbsp;
+                                    <input type='button' id="btnAjuda" class='btn-two btn' onclick='ajudaExercicio()' value='Preciso de ajuda!' />&nbsp;&nbsp;&nbsp;
                                 </div>
                             </form>
                             <br /><br />
@@ -236,27 +230,36 @@
                 <!--
                 -->
                 <div class="col-sm-4">
-                    <h3>Dicas</h3>
-                    <div id="rondellPages">
-                        @{
-                    foreach (var d in dicasEx)
-                    {
-                        <div>
+                    <div class="row">
+                        <h3>Tempo</h3>
+                        <div id="timerDiv"></div>
+                    </div>
+                    <div class="row" id="dicas">
+                        <h3>Dicas</h3>
+                        <div id="rondellPages">
                             @{
-                        if (d.Imagem != null)
-                        {
-                            <img src="@Url.Content("~/Images/Dicas/" + d.IdDica + ".png")" />
-                        }
-                        else
-                        {
-                            <p class="text-muted text-center">@d.Texto</p>
-                        }
+                                foreach (var d in dicasEx)
+                                {
+                                    <div>
+                                        @{
+                                    if (d.Imagem != null)
+                                    {
+                                        <img src="@Url.Content("~/Images/Dicas/" + d.IdDica + ".png")" />
+                                    }
+                                    else
+                                    {
+                                        <p class="text-muted text-center">@d.Texto</p>
+                                    }
+                                        }
+                                    </div>
+                                }
                             }
                         </div>
-                    }
-                        }
                     </div>
-                </div>
+
+                    </div>
+
+
 
             </div>
 
@@ -267,13 +270,12 @@
         <!-- /.container-fluid -->
     </div>
     <!-- /#page-wrapper -->
-        <div id="myModal" class="modal fade" role="dialog">
+        <div id="myModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog">
 
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="btn-circle info" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title" id="modalHeader"></h4>
                     </div>
                     <div class="modal-body">
@@ -303,8 +305,8 @@
 
 <script type="text/javascript" src="~/Scripts/modernizr-2.6.2.js"></script>
 <script type="text/javascript" src="~/Scripts/jquery.rondell.js"></script>
-<script type="text/javascript" src="~/Scripts/jquery.countdown.min.js"></script>
-<!--<script type="text/javascript" src="~/Scripts/jquery.countdown.js"></script>-->
+<!--<script type="text/javascript" src="~/Scripts/jquery.countdown.min.js"></script>-->
+    <script type="text/javascript" src="~/Scripts/jquery.countdown360.js"></script>
  
 <script>
     var modalHeader;
@@ -312,6 +314,8 @@
     var modal;
     var btnOk;
     var btnRefuse;
+    var btnAjuda;
+    var countdown;
 
     jQuery(document).ready(function() {
         modalHeader = document.getElementById("modalHeader");
@@ -321,26 +325,53 @@
         modal = document.getElementById("myModal");
         btnOk = document.getElementById("btnOK");
         btnRefuse = document.getElementById("btnRefuse");
+        btnAjuda = document.getElementById("btnAjuda");
+
+        @if (al.Dica == 0)
+        {
+            <text>btnAjuda.style.visibility = 'hidden';</text>
+        }
+        else
+        {
+            <text>btnAjuda.style.visibility = 'visible';</text>
+        }
+        $("#dicas").hide();
+        countdown = $('#timerDiv').countdown360({
+            radius: 60,
+            seconds: @Model.TempoEx,
+            fontColor: '#FFFFFF',
+            autoStart: true,
+            fillStyle: '#29AAE2',
+            strokeStyle: '#1884B1',
+            onComplete: function(event) {
+                $("#ops").fadeOut();
+                var modalText = document.getElementById("modalText");
+                var modalHeader = document.getElementById("modalHeader");
+                btnOk.setAttribute("onClick", "location.reload()");
+                modalHeader.innerHTML = "Acabou o tempo...";
+                modalText.innerHTML = "Não acabaste este exercício!<br>Queres tentar outra vez?";
+                $("#myModal").modal('show');
+            }
+        });
     });
 
     function ajudaExercicio() {
-        $("#rondellPages").fadeIn();
+        $("#dicas").fadeIn();
     }
 
     $("#rondellPages").rondell({
         preset: "pages"
     });
-    jQuery("#rondellPages").hide();
 
     function mostraNovoExercicio() {
 
     }
 
     $("#respForm").submit(function(event) {
-
         event.preventDefault();
         $.post("@Url.Action("AnalisaResposta")", { licao: @lvm.IdLicao, expl: @lvm.NumExpl, aluno: @al.IdAluno, ex: @Model.IdExercicio, r: $('input:radio[name=optradio]:checked').val() },
             function(data) {
+                countdown.stop();
                 var json = JSON.parse(data);
                 btnOk.style.visibility = 'visible';
                 btnRefuse.style.visibility = 'visible';
@@ -355,7 +386,6 @@
                         break;
                     case @LicaoDAO.EXER_MAIS_DIFICIL:
                     case @LicaoDAO.EXER_RANDOM:
-                        alert("NextExer: " + json.NextExercicio);
                         modalHeader.setAttribute("class", "text-success");
                         modalHeader.innerHTML = "Parabéns! Acertaste a resposta!";
                         modalText.innerHTML = "Vamos a mais um exercício?";

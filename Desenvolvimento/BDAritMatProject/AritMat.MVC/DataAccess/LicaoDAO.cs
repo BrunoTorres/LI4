@@ -117,12 +117,12 @@ namespace AritMat.MVC.DataAccess
 
         public List<Licao> GetLicoesAdd()
         {
-            return db.Licoes.Distinct().Where(l => l.Tipo == 1).ToList();
+            return db.Licoes.DistinctBy(l => l.idLicao).Where(l => l.Tipo == 1).ToList();
         }
 
         public List<Licao> GetLicoesSub()
         {
-            return db.Licoes.Where(l => l.Tipo == 2).ToList();
+            return db.Licoes.DistinctBy(l => l.idLicao).Where(l => l.Tipo == 2).ToList();
         }
 
         public Licao GetLicao(int id, int exp)

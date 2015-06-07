@@ -24,6 +24,7 @@
     Exercicio ex = ViewBag.ExercicioAtual as Exercicio;
 
     List<Dica> dicasEx = ViewBag.Dicas as List<Dica>;
+    ViewBag.Title = "Aprender Lição";
 
     int valor = 0;
 }
@@ -87,7 +88,7 @@
                     <li class="c2">@Html.ActionLink("Sobre", "About", "Home") </li>
                     @if (al != null)
                     {
-                        <li class="c3">@Html.ActionLink("Editar perfil", "Edit", "Aluno", new {id = al.IdAluno})</li>
+                        <li class="c3"><a href="@Url.Action("Edit","Alunos", new { id = al.IdAluno })">Editar Perfil</a></li>
                     }
                     <li class="c4">@Html.ActionLink("Sair", "Logout", "Home") </li>
 
@@ -127,7 +128,7 @@
                                 foreach (var l in licoesAdd)
                                 {
                                     <li>
-                                        <a href="#"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
+                                        <a href="@Url.Action("VerLicao", "Licoes", new { id = l.idLicao })"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
                                     </li>
                                     i++;
                                 }
@@ -137,20 +138,23 @@
                     <li>
                         <a href="#"><span class="fa fa-minus-circle"></span>&nbsp;&nbsp;Subtração<span class="fa arrow"></span></a>
                         <ul class="nav nav-third-level">
-                            @if (licoesSub != null)
-                            {
-                                int i = 1;
-                                foreach (var l in licoesSub)
+                            @{
+                                if (licoesSub != null)
                                 {
-                                    <li>
-                                        <a href="#"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
-                                    </li>
-                                    i++;
+                                    int i = 1;
+                                    foreach (var l in licoesSub)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("VerLicao", "Licoes", new { id = l.idLicao })"><span class="fa fa-angle-right"></span>&nbsp;&nbsp;Lição @i</a>
+                                        </li>
+                                        i++;
+                                    }
                                 }
                             }
                         </ul>
                     </li>
                 </ul>
+
                 <!-- /.nav-second-level -->
             </li>
             <li>
@@ -187,81 +191,14 @@
                 if (lvm.Video == null && lvm.Imagem == null)
                 {
 
-                    <div class="panel panel-default">
-                        <!--<div class="panel-heading">
-                            <i class="fa fa-clock-o fa-fw"></i> Avisos
-                        </div>-->
-                        <!-- /.panel-heading -->
-
+                    <div class="panel panel-default" id="txtDiv">
                         <div class="panel-body">
                             <div id="timer">
                                 <!--<p> <span id="minutes"></span> Minutes </p><div class="space">:</div><p> <span id="seconds"></span> Seconds </p>-->
                             </div>
-                            <ul class="timeline">
-                                <li>
-                                    <div class="timeline-badge success">
-                                        <i class="fa fa-check"></i>
-                                    </div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                                            <p>
-                                                <small class="text-muted"><i class="fa fa-clock-o"></i> 11 hours ago via Twitter</small>
-                                            </p>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-inverted">
-                                    <div class="timeline-badge info">
-                                        <i class="fa fa-save"></i>
-                                    </div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                            <hr>
-                                            <div class="btn-group">
-                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                                    <i class="fa fa-gear"></i> <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li>
-                                                        <a href="#">Action</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">Another action</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">Something else here</a>
-                                                    </li>
-                                                    <li class="divider"></li>
-                                                    <li>
-                                                        <a href="#">Separated link</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="timeline-badge danger">
-                                        <i class="fa fa-graduation-cap"></i>
-                                    </div>
-                                    <div class="timeline-panel">
-                                        <div class="timeline-heading">
-                                            <h4 class="timeline-title">Lorem ipsum dolor</h4>
-                                        </div>
-                                        <div class="timeline-body">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <div class="panel-heading">
+                                <label>@lvm.Texto</label>
+                            </div>
                         </div>
                         <!-- /.panel-body -->
                     </div>
@@ -269,14 +206,17 @@
                 else if (lvm.Imagem != null)
                 {
                     <div class="panel panel-default" id="imgDiv">
+                        <div id="timer">
+                            <!--<p> <span id="minutes"></span> Minutes </p><div class="space">:</div><p> <span id="seconds"></span> Seconds </p>-->
+                        </div>
                         <div class="panel-heading">
-                            <i class="fa fa-video-camera fa-fw"></i> Vídeo
+                            <i class="fa fa-video-camera fa-fw"></i> Lição @lvm.IdLicao
                         </div>
                         <!-- /.panel-heading -->
 
                         <div class="panel-body">
                             <h3>Lição</h3>
-                            <img class="img-responsive" src="@Url.Content("~/Images/Licoes/L" + lvm.IdLicao + "E" + lvm.NumExpl + ".png")">
+                            <img class="img-responsive center-block" src="@Url.Content("~/Images/Licoes/L" + lvm.IdLicao + "E" + lvm.NumExpl + ".png")">
                         </div>
                     </div>
                 }
@@ -286,12 +226,11 @@
 
                     <div class="panel panel-default" id="videoDiv">
                         <div class="panel-heading">
-                            <i class="fa fa-video-camera fa-fw"></i> Vídeo
+                            <i class="fa fa-video-camera fa-fw"></i> Lição @lvm.IdLicao
                         </div>
                         <!-- /.panel-heading -->
 
                         <div class="panel-body">
-                            <h3>@lvm.Video</h3>
                             <div class="embed-responsive embed-responsive-16by9">
                                 <div id="playerDiv"></div>
                             </div>
@@ -313,11 +252,30 @@
 
                 <div class="panel-body">
                     <br/><br/>
-                    <div class="form-group">
+                    <div class="form-inline text-center">
                         <input type="button" class="btn-two btn" onclick=" apresentaExercicio() " value="Sim, quero fazer um exercício!"/>&nbsp;&nbsp;&nbsp;
                         <input type="button" id="btnNextExpl" class="btn-two btn" onclick=" nextExplicacao() " value="Não, preciso de outra explicação!"/>&nbsp;&nbsp;&nbsp;
-                        <input type="button" class="btn-two btn" onclick=" avancarLicao() " value="Quero avançar para a próxima lição!"/>&nbsp;&nbsp;&nbsp;
+                        <br/><br/><input type="button" id="btnNextLesson" class="btn-two btn" onclick=" avancarLicao() " value="Quero avançar para a próxima lição!"/>&nbsp;&nbsp;&nbsp;
+                        <input type="button" id="btnRepLesson" class="btn-two btn" onclick=" repetirLicao() " value="Quero ver esta lição outra vez!" />&nbsp;&nbsp;&nbsp;
                     </div>
+                    <script type="text/javascript">
+                        jQuery.post("@Url.Action("ProximaExplicacao")", { licao: @lvm.IdLicao, numExpl: @lvm.NumExpl },
+                        function(data) {
+                            var json = JSON.parse(data);
+                            if (json.OQueFazer !== @LicaoDAO.PROX_EXPLICACAO) {
+                                var btnNextExp = document.getElementById("btnNextExpl");
+                                btnNextExp.style.visibility = 'hidden';
+                            }
+                        });
+                        jQuery.post("@Url.Action("ProximaLicao")", { licao: @lvm.IdLicao, numExpl: @lvm.NumExpl },
+                        function(data) {
+                            var json = JSON.parse(data);
+                            if (json.OQueFazer !== @LicaoDAO.PROX_LICAO) {
+                                var btnNextLesson = document.getElementById("btnNextLesson");
+                                btnNextLesson.style.visibility = 'hidden';
+                            }
+                        });
+                    </script>
                 </div>
             </div>
             <div id="myModal" class="modal fade" role="dialog">
@@ -326,7 +284,7 @@
                     <!-- Modal content-->
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="btn-circle info" data-dismiss="modal">&times;</button>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h4 class="modal-title" id="modalHeader"></h4>
                         </div>
                         <div class="modal-body">
@@ -372,58 +330,51 @@
     if (lvm.Video == null)
     {
         <script type="text/javascript">
-            function scrollBottom() {
-                $("html, body").animate({ scrollTop: $(document).height() }, 500);
-            }
-            function addMinutes(date, minutes) {
-                return new Date(date.getTime() + minutes * 60000);
-            }
-
-            $(function() {
-                var now = new Date();
-                var newDate = addMinutes(now, @lvm.TempoLicao);
-                $('div#timer').countdown(newDate).on('update.countddown', function(event) {
-                    $('div#timer').text(
-                        event.strftime('%M:%S'));
-                }).on('finish.countdown', function(event) {
-                    scrollBottom();
-                });
-
-            }); 
-        </script>
+    function scrollBottom() {
+        $("html, body").animate({ scrollTop: $(document).height() }, 500);
     }
-    else
-    {
-        <script type="text/javascript">
-            $("#opcoes").hide();
-        </script>
+    function addMinutes(date, minutes) {
+        return new Date(date.getTime() + minutes * 60000);
+    }
+
+    $(function() {
+        var now = new Date();
+        var newDate = addMinutes(now, @lvm.TempoLicao);
+        var btnRep = document.getElementById("btnRepLesson");
+        btnRep.style.visibility = 'hidden';
+        $('div#timer').countdown(newDate).on('update.countddown', function(event) {
+            /*$('div#timer').text(
+                event.strftime('%M:%S'));*/
+        }).on('finish.countdown', function(event) {
+            @if (lvm.Imagem != null)
+            {
+                <text>$("#imgDiv").fadeOut();
+            btnRep.style.visibility = 'visible';</text>
+            }
+            else
+            {
+                <text>$("#txtDiv").fadeOut();
+            btnRep.style.visibility = 'visible';</text>
+            }
+            var modalText = document.getElementById("modalText");
+            var modalHeader = document.getElementById("modalHeader");
+            modalHeader.innerHTML = "Acabou esta lição...";
+            modalText.innerHTML = "Escolhe agora o que pretendes fazer";
+            $("#myModal").modal('show');
+        });
+
+    });
+</script>
     }
 }
 <script>
     var player;
-    $(document).ready(function(e) {
-        $.post("@Url.Action("ProximaExplicacao")", { licao: @lvm.IdLicao, numExpl: @lvm.NumExpl },
-            function(data) {
-                var json = JSON.parse(data);
-                if (json.NextExpl <= @lvm.NumExpl) {
-                    var btnNextExp = document.getElementById("btnNextExpl");
-                    btnNextExp.style.visibility = 'hidden';
-                }
-        });
-        $.post("@Url.Action("ProximaLicao")", { licao: @lvm.IdLicao, numExpl: @lvm.NumExpl },
-        function(data) {
-            var json = JSON.parse(data);
-            if (json.NextExpl <= @lvm.NumExpl) {
-                var btnNextExp = document.getElementById("btnNextExpl");
-                btnNextExp.style.visibility = 'hidden';
-            }
-        });
-    })
-
-    jQuery("#exercicio").hide();
 
     function onYouTubeIframeAPIReady() {
         //var exer = jQuery("#exercicio").hide();
+        var btnRep = document.getElementById("btnRepLesson");
+        btnRep.style.visibility = 'hidden';
+        
         player = new YT.Player('playerDiv', {
             height: '390',
             width: '640',
@@ -443,7 +394,12 @@
     function onPlayerStateChange(event) {
         if (event.data === 0) {
             jQuery("#videoDiv").fadeOut();
-            jQuery("#opcoes").fadeIn();
+            document.getElementById("btnRepLesson").style.visibility = 'visible';
+            var modalText = document.getElementById("modalText");
+            var modalHeader = document.getElementById("modalHeader");
+            modalHeader.innerHTML = "Acabou a lição...";
+            modalText.innerHTML = "Escolhe agora o que pretendes fazer";
+            $("#myModal").modal('show');
         }
     }
 
@@ -452,14 +408,27 @@
     }
 
     function nextExplicacao() {
-        $.post("@Url.Action("ProximaExplicacao")", { licao: @lvm.IdLicao, numExpl: @lvm.NumExpl },
-            function(data) {
-                var json = JSON.parse(data);
-                if (json.NextExpl > @lvm.NumExpl)
-                    window.location = "@Url.Action("VerLicao", new {id = lvm.IdLicao, exp = lvm.NumExpl + 1})";
-                else 
-                    $("#myModal").modal('show');
-            });
+        window.location = "@Url.Action("VerLicao","Licoes", new { id = @lvm.IdLicao, exp = @lvm.NumExpl+1 })";
+    };
+
+    function avancarLicao() {
+        // bad code -.-
+        window.location = "@Url.Action("VerLicao","Licoes", new { id = @lvm.IdLicao+1, exp = 1 })";
+    };
+
+    function repetirLicao() {
+        @if (lvm.Imagem != null)
+        {
+            <text>$("#imgDiv").show();</text>
+        }
+        else if (lvm.Video != null)
+        {
+            <text>$("#videoDiv").show();</text>
+        }
+        else
+        {
+            <text>$("#txtDiv").show();</text>
+        }
     };
 
 </script>

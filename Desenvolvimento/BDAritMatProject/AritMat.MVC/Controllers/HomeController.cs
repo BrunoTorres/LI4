@@ -16,75 +16,9 @@ namespace AritMat.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
-
-        private BDAritMatProjectEntities db = new BDAritMatProjectEntities();
-
-        public HomeController()
-        {
-        }
-
-        public HomeController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
+        BDAritMatProjectEntities db = new BDAritMatProjectEntities();
         public ActionResult Index()
         {
-            /*List<Exercicio> exs = db.Exercicios.Where(ex => ex.Imagem != null).ToList();
-            foreach (var ex in exs)
-            {
-                //MemoryStream ms = new MemoryStream();
-                MemoryStream ms = new MemoryStream(ex.Imagem);
-                Image img = Image.FromStream(ms);
-                //Image img = Image.FromFile("C:\\Users\\John\\Documents\\Repos\\LI4\\Desenvolvimento\\Li4Licoes\\E" + ex.IdExercicio + ".png");
-                img.Save(Server.MapPath("~/Images/Exercicios/E" + ex.IdExercicio + ".png"), ImageFormat.Png);
-                //img.Save(ms, ImageFormat.Png);
-                //ex.Imagem = ms.ToArray();
-                
-                //db.Exercicios.AddOrUpdate(ex);
-
-                //db.SaveChanges();
-            }
-
-            List<Licao> lics = db.Licoes.Where(l => l.Imagem != null).ToList();
-            foreach (var l in lics)
-            {
-                //Image img = Image.FromFile("C:\\Users\\John\\Documents\\Repos\\LI4\\Desenvolvimento\\Li4Licoes\\L" + l.idLicao + "E" + l.NumExpl + ".png");
-                //MemoryStream ms = new MemoryStream();
-                MemoryStream ms = new MemoryStream(l.Imagem);
-                Image img = Image.FromStream(ms);
-                //img.Save(ms, ImageFormat.Png);
-                //l.Imagem = ms.ToArray();
-                //db.Licoes.AddOrUpdate(l);
-                //db.SaveChanges();
-                img.Save(Server.MapPath("~/Images/Licoes/L" + l.idLicao + "E" + l.NumExpl + ".png"), ImageFormat.Png);
-            }*/
             return View();
         }
 
@@ -97,7 +31,7 @@ namespace AritMat.MVC.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Contatos";
 
             return View();
         }
@@ -138,6 +72,8 @@ namespace AritMat.MVC.Controllers
 
         public ActionResult Register()
         {
+            if(Session["User"] != null)
+                return RedirectToAction("Index","Alunos");
             return View();
         }
 

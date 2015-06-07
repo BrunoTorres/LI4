@@ -1,25 +1,72 @@
-﻿@model AritMat.MVC.Models.ViewModels.AlunoEditModel
+﻿@using AritMat.MVC.Models.ViewModels
+@model AritMat.MVC.Models.ViewModels.AlunoEditModel
 
-    @{
-        ViewBag.Title = "Edit";
-    }
+@{
+    ViewBag.Title = "Editar Perfil";
+}
+
+@if (Session["User"] == null)
+{
+    <script type="text/javascript">
+        window.location = "@Url.Action("Login", "Home")";
+    </script>
+}
+
+@if (Model.IdAluno != int.Parse(Url.RequestContext.RouteData.Values["id"].ToString()))
+{
+    <script type="text/javascript">
+        window.location = "@Url.Action("Index", "Alunos")";
+    </script>
+}
+
+@{
+    AlunoViewModel al = Session["User"] as AlunoViewModel;
+}
+
 
 <body>
-<div class="container">
-    <div class="row">
-        <h2>Editar</h2>
-        <div class="col-md-8">
-            @using (Html.BeginForm("Edit", "Alunos", FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
-            {
-                @Html.AntiForgeryToken()
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <!-- Button for smallest screens -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <img src="~/Images/logo.png" alt="Techro HTML5 template">
+                </a>
+            </div>
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav pull-right mainNav">
+                    <li class="c1">@Html.ActionLink("Início", "Index", "Home")</li>
+                    <li class="c2">@Html.ActionLink("Sobre", "About", "Home") </li>
+                    @if (al != null)
+                    {
+                        <li class="c3"><a href="@Url.Action("Edit","Alunos", new { id = al.IdAluno })">Editar Perfil</a></li>
+                    }
+                    <li class="c4">@Html.ActionLink("Sair", "Logout", "Home") </li>
 
-                <div class="form-horizontal">
-                    <h4>A tua conta</h4>
-                    <hr/>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <h2>Editar</h2>
+            <div class="col-md-8">
+                @using (Html.BeginForm("Edit", "Alunos", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
 
-                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-                    @Html.HiddenFor(model => model.IdAluno)
-                    @Html.HiddenFor(model => model.Username)
+                    <div class="form-horizontal">
+                        <h4>A tua conta</h4>
+                        <hr />
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(model => model.IdAluno)
+                        @Html.HiddenFor(model => model.Username)
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -27,66 +74,67 @@
                                 @Html.DisplayFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Nome, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Nome, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.Nome, "", new {@class = "text-danger"})
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Nome, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Password, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Password, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.DataNasc, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.DataNasc, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.DataNasc, "", new {@class = "text-danger"})
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DataNasc, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.DataNasc, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DataNasc, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                    </div>
 
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Tema, htmlAttributes: new {@class = "control-label col-md-2"})
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Tema, new {htmlAttributes = new {@class = "form-control"}})
-                            @Html.ValidationMessageFor(model => model.Tema, "", new {@class = "text-danger"})
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Tema, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.EditorFor(model => model.Tema, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Tema, "", new { @class = "text-danger" })
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="nice-checkbox">
-                            <label class="checkbox-inline">&nbsp;&nbsp;&nbsp;&nbsp;@Html.CheckBoxFor(model => model.Explicacao)</label>
-                            @Html.LabelFor(model => model.Explicacao, htmlAttributes: new {@class = "control-label col-md-2"})
+                        <div class="form-group">
+                            <div class="nice-checkbox">
+                                <label class="checkbox-inline">&nbsp;&nbsp;&nbsp;&nbsp;@Html.CheckBoxFor(model => model.Explicacao)</label>
+                                @Html.LabelFor(model => model.Explicacao, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="nice-checkbox">
+                        <div class="form-group">
+                            <div class="nice-checkbox">
 
-                            <label class="checkbox-inline">&nbsp;&nbsp;&nbsp;&nbsp;@Html.CheckBoxFor(model => model.Dica)</label>
-                            @Html.LabelFor(model => model.Dica, htmlAttributes: new {@class = "control-label col-md-2"})
+                                <label class="checkbox-inline">&nbsp;&nbsp;&nbsp;&nbsp;@Html.CheckBoxFor(model => model.Dica)</label>
+                                @Html.LabelFor(model => model.Dica, htmlAttributes: new { @class = "control-label col-md-2" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Guardar" class="btn btn-default" />
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Guardar" class="btn btn-default"/>
-                        </div>
-                    </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
-</div>
 
-<script type='text/javascript' src='~/Scripts/fancybox/jquery.fancybox.pack.js'></script>
-<script type='text/javascript' src='~/Scripts/jquery.mobile.customized.min.js'></script>
-<script type='text/javascript' src='~/Scripts/jquery.easing.1.3.js'></script>
-<script type='text/javascript' src='~/Scripts/camera.min.js'></script>
-<script src="~/Scripts/bootstrap.min.js"></script>
+    <script type='text/javascript' src='~/Scripts/fancybox/jquery.fancybox.pack.js'></script>
+    <script type='text/javascript' src='~/Scripts/jquery.mobile.customized.min.js'></script>
+    <script type='text/javascript' src='~/Scripts/jquery.easing.1.3.js'></script>
+    <script type='text/javascript' src='~/Scripts/camera.min.js'></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
 </body>
+</html>
