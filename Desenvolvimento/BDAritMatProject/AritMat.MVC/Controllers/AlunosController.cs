@@ -34,12 +34,14 @@ namespace AritMat.MVC.Controllers
                 double percCertas = new ExercicioDAO(db).GetPercentCertas(avm.IdAluno);
                 int certas = new ExercicioDAO(db).GetNumCertas(avm.IdAluno);
                 int testesFeitos = new TesteDAO(db).GetNumTestesFeitosAluno(avm.IdAluno);
+                int exerciciosFeitos = new ExercicioDAO(db).GetNumExerciciosFeitos(avm.IdAluno);
                 double percentTestes = new TesteDAO(db).GetPercentTestesAluno(avm.IdAluno);
 
                 ViewBag.PercentCertas = percCertas;
                 ViewBag.Certas = certas;
                 ViewBag.TestesFeitos = testesFeitos;
                 ViewBag.PercentTestes = percentTestes;
+                ViewBag.ExerciciosFeitos = exerciciosFeitos;
 
                 System.Diagnostics.Debug.WriteLine("NTestes: " + testesFeitos + "\nMEDIA TESTES: " + percentTestes +
                     "\nNCertas: " + certas + "\nPercCertas: " + percCertas);

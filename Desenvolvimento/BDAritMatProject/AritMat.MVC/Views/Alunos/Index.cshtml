@@ -181,10 +181,25 @@
                                                 <h4 class="timeline-title">Estatísticas</h4>
                                             </div>
                                             <div class="timeline-body">
-                                                <p>Acertaste em <strong class="text-success">@ViewBag.Certas</strong> perguntas, ou seja em <strong class="text-success">@Math.Round(ViewBag.PercentCertas*100, 2) %</strong> das que fizeste
-                                                </p>
-                                                <p>Fizeste <strong class="text-success">@ViewBag.TestesFeitos</strong> testes e tens uma média de <strong class="text-success">@Math.Round(ViewBag.PercentTestes*100, 2) %</strong></p>
-                                            </div>
+                                                @if (ViewBag.ExerciciosFeitos == 0)
+                                                {
+                                                    <p>Ainda não fizeste nenhum exercício nem teste :(</p>
+                                                }
+                                                else
+                                                {
+                                                    <p>Acertaste em <strong class="text-success">@ViewBag.Certas</strong> perguntas, ou seja em <strong class="text-success">@Math.Round(ViewBag.PercentCertas*100, 2) %</strong> das que fizeste
+                                                    </p>
+                                                    if (ViewBag.TestesFeitos == 0)
+                                                     {
+                                                         <p>Quando estiveres preparado experimenta fazer um teste!</p>
+                                                     }
+                                                     else
+                                                     {
+                                                         <p>Fizeste <strong class="text-success">@ViewBag.TestesFeitos</strong> testes e tens uma média de <strong class="text-success">@Math.Round(ViewBag.PercentTestes*100, 2) %</strong>
+                                                         </p>
+                                                     }
+                                                }
+                                                    </div>
                                         </div>
                                     </li>
                                     <li class="timeline-inverted">

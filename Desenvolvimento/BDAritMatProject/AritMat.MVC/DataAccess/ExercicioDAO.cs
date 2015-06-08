@@ -207,5 +207,14 @@ namespace AritMat.MVC.DataAccess
 
             return (double) certas / (certas + erradas);
         }
+
+        public int GetNumExerciciosFeitos(int idAluno)
+        {
+            Aluno a = db.Alunos.Find(idAluno);
+            int certas = GetNumCertas(idAluno);
+            int erradas = (int) a.LicoesVistas.Where(ax => ax.RespErradas != null).Sum(ax => ax.RespErradas);
+
+            return certas + erradas;
+        }
     }
 }
