@@ -272,10 +272,6 @@
     <Content Include="Images\news2.jpg" />
     <Content Include="Images\news3.jpg" />
     <Content Include="Images\news4.jpg" />
-    <Content Include="Images\photo-1.jpg" />
-    <Content Include="Images\photo-2.jpg" />
-    <Content Include="Images\photo-3.jpg" />
-    <Content Include="Images\photo-4.jpg" />
     <Content Include="Images\playbutton.png" />
     <Content Include="Images\portfolio\img1.jpg" />
     <Content Include="Images\portfolio\img2.jpg" />

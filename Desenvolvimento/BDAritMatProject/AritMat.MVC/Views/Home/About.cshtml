@@ -1,5 +1,18 @@
-﻿<!DOCTYPE html>
+﻿@using AritMat.MVC.Models.ViewModels
+
+@{
+    AlunoViewModel al=null; 
+    if (Session["User"] != null)
+    {
+        al = ((AlunoViewModel) (Session["User"]));
+        ViewBag.Title = al.Username;
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
+
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,8 +28,8 @@
     <link rel="stylesheet" href="~/Content/style.css">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="~/Scripts/html5shiv.js"></script>
-    <script src="~/Scripts/respond.min.js"></script>
+        <script src="~/Scripts/html5shiv.js"></script>
+        <script src="~/Scripts/respond.min.js"></script>
     <![endif]-->
 </head>
 
@@ -37,8 +50,21 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav pull-right mainNav">
                     <li class="c1">@Html.ActionLink("Início", "Index", "Home")</li>
+                    @if (al != null)
+                    {
+                        <li class="c5">@Html.ActionLink("Aprender", "Index", "Alunos") </li>
+                    }
                     <li class="c2 active">@Html.ActionLink("Sobre", "About", "Home") </li>
-                    <li class="c3">@Html.ActionLink("Entrar", "Login", "Home") </li>
+                    @if (al != null)
+                    {
+                        <li class="c3"><a href="@Url.Action("Edit", "Alunos", new {id = al.IdAluno})">Editar Perfil</a></li>
+                        <li class="c4">@Html.ActionLink("Sair", "Logout", "Home") </li>
+                    }
+                    else
+                    {
+                        <li class="c3">@Html.ActionLink("Entrar", "Login", "Home") </li>
+                    }
+                    
 
                 </ul>
             </div>
@@ -48,25 +74,26 @@
 
 
 <!-- container -->
-    <section class="container">
-        <div class="row">
-            <!-- main content -->
-            <section class="col-sm-8 maincontent">
-                <h3>Sobre o Arit-Mat</h3>
-                <p>
-                    <img src="~/Images/about.jpg" alt="" class="img-rounded pull-right" width="300">
-                    O Arit-Mat surgiu a partir de uma proposta da criação de um tutor inteligente na unidade curricular de LI4 do curso de Engenharia Informática.
-                </p>
-                <p>Assim foi criado com o objetivo de </p>
-                 </section>
-        </div>
-    </section>
-    <!-- /container -->
+<section class="container">
+    <div class="row">
+        <!-- main content -->
+        <section class="col-sm-8 maincontent">
+            <h3>Sobre o Arit-Mat</h3>
+            <p>
+                <img src="~/Images/about.jpg" alt="" class="img-rounded pull-right" width="300">
+                O Arit-Mat surgiu a partir de uma proposta da criação de um tutor inteligente na unidade curricular de LI4 do curso de Engenharia Informática.
+            </p>
+            <p>Assim foi criado com o objetivo de incentivar os alunos do ensino primário a estudar e praticar adições e subtrações, bases matemáticas muito importantes.</p>
+        </section>
+    </div>
+</section>
+<!-- /container -->
 <section class="team-content">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h3>A equipa</h3>
+                <p>Formada na unidade curricular de LI4, composta por 4 membros: </p>
                 <br/>
             </div>
         </div>
@@ -113,47 +140,47 @@
 </section>
 
 
-    <footer id="footer">
+<footer id="footer">
 
-        <div class="container">
-            <div class="row">
-                <div class="footerbottom">
-                    <div class="col-md-3 col-sm-6">
-                        <div class="footerwidget">
-                            <h4>
-                                Categorias Disponíveis
-                            </h4>
-                            <div class="menu-course">
-                                <ul class="menu">
-                                    <li>
-                                        Adições
-                                    </li>
-                                    <li>
-                                        Subtrações
-                                    </li>
+    <div class="container">
+        <div class="row">
+            <div class="footerbottom">
+                <div class="col-md-3 col-sm-6">
+                    <div class="footerwidget">
+                        <h4>
+                            Categorias Disponíveis
+                        </h4>
+                        <div class="menu-course">
+                            <ul class="menu">
+                                <li>
+                                    Adições
+                                </li>
+                                <li>
+                                    Subtrações
+                                </li>
 
-                                </ul>
-                            </div>
+                            </ul>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6">
-                        <div class="footerwidget">
-                            <h4>Contactos</h4>
-                            <div class="contact-info">
-                                <i class="fa fa-map-marker"></i> Universidade do Minho<br>
-                            </div>
-                        </div><!-- end widget -->
-                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="footerwidget">
+                        <h4>Contactos</h4>
+                        <div class="contact-info">
+                            <i class="fa fa-map-marker"></i> Universidade do Minho<br>
+                        </div>
+                    </div><!-- end widget -->
                 </div>
             </div>
-            <div class="clear"></div>
-            <!--CLEAR FLOATS-->
         </div>
-    </footer>
+        <div class="clear"></div>
+        <!--CLEAR FLOATS-->
+    </div>
+</footer>
 
 <!-- JavaScript libs are placed at the end of the document so the pages load faster -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <script src="~/Scripts/custom.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="~/Scripts/custom.js"></script>
 </body>
 </html>

@@ -40,10 +40,11 @@
             <div class="navbar-collapse">
                 <ul class="nav navbar-nav pull-right mainNav">
                     <li class="c1">@Html.ActionLink("Início", "Index", "Home")</li>
+                    <li class="c5">@Html.ActionLink("Aprender", "Index", "Alunos") </li>
                     <li class="c2">@Html.ActionLink("Sobre", "About", "Home") </li>
                     @if (al != null)
                     {
-                        <li class="c3"><a href="@Url.Action("Edit","Alunos", new { id = al.IdAluno })">Editar Perfil</a></li>
+                        <li class="c3 active"><a href="@Url.Action("Edit","Alunos", new { id = al.IdAluno })">Editar Perfil</a></li>
                     }
                     <li class="c4">@Html.ActionLink("Sair", "Logout", "Home") </li>
 

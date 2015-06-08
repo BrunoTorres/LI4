@@ -1,4 +1,14 @@
-﻿<!--
+﻿@using AritMat.MVC.Models.ViewModels
+
+@{
+    AlunoViewModel al = null;
+    if (Session["User"] != null)
+    {
+        al = ((AlunoViewModel)(Session["User"]));
+        ViewBag.Title = al.Username;
+    }
+}
+<!--
 Author: WebThemez
 Author URL: http://webthemez.com
 License: Creative Commons Attribution 3.0 Unported
@@ -35,7 +45,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <![endif]-->
 </head>
 <body>
-    <!-- Fixed navbar -->
+<!-- Fixed navbar -->
+
     <div class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
@@ -50,8 +61,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav pull-right mainNav">
                     <li class="c1 active">@Html.ActionLink("Início", "Index", "Home")</li>
+                    @if (al != null)
+                    {
+                        <li class="c5">@Html.ActionLink("Aprender", "Index", "Alunos") </li>
+                    }
                     <li class="c2">@Html.ActionLink("Sobre", "About", "Home") </li>
-                    <li class="c3">@Html.ActionLink("Entrar", "Login", "Home") </li>
+                    @if (al != null)
+                    {
+                        <li class="c3"><a href="@Url.Action("Edit", "Alunos", new {id = al.IdAluno})">Editar Perfil</a></li>
+                        <li class="c4">@Html.ActionLink("Sair", "Logout", "Home") </li>
+                    }
+                    else
+                    {
+                        <li class="c3">@Html.ActionLink("Entrar", "Login", "Home") </li>
+                    }
+
 
                 </ul>
             </div>
