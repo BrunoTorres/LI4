@@ -384,13 +384,13 @@ color: #fff !important;
 }
 .heading-text h1{
     font-size: 38px;
-    background: rgba(255, 85, 85, 0.81);
+    background: rgba(41, 170, 226, 0.81);
     padding: 15px 20px;
     display: inline-block;
 }
 .heading-text p{
 font-size: 22px;
-background: rgba(255, 85, 85, 0.78);
+background: rgba(41, 170, 226, 0.78);
 padding: 15px 20px;
 display: inline-block;
 clear: both;
